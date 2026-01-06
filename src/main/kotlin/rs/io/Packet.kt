@@ -1,0 +1,321 @@
+package rs.io
+
+import rs.util.DoublyLinkable
+import rs.util.LinkList
+import java.io.File
+import java.nio.ByteBuffer
+import java.nio.ByteOrder
+
+class Packet(val data: ByteArray, private val order: ByteOrder = ByteOrder.BIG_ENDIAN) : DoublyLinkable() {
+    companion object {
+        private const val CRC32_POLYNOMIAL: Int = 0xEDB88320.toInt()
+
+        private val crctable: IntArray = IntArray(256)
+        val bitmask: IntArray = IntArray(33)
+
+        private val cacheMin: LinkList<Packet> = LinkList()
+        private val cacheMid: LinkList<Packet> = LinkList()
+        private val cacheMax: LinkList<Packet> = LinkList()
+        private val cacheBig: LinkList<Packet> = LinkList()
+        private val cacheHuge: LinkList<Packet> = LinkList()
+        private val cacheUnimaginable: LinkList<Packet> = LinkList()
+
+        private var cacheMinCount: Int = 0
+        private var cacheMidCount: Int = 0
+        private var cacheMaxCount: Int = 0
+        private var cacheBigCount: Int = 0
+        private var cacheHugeCount: Int = 0
+        private var cacheUnimaginableCount: Int = 0
+
+        init {
+            // bitmask init
+            for (i in 0 until 32) {
+                bitmask[i] = (1 shl i) - 1
+            }
+            bitmask[32] = -1 // 0xffffffff
+
+            // CRC table init
+            for (i in 0 until 256) {
+                var remainder = i
+
+                for (bit in 0 until 8) {
+                    remainder = if ((remainder and 1) == 1) {
+                        (remainder ushr 1) xor CRC32_POLYNOMIAL
+                    } else {
+                        remainder ushr 1
+                    }
+                }
+
+                crctable[i] = remainder
+            }
+        }
+
+        fun getcrc(src: ByteArray, offset: Int, length: Int): Int {
+            var crc = -1 // 0xffffffff
+
+            var i = offset
+            while (i < length) {
+                crc = (crc ushr 8) xor crctable[(crc xor (src[i].toInt() and 0xFF)) and 0xFF]
+                i++
+            }
+
+            return crc.inv()
+        }
+
+        fun checkcrc(src: ByteArray, offset: Int, length: Int, expected: Int = 0): Boolean {
+            return getcrc(src, offset, length) == expected
+        }
+
+        fun load(file: File, seekToEnd: Boolean = false) : Packet {
+            val packet = Packet(file.readBytes(), ByteOrder.BIG_ENDIAN)
+            if (seekToEnd) {
+                packet.position(packet.data.size)
+            }
+            return packet
+        }
+
+        @JvmStatic
+        fun alloc(type: Int): Packet {
+            var cached: Packet? = null
+
+            if (type == 0 && cacheMinCount > 0) {
+                cached = cacheMin.removeHead()
+                cacheMinCount--
+            } else if (type == 1 && cacheMidCount > 0) {
+                cached = cacheMid.removeHead()
+                cacheMidCount--
+            } else if (type == 2 && cacheMaxCount > 0) {
+                cached = cacheMax.removeHead()
+                cacheMaxCount--
+            } else if (type == 3 && cacheBigCount > 0) {
+                cached = cacheBig.removeHead()
+                cacheBigCount--
+            } else if (type == 4 && cacheHugeCount > 0) {
+                cached = cacheHuge.removeHead()
+                cacheHugeCount--
+            } else if (type == 5 && cacheUnimaginableCount > 0) {
+                cached = cacheUnimaginable.removeHead()
+                cacheUnimaginableCount--
+            }
+
+            if (cached != null) {
+                cached.position(0)
+                return cached
+            }
+
+            return when (type) {
+                0 -> Packet(ByteArray(100))
+                1 -> Packet(ByteArray(5_000))
+                2 -> Packet(ByteArray(30_000))
+                3 -> Packet(ByteArray(100_000))
+                4 -> Packet(ByteArray(500_000))
+                5 -> Packet(ByteArray(2_000_000))
+                else -> Packet(ByteArray(type))
+            }
+        }
+    }
+
+    private val view = ByteBuffer.wrap(data).order(order)
+
+    var bitPos = 0
+
+    fun position() = view.position()
+
+    @Suppress("HasPlatformType")
+    fun position(position: Int) = view.position(position)
+
+    fun move(positions: Int) {
+        position(position() + positions)
+    }
+
+    fun length() : Int {
+        return view.limit()
+    }
+
+    fun available() : Int {
+        return view.remaining()
+    }
+
+
+
+    fun release() {
+        position(0)
+
+        when (length()) {
+            100 -> if (cacheMinCount < 1_000) {
+                cacheMin.addTail(this)
+                cacheMinCount++
+            }
+
+            5_000 -> if (cacheMidCount < 250) {
+                cacheMid.addTail(this)
+                cacheMidCount++
+            }
+
+            30_000 -> if (cacheMaxCount < 50) {
+                cacheMax.addTail(this)
+                cacheMaxCount++
+            }
+
+            100_000 -> if (cacheBigCount < 10) {
+                cacheBig.addTail(this)
+                cacheBigCount++
+            }
+
+            500_000 -> if (cacheHugeCount < 5) {
+                cacheHuge.addTail(this)
+                cacheHugeCount++
+            }
+
+            2_000_000 -> if (cacheUnimaginableCount < 2) {
+                cacheUnimaginable.addTail(this)
+                cacheUnimaginableCount++
+            }
+        }
+    }
+
+    fun p1(value: Int) {
+        move(1)
+        data[position() - 1] = value.toByte()
+    }
+
+    fun p1_alt3(v: Int) {
+        move(1)
+        data[position() - 1] = ((128 - v) and 0xFF).toByte()
+    }
+
+    fun g1(): Int {
+        return view.get().toInt() and 0xFF
+    }
+
+    fun g1b(): Int {
+        return view.get().toInt()
+    }
+
+    fun p2(value: Int) {
+        move(2)
+        data[position() - 2] = ((value shr 8) and 0xFF).toByte()
+        data[position() - 1] = (value and 0xFF).toByte()
+    }
+
+
+    fun p2_alt1(v: Int) {
+        move(2)
+        data[position() - 2] = (v and 0xFF).toByte()
+        data[position() - 1] = ((v shr 8) and 0xFF).toByte()
+    }
+
+    fun p2_alt2(v: Int) {
+        move(2)
+        data[position() - 2] = ((v shr 8) and 0xFF).toByte()
+        data[position() - 1] = ((v + 128) and 0xFF).toByte()
+    }
+
+
+    fun g2(): Int {
+        return view.getShort().toInt() and 0xFFFF
+    }
+
+    fun g2s(): Int {
+        return view.getShort().toInt()
+    }
+
+    fun g3(): Int {
+        move(3)
+        return ((data[position() - 3].toInt() and 0xFF) shl 16) or
+                ((data[position() - 2].toInt() and 0xFF) shl 8) or
+                (data[position() - 1].toInt() and 0xFF)
+    }
+
+    fun g4(): Long {
+        move(4)
+        val b0 = data[position() - 4].toInt() and 0xFF
+        val b1 = data[position() - 3].toInt() and 0xFF
+        val b2 = data[position() - 2].toInt() and 0xFF
+        val b3 = data[position() - 1].toInt() and 0xFF
+        return (b0 shl 24 or (b1 shl 16) or (b2 shl 8) or b3).toLong() and 0xFFFFFFFFL
+    }
+
+    fun p4(value: Int) {
+        move(4)
+        data[position() - 4] = ((value shr 24) and 0xFF).toByte()
+        data[position() - 3] = ((value shr 16) and 0xFF).toByte()
+        data[position() - 2] = ((value shr 8) and 0xFF).toByte()
+        data[position() - 1] = (value and 0xFF).toByte()
+    }
+
+    fun p4_alt3(v: Int) {
+        move(4)
+        data[position() - 4] = ((v shr 16) and 0xFF).toByte()
+        data[position() - 3] = ((v shr 24) and 0xFF).toByte()
+        data[position() - 2] = (v and 0xFF).toByte()
+        data[position() - 1] = ((v shr 8) and 0xFF).toByte()
+    }
+
+
+    fun gbool() : Boolean {
+        return g1() == 1
+    }
+
+    fun pjstr(str: String) {
+        val length = str.length
+        for (i in 0 until length) {
+            move(1)
+            view.put(position() - 1, str[i].code.toByte())
+        }
+        move(1)
+        view.put(position() - 1, 10.toByte())
+    }
+
+    fun gjstr(terminator: Int = 10): String {
+        var pos = position()
+        val length = length()  // matches DataView.byteLength
+        val sb = StringBuilder()
+        var b: Int
+
+        while (pos < length) {
+            b = view.get(pos).toInt() and 0xFF
+            pos++  // increment like pos++ in TS
+
+            if (b == terminator) break  // stop before appending terminator
+            sb.append(b.toChar())
+        }
+        position(pos)
+
+        return sb.toString()
+    }
+
+    fun g4s(): Int {
+        return view.getInt()
+    }
+
+    fun gsmart(): Int {
+        return if ((data[position()].toInt() and 0xFF) < 0x80) {
+            g1() - 0x40
+        } else {
+            g2() - 0xC000
+        }
+    }
+
+    fun gdata(dest: ByteArray, offset: Int, length: Int) {
+        System.arraycopy(data, position(), dest, offset, length)
+        move(length)
+    }
+
+    fun pdata(src: ByteArray, offset: Int, length: Int) {
+        System.arraycopy(src, offset, data, position(), length)
+        move(length)
+    }
+
+    fun psize2(size: Int) {
+        data[position() - size - 2] = ((size shr 8) and 0xFF).toByte()
+        data[position() - size - 1] = (size and 0xFF).toByte()
+        move(2)
+    }
+
+    fun psize1(size: Int) {
+        data[position() - size - 1] = (size and 0xFF).toByte()
+        move(1)
+    }
+
+}

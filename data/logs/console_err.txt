@@ -1,0 +1,1897 @@
+[31 Dec 2025 22:44:28] [io.luna.game.model.World] [InitializationThread]
+FATAL: Fatal error creating SQL pool!
+com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: Access denied for user 'luna_db'@'localhost' (using password: YES)
+	at com.zaxxer.hikari.pool.HikariPool.throwPoolInitializationException(HikariPool.java:584) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:571) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:98) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.HikariDataSource.<init>(HikariDataSource.java:80) ~[HikariCP-5.1.0.jar:?]
+	at io.luna.util.SqlConnectionPool$Builder.build(SqlConnectionPool.java:238) ~[main/:?]
+	at io.luna.game.model.World.<init>(World.java:218) ~[main/:?]
+	at io.luna.LunaContext.<init>(LunaContext.java:28) ~[main/:?]
+	at io.luna.Luna.main(Luna.java:61) ~[main/:?]
+Caused by: java.sql.SQLException: Access denied for user 'luna_db'@'localhost' (using password: YES)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:130) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:825) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:446) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:239) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:188) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:137) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:360) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:202) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:461) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:550) ~[HikariCP-5.1.0.jar:?]
+	... 6 more
+[31 Dec 2025 22:44:28] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: Access denied for user 'luna_db'@'localhost' (using password: YES)
+	at io.luna.game.model.World.<init>(World.java:221) ~[main/:?]
+	at io.luna.LunaContext.<init>(LunaContext.java:28) ~[main/:?]
+	at io.luna.Luna.main(Luna.java:61) ~[main/:?]
+Caused by: com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: Access denied for user 'luna_db'@'localhost' (using password: YES)
+	at com.zaxxer.hikari.pool.HikariPool.throwPoolInitializationException(HikariPool.java:584) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:571) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:98) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.HikariDataSource.<init>(HikariDataSource.java:80) ~[HikariCP-5.1.0.jar:?]
+	at io.luna.util.SqlConnectionPool$Builder.build(SqlConnectionPool.java:238) ~[main/:?]
+	at io.luna.game.model.World.<init>(World.java:218) ~[main/:?]
+	... 2 more
+Caused by: java.sql.SQLException: Access denied for user 'luna_db'@'localhost' (using password: YES)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:130) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:825) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:446) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:239) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:188) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:137) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:360) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:202) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:461) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:550) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:98) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.HikariDataSource.<init>(HikariDataSource.java:80) ~[HikariCP-5.1.0.jar:?]
+	at io.luna.util.SqlConnectionPool$Builder.build(SqlConnectionPool.java:238) ~[main/:?]
+	at io.luna.game.model.World.<init>(World.java:218) ~[main/:?]
+	... 2 more
+[31 Dec 2025 22:45:09] [io.luna.game.model.World] [InitializationThread]
+FATAL: Fatal error creating SQL pool!
+com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: Access denied for user 'luna_db'@'localhost' (using password: YES)
+	at com.zaxxer.hikari.pool.HikariPool.throwPoolInitializationException(HikariPool.java:584) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:571) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:98) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.HikariDataSource.<init>(HikariDataSource.java:80) ~[HikariCP-5.1.0.jar:?]
+	at io.luna.util.SqlConnectionPool$Builder.build(SqlConnectionPool.java:238) ~[main/:?]
+	at io.luna.game.model.World.<init>(World.java:218) ~[main/:?]
+	at io.luna.LunaContext.<init>(LunaContext.java:28) ~[main/:?]
+	at io.luna.Luna.main(Luna.java:61) ~[main/:?]
+Caused by: java.sql.SQLException: Access denied for user 'luna_db'@'localhost' (using password: YES)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:130) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:825) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:446) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:239) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:188) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:137) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:360) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:202) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:461) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:550) ~[HikariCP-5.1.0.jar:?]
+	... 6 more
+[31 Dec 2025 22:45:09] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: Access denied for user 'luna_db'@'localhost' (using password: YES)
+	at io.luna.game.model.World.<init>(World.java:221) ~[main/:?]
+	at io.luna.LunaContext.<init>(LunaContext.java:28) ~[main/:?]
+	at io.luna.Luna.main(Luna.java:61) ~[main/:?]
+Caused by: com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: Access denied for user 'luna_db'@'localhost' (using password: YES)
+	at com.zaxxer.hikari.pool.HikariPool.throwPoolInitializationException(HikariPool.java:584) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:571) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:98) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.HikariDataSource.<init>(HikariDataSource.java:80) ~[HikariCP-5.1.0.jar:?]
+	at io.luna.util.SqlConnectionPool$Builder.build(SqlConnectionPool.java:238) ~[main/:?]
+	at io.luna.game.model.World.<init>(World.java:218) ~[main/:?]
+	... 2 more
+Caused by: java.sql.SQLException: Access denied for user 'luna_db'@'localhost' (using password: YES)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:130) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:825) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:446) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:239) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:188) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:137) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:360) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:202) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:461) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:550) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:98) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.HikariDataSource.<init>(HikariDataSource.java:80) ~[HikariCP-5.1.0.jar:?]
+	at io.luna.util.SqlConnectionPool$Builder.build(SqlConnectionPool.java:238) ~[main/:?]
+	at io.luna.game.model.World.<init>(World.java:218) ~[main/:?]
+	... 2 more
+[31 Dec 2025 22:45:19] [io.luna.game.model.World] [InitializationThread]
+FATAL: Fatal error creating SQL pool!
+com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: Unknown database 'luna_players'
+	at com.zaxxer.hikari.pool.HikariPool.throwPoolInitializationException(HikariPool.java:584) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:571) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:98) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.HikariDataSource.<init>(HikariDataSource.java:80) ~[HikariCP-5.1.0.jar:?]
+	at io.luna.util.SqlConnectionPool$Builder.build(SqlConnectionPool.java:238) ~[main/:?]
+	at io.luna.game.model.World.<init>(World.java:218) ~[main/:?]
+	at io.luna.LunaContext.<init>(LunaContext.java:28) ~[main/:?]
+	at io.luna.Luna.main(Luna.java:61) ~[main/:?]
+Caused by: java.sql.SQLSyntaxErrorException: Unknown database 'luna_players'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:825) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:446) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:239) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:188) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:137) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:360) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:202) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:461) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:550) ~[HikariCP-5.1.0.jar:?]
+	... 6 more
+[31 Dec 2025 22:45:19] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: Unknown database 'luna_players'
+	at io.luna.game.model.World.<init>(World.java:221) ~[main/:?]
+	at io.luna.LunaContext.<init>(LunaContext.java:28) ~[main/:?]
+	at io.luna.Luna.main(Luna.java:61) ~[main/:?]
+Caused by: com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: Unknown database 'luna_players'
+	at com.zaxxer.hikari.pool.HikariPool.throwPoolInitializationException(HikariPool.java:584) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:571) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:98) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.HikariDataSource.<init>(HikariDataSource.java:80) ~[HikariCP-5.1.0.jar:?]
+	at io.luna.util.SqlConnectionPool$Builder.build(SqlConnectionPool.java:238) ~[main/:?]
+	at io.luna.game.model.World.<init>(World.java:218) ~[main/:?]
+	... 2 more
+Caused by: java.sql.SQLSyntaxErrorException: Unknown database 'luna_players'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.createNewIO(ConnectionImpl.java:825) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.<init>(ConnectionImpl.java:446) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ConnectionImpl.getInstance(ConnectionImpl.java:239) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.NonRegisteringDriver.connect(NonRegisteringDriver.java:188) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:137) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:360) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:202) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:461) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:550) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:98) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.HikariDataSource.<init>(HikariDataSource.java:80) ~[HikariCP-5.1.0.jar:?]
+	at io.luna.util.SqlConnectionPool$Builder.build(SqlConnectionPool.java:238) ~[main/:?]
+	at io.luna.game.model.World.<init>(World.java:218) ~[main/:?]
+	... 2 more
+[31 Dec 2025 22:47:53] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.io.FileNotFoundException: No index files present.
+	at io.luna.game.cache.Cache.open(Cache.java:99) ~[main/:?]
+	at io.luna.LunaServer.initCache(LunaServer.java:113) ~[main/:?]
+	at io.luna.LunaServer.init(LunaServer.java:90) ~[main/:?]
+	at io.luna.Luna.main(Luna.java:62) ~[main/:?]
+[31 Dec 2025 22:49:43] [io.luna.game.model.mob.bot.BotRepository] [BackgroundLoaderThread]
+ERROR: Error while loading the usernames of saved bots.
+java.lang.RuntimeException: Persistent bot data could not be loaded.
+	at io.luna.game.model.mob.bot.BotRepository.loadSqlNames(BotRepository.java:128) ~[main/:?]
+	at io.luna.game.model.mob.bot.BotRepository.loadNames(BotRepository.java:86) ~[main/:?]
+	at io.luna.LunaServer.lambda$initLaunchTasks$0(LunaServer.java:160) ~[main/:?]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.base/java.lang.Thread.run(Thread.java:1575) [?:?]
+Caused by: java.sql.SQLSyntaxErrorException: Table 'luna_players.main_data' doesn't exist
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:916) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:972) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.executeQuery(ProxyPreparedStatement.java:52) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.executeQuery(HikariProxyPreparedStatement.java) ~[HikariCP-5.1.0.jar:?]
+	at io.luna.game.model.mob.bot.BotRepository.loadSqlNames(BotRepository.java:122) ~[main/:?]
+	... 5 more
+[31 Dec 2025 23:02:12] [io.luna.game.LogoutService] [LogoutServiceWorker]
+ERROR: Issue servicing nulled's logout request!
+java.lang.RuntimeException: nulled's data could not be saved.
+	at io.luna.game.persistence.SqlGameSerializer.savePlayer(SqlGameSerializer.java:59) ~[main/:?]
+	at io.luna.game.LogoutService.lambda$startWorker$0(LogoutService.java:159) ~[main/:?]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[?:?]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[?:?]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.base/java.lang.Thread.run(Thread.java:1575) [?:?]
+Caused by: java.lang.IllegalStateException: java.sql.SQLSyntaxErrorException: Table 'luna_players.skills_data' doesn't exist
+	at io.luna.game.persistence.SqlGameSerializer.saveNewPlayer(SqlGameSerializer.java:160) ~[main/:?]
+	at io.luna.game.persistence.SqlGameSerializer.savePlayer(SqlGameSerializer.java:51) ~[main/:?]
+	... 6 more
+Caused by: java.sql.SQLSyntaxErrorException: Table 'luna_players.skills_data' doesn't exist
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:916) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1061) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1009) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeLargeUpdate(ClientPreparedStatement.java:1320) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdate(ClientPreparedStatement.java:994) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.executeUpdate(ProxyPreparedStatement.java:61) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.executeUpdate(HikariProxyPreparedStatement.java) ~[HikariCP-5.1.0.jar:?]
+	at io.luna.game.persistence.SqlGameSerializer.saveNewPlayer(SqlGameSerializer.java:142) ~[main/:?]
+	at io.luna.game.persistence.SqlGameSerializer.savePlayer(SqlGameSerializer.java:51) ~[main/:?]
+	... 6 more
+[31 Dec 2025 23:03:30] [io.luna.game.LogoutService] [LogoutServiceWorker]
+ERROR: Issue servicing nulled's logout request!
+java.lang.RuntimeException: nulled's data could not be saved.
+	at io.luna.game.persistence.SqlGameSerializer.savePlayer(SqlGameSerializer.java:59) ~[main/:?]
+	at io.luna.game.LogoutService.lambda$startWorker$0(LogoutService.java:159) ~[main/:?]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[?:?]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[?:?]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.base/java.lang.Thread.run(Thread.java:1575) [?:?]
+Caused by: java.lang.IllegalStateException: java.sql.SQLSyntaxErrorException: Table 'luna_players.skills_data' doesn't exist
+	at io.luna.game.persistence.SqlGameSerializer.saveNewPlayer(SqlGameSerializer.java:160) ~[main/:?]
+	at io.luna.game.persistence.SqlGameSerializer.savePlayer(SqlGameSerializer.java:51) ~[main/:?]
+	... 6 more
+Caused by: java.sql.SQLSyntaxErrorException: Table 'luna_players.skills_data' doesn't exist
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:916) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1061) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1009) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeLargeUpdate(ClientPreparedStatement.java:1320) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdate(ClientPreparedStatement.java:994) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.executeUpdate(ProxyPreparedStatement.java:61) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.executeUpdate(HikariProxyPreparedStatement.java) ~[HikariCP-5.1.0.jar:?]
+	at io.luna.game.persistence.SqlGameSerializer.saveNewPlayer(SqlGameSerializer.java:142) ~[main/:?]
+	at io.luna.game.persistence.SqlGameSerializer.savePlayer(SqlGameSerializer.java:51) ~[main/:?]
+	... 6 more
+[31 Dec 2025 23:05:12] [io.luna.game.LogoutService] [LogoutServiceWorker]
+ERROR: Issue servicing nulled's logout request!
+java.lang.RuntimeException: nulled's data could not be saved.
+	at io.luna.game.persistence.SqlGameSerializer.savePlayer(SqlGameSerializer.java:59) ~[main/:?]
+	at io.luna.game.LogoutService.lambda$startWorker$0(LogoutService.java:159) ~[main/:?]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[?:?]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[?:?]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.base/java.lang.Thread.run(Thread.java:1575) [?:?]
+Caused by: java.lang.IllegalStateException: java.sql.SQLSyntaxErrorException: Table 'luna_players.skills_data' doesn't exist
+	at io.luna.game.persistence.SqlGameSerializer.saveNewPlayer(SqlGameSerializer.java:160) ~[main/:?]
+	at io.luna.game.persistence.SqlGameSerializer.savePlayer(SqlGameSerializer.java:51) ~[main/:?]
+	... 6 more
+Caused by: java.sql.SQLSyntaxErrorException: Table 'luna_players.skills_data' doesn't exist
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:916) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1061) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1009) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeLargeUpdate(ClientPreparedStatement.java:1320) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdate(ClientPreparedStatement.java:994) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.executeUpdate(ProxyPreparedStatement.java:61) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.executeUpdate(HikariProxyPreparedStatement.java) ~[HikariCP-5.1.0.jar:?]
+	at io.luna.game.persistence.SqlGameSerializer.saveNewPlayer(SqlGameSerializer.java:142) ~[main/:?]
+	at io.luna.game.persistence.SqlGameSerializer.savePlayer(SqlGameSerializer.java:51) ~[main/:?]
+	... 6 more
+[31 Dec 2025 23:09:11] [io.luna.game.LogoutService] [LogoutServiceWorker]
+ERROR: Issue servicing nulled's logout request!
+java.lang.RuntimeException: nulled's data could not be saved.
+	at io.luna.game.persistence.SqlGameSerializer.savePlayer(SqlGameSerializer.java:59) ~[main/:?]
+	at io.luna.game.LogoutService.lambda$startWorker$0(LogoutService.java:159) ~[main/:?]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[?:?]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[?:?]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.base/java.lang.Thread.run(Thread.java:1575) [?:?]
+Caused by: java.lang.IllegalStateException: java.sql.SQLSyntaxErrorException: Table 'luna_players.skills_data' doesn't exist
+	at io.luna.game.persistence.SqlGameSerializer.saveNewPlayer(SqlGameSerializer.java:160) ~[main/:?]
+	at io.luna.game.persistence.SqlGameSerializer.savePlayer(SqlGameSerializer.java:51) ~[main/:?]
+	... 6 more
+Caused by: java.sql.SQLSyntaxErrorException: Table 'luna_players.skills_data' doesn't exist
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:916) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1061) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1009) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeLargeUpdate(ClientPreparedStatement.java:1320) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdate(ClientPreparedStatement.java:994) ~[mysql-connector-j-8.0.33.jar:8.0.33]
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.executeUpdate(ProxyPreparedStatement.java:61) ~[HikariCP-5.1.0.jar:?]
+	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.executeUpdate(HikariProxyPreparedStatement.java) ~[HikariCP-5.1.0.jar:?]
+	at io.luna.game.persistence.SqlGameSerializer.saveNewPlayer(SqlGameSerializer.java:142) ~[main/:?]
+	at io.luna.game.persistence.SqlGameSerializer.savePlayer(SqlGameSerializer.java:51) ~[main/:?]
+	... 6 more
+[31 Dec 2025 23:19:06] [io.luna.game.LogoutService] [LogoutServiceWorker]
+ERROR: Issue servicing nulled's logout request!
+java.lang.RuntimeException: nulled's data could not be saved.
+	at io.luna.game.persistence.SqlGameSerializer.savePlayer(SqlGameSerializer.java:59) ~[main/:?]
+	at io.luna.game.LogoutService.lambda$startWorker$0(LogoutService.java:159) ~[main/:?]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[?:?]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[?:?]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.base/java.lang.Thread.run(Thread.java:1575) [?:?]
+Caused by: java.lang.IllegalStateException: com.google.gson.JsonIOException: Failed making field 'java.time.Instant#seconds' accessible; either change its visibility or write a custom TypeAdapter for its declaring type
+	at io.luna.game.persistence.SqlGameSerializer.saveNewPlayer(SqlGameSerializer.java:160) ~[main/:?]
+	at io.luna.game.persistence.SqlGameSerializer.savePlayer(SqlGameSerializer.java:51) ~[main/:?]
+	... 6 more
+Caused by: com.google.gson.JsonIOException: Failed making field 'java.time.Instant#seconds' accessible; either change its visibility or write a custom TypeAdapter for its declaring type
+	at com.google.gson.internal.reflect.ReflectionHelper.makeAccessible(ReflectionHelper.java:23) ~[gson-2.9.1.jar:?]
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.getBoundFields(ReflectiveTypeAdapterFactory.java:203) ~[gson-2.9.1.jar:?]
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.create(ReflectiveTypeAdapterFactory.java:112) ~[gson-2.9.1.jar:?]
+	at com.google.gson.Gson.getAdapter(Gson.java:531) ~[gson-2.9.1.jar:?]
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.createBoundField(ReflectiveTypeAdapterFactory.java:137) ~[gson-2.9.1.jar:?]
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.getBoundFields(ReflectiveTypeAdapterFactory.java:211) ~[gson-2.9.1.jar:?]
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.create(ReflectiveTypeAdapterFactory.java:112) ~[gson-2.9.1.jar:?]
+	at com.google.gson.Gson.getAdapter(Gson.java:531) ~[gson-2.9.1.jar:?]
+	at com.google.gson.Gson.toJson(Gson.java:778) ~[gson-2.9.1.jar:?]
+	at com.google.gson.Gson.toJson(Gson.java:756) ~[gson-2.9.1.jar:?]
+	at com.google.gson.Gson.toJson(Gson.java:711) ~[gson-2.9.1.jar:?]
+	at com.google.gson.Gson.toJson(Gson.java:691) ~[gson-2.9.1.jar:?]
+	at io.luna.game.persistence.SqlGameSerializer.saveNewPlayer(SqlGameSerializer.java:149) ~[main/:?]
+	at io.luna.game.persistence.SqlGameSerializer.savePlayer(SqlGameSerializer.java:51) ~[main/:?]
+	... 6 more
+Caused by: java.lang.reflect.InaccessibleObjectException: Unable to make field private final long java.time.Instant.seconds accessible: module java.base does not "opens java.time" to unnamed module @294425a7
+	at java.base/java.lang.reflect.AccessibleObject.throwInaccessibleObjectException(AccessibleObject.java:388) ~[?:?]
+	at java.base/java.lang.reflect.AccessibleObject.checkCanSetAccessible(AccessibleObject.java:364) ~[?:?]
+	at java.base/java.lang.reflect.AccessibleObject.checkCanSetAccessible(AccessibleObject.java:312) ~[?:?]
+	at java.base/java.lang.reflect.Field.checkCanSetAccessible(Field.java:183) ~[?:?]
+	at java.base/java.lang.reflect.Field.setAccessible(Field.java:177) ~[?:?]
+	at com.google.gson.internal.reflect.ReflectionHelper.makeAccessible(ReflectionHelper.java:20) ~[gson-2.9.1.jar:?]
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.getBoundFields(ReflectiveTypeAdapterFactory.java:203) ~[gson-2.9.1.jar:?]
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.create(ReflectiveTypeAdapterFactory.java:112) ~[gson-2.9.1.jar:?]
+	at com.google.gson.Gson.getAdapter(Gson.java:531) ~[gson-2.9.1.jar:?]
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.createBoundField(ReflectiveTypeAdapterFactory.java:137) ~[gson-2.9.1.jar:?]
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.getBoundFields(ReflectiveTypeAdapterFactory.java:211) ~[gson-2.9.1.jar:?]
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.create(ReflectiveTypeAdapterFactory.java:112) ~[gson-2.9.1.jar:?]
+	at com.google.gson.Gson.getAdapter(Gson.java:531) ~[gson-2.9.1.jar:?]
+	at com.google.gson.Gson.toJson(Gson.java:778) ~[gson-2.9.1.jar:?]
+	at com.google.gson.Gson.toJson(Gson.java:756) ~[gson-2.9.1.jar:?]
+	at com.google.gson.Gson.toJson(Gson.java:711) ~[gson-2.9.1.jar:?]
+	at com.google.gson.Gson.toJson(Gson.java:691) ~[gson-2.9.1.jar:?]
+	at io.luna.game.persistence.SqlGameSerializer.saveNewPlayer(SqlGameSerializer.java:149) ~[main/:?]
+	at io.luna.game.persistence.SqlGameSerializer.savePlayer(SqlGameSerializer.java:51) ~[main/:?]
+	... 6 more
+[31 Dec 2025 23:25:21] [io.luna.game.LogoutService] [LogoutServiceWorker]
+ERROR: Issue servicing nulled's logout request!
+java.lang.RuntimeException: nulled's data could not be saved.
+	at io.luna.game.persistence.SqlGameSerializer.savePlayer(SqlGameSerializer.java:59) ~[main/:?]
+	at io.luna.game.LogoutService.lambda$startWorker$0(LogoutService.java:159) ~[main/:?]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[?:?]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[?:?]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.base/java.lang.Thread.run(Thread.java:1575) [?:?]
+Caused by: java.lang.IllegalStateException: com.google.gson.JsonIOException: Failed making field 'java.time.Instant#seconds' accessible; either change its visibility or write a custom TypeAdapter for its declaring type
+	at io.luna.game.persistence.SqlGameSerializer.saveNewPlayer(SqlGameSerializer.java:160) ~[main/:?]
+	at io.luna.game.persistence.SqlGameSerializer.savePlayer(SqlGameSerializer.java:51) ~[main/:?]
+	... 6 more
+Caused by: com.google.gson.JsonIOException: Failed making field 'java.time.Instant#seconds' accessible; either change its visibility or write a custom TypeAdapter for its declaring type
+	at com.google.gson.internal.reflect.ReflectionHelper.makeAccessible(ReflectionHelper.java:23) ~[gson-2.9.1.jar:?]
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.getBoundFields(ReflectiveTypeAdapterFactory.java:203) ~[gson-2.9.1.jar:?]
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.create(ReflectiveTypeAdapterFactory.java:112) ~[gson-2.9.1.jar:?]
+	at com.google.gson.Gson.getAdapter(Gson.java:531) ~[gson-2.9.1.jar:?]
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.createBoundField(ReflectiveTypeAdapterFactory.java:137) ~[gson-2.9.1.jar:?]
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.getBoundFields(ReflectiveTypeAdapterFactory.java:211) ~[gson-2.9.1.jar:?]
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.create(ReflectiveTypeAdapterFactory.java:112) ~[gson-2.9.1.jar:?]
+	at com.google.gson.Gson.getAdapter(Gson.java:531) ~[gson-2.9.1.jar:?]
+	at com.google.gson.Gson.toJson(Gson.java:778) ~[gson-2.9.1.jar:?]
+	at com.google.gson.Gson.toJson(Gson.java:756) ~[gson-2.9.1.jar:?]
+	at com.google.gson.Gson.toJson(Gson.java:711) ~[gson-2.9.1.jar:?]
+	at com.google.gson.Gson.toJson(Gson.java:691) ~[gson-2.9.1.jar:?]
+	at io.luna.game.persistence.SqlGameSerializer.saveNewPlayer(SqlGameSerializer.java:149) ~[main/:?]
+	at io.luna.game.persistence.SqlGameSerializer.savePlayer(SqlGameSerializer.java:51) ~[main/:?]
+	... 6 more
+Caused by: java.lang.reflect.InaccessibleObjectException: Unable to make field private final long java.time.Instant.seconds accessible: module java.base does not "opens java.time" to unnamed module @294425a7
+	at java.base/java.lang.reflect.AccessibleObject.throwInaccessibleObjectException(AccessibleObject.java:388) ~[?:?]
+	at java.base/java.lang.reflect.AccessibleObject.checkCanSetAccessible(AccessibleObject.java:364) ~[?:?]
+	at java.base/java.lang.reflect.AccessibleObject.checkCanSetAccessible(AccessibleObject.java:312) ~[?:?]
+	at java.base/java.lang.reflect.Field.checkCanSetAccessible(Field.java:183) ~[?:?]
+	at java.base/java.lang.reflect.Field.setAccessible(Field.java:177) ~[?:?]
+	at com.google.gson.internal.reflect.ReflectionHelper.makeAccessible(ReflectionHelper.java:20) ~[gson-2.9.1.jar:?]
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.getBoundFields(ReflectiveTypeAdapterFactory.java:203) ~[gson-2.9.1.jar:?]
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.create(ReflectiveTypeAdapterFactory.java:112) ~[gson-2.9.1.jar:?]
+	at com.google.gson.Gson.getAdapter(Gson.java:531) ~[gson-2.9.1.jar:?]
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.createBoundField(ReflectiveTypeAdapterFactory.java:137) ~[gson-2.9.1.jar:?]
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.getBoundFields(ReflectiveTypeAdapterFactory.java:211) ~[gson-2.9.1.jar:?]
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.create(ReflectiveTypeAdapterFactory.java:112) ~[gson-2.9.1.jar:?]
+	at com.google.gson.Gson.getAdapter(Gson.java:531) ~[gson-2.9.1.jar:?]
+	at com.google.gson.Gson.toJson(Gson.java:778) ~[gson-2.9.1.jar:?]
+	at com.google.gson.Gson.toJson(Gson.java:756) ~[gson-2.9.1.jar:?]
+	at com.google.gson.Gson.toJson(Gson.java:711) ~[gson-2.9.1.jar:?]
+	at com.google.gson.Gson.toJson(Gson.java:691) ~[gson-2.9.1.jar:?]
+	at io.luna.game.persistence.SqlGameSerializer.saveNewPlayer(SqlGameSerializer.java:149) ~[main/:?]
+	at io.luna.game.persistence.SqlGameSerializer.savePlayer(SqlGameSerializer.java:51) ~[main/:?]
+	... 6 more
+[31 Dec 2025 23:29:44] [io.luna.game.LogoutService] [LogoutServiceWorker]
+ERROR: Issue servicing nulled's logout request!
+java.lang.RuntimeException: nulled's data could not be saved.
+	at io.luna.game.persistence.SqlGameSerializer.savePlayer(SqlGameSerializer.java:59) ~[main/:?]
+	at io.luna.game.LogoutService.lambda$startWorker$0(LogoutService.java:159) ~[main/:?]
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[?:?]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317) ~[?:?]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.base/java.lang.Thread.run(Thread.java:1575) [?:?]
+Caused by: java.lang.IllegalStateException: com.google.gson.JsonIOException: Failed making field 'java.time.Instant#seconds' accessible; either change its visibility or write a custom TypeAdapter for its declaring type
+	at io.luna.game.persistence.SqlGameSerializer.saveNewPlayer(SqlGameSerializer.java:160) ~[main/:?]
+	at io.luna.game.persistence.SqlGameSerializer.savePlayer(SqlGameSerializer.java:51) ~[main/:?]
+	... 6 more
+Caused by: com.google.gson.JsonIOException: Failed making field 'java.time.Instant#seconds' accessible; either change its visibility or write a custom TypeAdapter for its declaring type
+	at com.google.gson.internal.reflect.ReflectionHelper.makeAccessible(ReflectionHelper.java:23) ~[gson-2.9.1.jar:?]
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.getBoundFields(ReflectiveTypeAdapterFactory.java:203) ~[gson-2.9.1.jar:?]
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.create(ReflectiveTypeAdapterFactory.java:112) ~[gson-2.9.1.jar:?]
+	at com.google.gson.Gson.getAdapter(Gson.java:531) ~[gson-2.9.1.jar:?]
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.createBoundField(ReflectiveTypeAdapterFactory.java:137) ~[gson-2.9.1.jar:?]
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.getBoundFields(ReflectiveTypeAdapterFactory.java:211) ~[gson-2.9.1.jar:?]
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.create(ReflectiveTypeAdapterFactory.java:112) ~[gson-2.9.1.jar:?]
+	at com.google.gson.Gson.getAdapter(Gson.java:531) ~[gson-2.9.1.jar:?]
+	at com.google.gson.Gson.toJson(Gson.java:778) ~[gson-2.9.1.jar:?]
+	at com.google.gson.Gson.toJson(Gson.java:756) ~[gson-2.9.1.jar:?]
+	at com.google.gson.Gson.toJson(Gson.java:711) ~[gson-2.9.1.jar:?]
+	at com.google.gson.Gson.toJson(Gson.java:691) ~[gson-2.9.1.jar:?]
+	at io.luna.game.persistence.SqlGameSerializer.saveNewPlayer(SqlGameSerializer.java:149) ~[main/:?]
+	at io.luna.game.persistence.SqlGameSerializer.savePlayer(SqlGameSerializer.java:51) ~[main/:?]
+	... 6 more
+Caused by: java.lang.reflect.InaccessibleObjectException: Unable to make field private final long java.time.Instant.seconds accessible: module java.base does not "opens java.time" to unnamed module @294425a7
+	at java.base/java.lang.reflect.AccessibleObject.throwInaccessibleObjectException(AccessibleObject.java:388) ~[?:?]
+	at java.base/java.lang.reflect.AccessibleObject.checkCanSetAccessible(AccessibleObject.java:364) ~[?:?]
+	at java.base/java.lang.reflect.AccessibleObject.checkCanSetAccessible(AccessibleObject.java:312) ~[?:?]
+	at java.base/java.lang.reflect.Field.checkCanSetAccessible(Field.java:183) ~[?:?]
+	at java.base/java.lang.reflect.Field.setAccessible(Field.java:177) ~[?:?]
+	at com.google.gson.internal.reflect.ReflectionHelper.makeAccessible(ReflectionHelper.java:20) ~[gson-2.9.1.jar:?]
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.getBoundFields(ReflectiveTypeAdapterFactory.java:203) ~[gson-2.9.1.jar:?]
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.create(ReflectiveTypeAdapterFactory.java:112) ~[gson-2.9.1.jar:?]
+	at com.google.gson.Gson.getAdapter(Gson.java:531) ~[gson-2.9.1.jar:?]
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.createBoundField(ReflectiveTypeAdapterFactory.java:137) ~[gson-2.9.1.jar:?]
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.getBoundFields(ReflectiveTypeAdapterFactory.java:211) ~[gson-2.9.1.jar:?]
+	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory.create(ReflectiveTypeAdapterFactory.java:112) ~[gson-2.9.1.jar:?]
+	at com.google.gson.Gson.getAdapter(Gson.java:531) ~[gson-2.9.1.jar:?]
+	at com.google.gson.Gson.toJson(Gson.java:778) ~[gson-2.9.1.jar:?]
+	at com.google.gson.Gson.toJson(Gson.java:756) ~[gson-2.9.1.jar:?]
+	at com.google.gson.Gson.toJson(Gson.java:711) ~[gson-2.9.1.jar:?]
+	at com.google.gson.Gson.toJson(Gson.java:691) ~[gson-2.9.1.jar:?]
+	at io.luna.game.persistence.SqlGameSerializer.saveNewPlayer(SqlGameSerializer.java:149) ~[main/:?]
+	at io.luna.game.persistence.SqlGameSerializer.savePlayer(SqlGameSerializer.java:51) ~[main/:?]
+	... 6 more
+[01 Jan 2026 01:24:30] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ClassCastException: class io.netty.channel.nio.NioIoHandler$4 cannot be cast to class io.netty.channel.MultiThreadIoEventLoopGroup (io.netty.channel.nio.NioIoHandler$4 and io.netty.channel.MultiThreadIoEventLoopGroup are in unnamed module of loader 'app')
+	at io.luna.LunaServer.initNetwork(LunaServer.java:135)
+	at io.luna.LunaServer.init(LunaServer.java:104)
+	at io.luna.Luna.main(Luna.java:62)
+[01 Jan 2026 03:23:51] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.IllegalArgumentException: Invalid RuneScript Compiler version or corrupt script bundle
+	at runescript.RuneScriptParser.read(JagFileScriptReader.kt:32)
+	at io.luna.LunaServer.init(LunaServer.java:98)
+	at io.luna.Luna.main(Luna.java:62)
+[01 Jan 2026 03:25:04] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.IllegalArgumentException: Invalid RuneScript Compiler version or corrupt script bundle
+	at runescript.RuneScriptParser.read(JagFileScriptReader.kt:32)
+	at io.luna.LunaServer.init(LunaServer.java:98)
+	at io.luna.Luna.main(Luna.java:62)
+[01 Jan 2026 03:26:27] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.IllegalStateException: Unexpected EOF for id 3115
+	at runescript.RuneScriptParser.read(JagFileScriptReader.kt:46)
+	at io.luna.LunaServer.init(LunaServer.java:98)
+	at io.luna.Luna.main(Luna.java:62)
+[01 Jan 2026 03:27:03] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.IllegalStateException: Unexpected EOF for id 3115
+	at runescript.RuneScriptParser.read(JagFileScriptReader.kt:46)
+	at io.luna.LunaServer.init(LunaServer.java:98)
+	at io.luna.Luna.main(Luna.java:62)
+[01 Jan 2026 03:28:46] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.IllegalStateException: Unexpected EOF for id 3115
+	at runescript.RuneScriptParser.read(JagFileScriptReader.kt:46)
+	at io.luna.LunaServer.init(LunaServer.java:98)
+	at io.luna.Luna.main(Luna.java:62)
+[01 Jan 2026 03:29:03] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.IllegalStateException: Unexpected EOF for id 3115
+	at runescript.RuneScriptParser.read(JagFileScriptReader.kt:46)
+	at io.luna.LunaServer.init(LunaServer.java:98)
+	at io.luna.Luna.main(Luna.java:62)
+[01 Jan 2026 03:29:40] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.IllegalStateException: Unexpected EOF for id 3115
+	at runescript.RuneScriptParser.read(JagFileScriptReader.kt:47)
+	at io.luna.LunaServer.init(LunaServer.java:98)
+	at io.luna.Luna.main(Luna.java:62)
+[01 Jan 2026 03:45:39] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.net.BindException: Address already in use: bind
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:565)
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.netBind(ServerSocketChannelImpl.java:344)
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:301)
+	at io.netty.channel.socket.nio.NioServerSocketChannel.doBind(NioServerSocketChannel.java:148)
+	at io.netty.channel.AbstractChannel$AbstractUnsafe.bind(AbstractChannel.java:434)
+	at io.netty.channel.DefaultChannelPipeline$HeadContext.bind(DefaultChannelPipeline.java:1353)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeBind(AbstractChannelHandlerContext.java:492)
+	at io.netty.channel.AbstractChannelHandlerContext.bind(AbstractChannelHandlerContext.java:471)
+	at io.netty.channel.DefaultChannelPipeline.bind(DefaultChannelPipeline.java:994)
+	at io.netty.channel.Channel.bind(Channel.java:302)
+	at io.netty.bootstrap.AbstractBootstrap$2.run(AbstractBootstrap.java:380)
+	at io.netty.util.concurrent.AbstractEventExecutor.runTask(AbstractEventExecutor.java:148)
+	at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:141)
+	at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:535)
+	at io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:201)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1193)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+	Suppressed: java.util.concurrent.CompletionException: Rethrowing promise failure cause
+		at io.netty.util.concurrent.DefaultPromise.rethrowIfFailed(DefaultPromise.java:685)
+		at io.netty.util.concurrent.DefaultPromise.syncUninterruptibly(DefaultPromise.java:426)
+		at io.netty.channel.DefaultChannelPromise.syncUninterruptibly(DefaultChannelPromise.java:125)
+		at io.netty.channel.DefaultChannelPromise.syncUninterruptibly(DefaultChannelPromise.java:30)
+		at io.luna.LunaServer.initNetwork(LunaServer.java:144)
+		at io.luna.LunaServer.init(LunaServer.java:109)
+		at io.luna.Luna.main(Luna.java:62)
+[01 Jan 2026 03:46:17] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.net.BindException: Address already in use: bind
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:565)
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.netBind(ServerSocketChannelImpl.java:344)
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:301)
+	at io.netty.channel.socket.nio.NioServerSocketChannel.doBind(NioServerSocketChannel.java:148)
+	at io.netty.channel.AbstractChannel$AbstractUnsafe.bind(AbstractChannel.java:434)
+	at io.netty.channel.DefaultChannelPipeline$HeadContext.bind(DefaultChannelPipeline.java:1353)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeBind(AbstractChannelHandlerContext.java:492)
+	at io.netty.channel.AbstractChannelHandlerContext.bind(AbstractChannelHandlerContext.java:471)
+	at io.netty.channel.DefaultChannelPipeline.bind(DefaultChannelPipeline.java:994)
+	at io.netty.channel.Channel.bind(Channel.java:302)
+	at io.netty.bootstrap.AbstractBootstrap$2.run(AbstractBootstrap.java:380)
+	at io.netty.util.concurrent.AbstractEventExecutor.runTask(AbstractEventExecutor.java:148)
+	at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:141)
+	at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:535)
+	at io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:201)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1193)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+	Suppressed: java.util.concurrent.CompletionException: Rethrowing promise failure cause
+		at io.netty.util.concurrent.DefaultPromise.rethrowIfFailed(DefaultPromise.java:685)
+		at io.netty.util.concurrent.DefaultPromise.syncUninterruptibly(DefaultPromise.java:426)
+		at io.netty.channel.DefaultChannelPromise.syncUninterruptibly(DefaultChannelPromise.java:125)
+		at io.netty.channel.DefaultChannelPromise.syncUninterruptibly(DefaultChannelPromise.java:30)
+		at io.luna.LunaServer.initNetwork(LunaServer.java:144)
+		at io.luna.LunaServer.init(LunaServer.java:109)
+		at io.luna.Luna.main(Luna.java:62)
+[01 Jan 2026 03:46:56] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.net.BindException: Address already in use: bind
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:565)
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.netBind(ServerSocketChannelImpl.java:344)
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:301)
+	at io.netty.channel.socket.nio.NioServerSocketChannel.doBind(NioServerSocketChannel.java:148)
+	at io.netty.channel.AbstractChannel$AbstractUnsafe.bind(AbstractChannel.java:434)
+	at io.netty.channel.DefaultChannelPipeline$HeadContext.bind(DefaultChannelPipeline.java:1353)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeBind(AbstractChannelHandlerContext.java:492)
+	at io.netty.channel.AbstractChannelHandlerContext.bind(AbstractChannelHandlerContext.java:471)
+	at io.netty.channel.DefaultChannelPipeline.bind(DefaultChannelPipeline.java:994)
+	at io.netty.channel.Channel.bind(Channel.java:302)
+	at io.netty.bootstrap.AbstractBootstrap$2.run(AbstractBootstrap.java:380)
+	at io.netty.util.concurrent.AbstractEventExecutor.runTask(AbstractEventExecutor.java:148)
+	at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:141)
+	at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:535)
+	at io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:201)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1193)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+	Suppressed: java.util.concurrent.CompletionException: Rethrowing promise failure cause
+		at io.netty.util.concurrent.DefaultPromise.rethrowIfFailed(DefaultPromise.java:685)
+		at io.netty.util.concurrent.DefaultPromise.syncUninterruptibly(DefaultPromise.java:426)
+		at io.netty.channel.DefaultChannelPromise.syncUninterruptibly(DefaultChannelPromise.java:125)
+		at io.netty.channel.DefaultChannelPromise.syncUninterruptibly(DefaultChannelPromise.java:30)
+		at io.luna.LunaServer.initNetwork(LunaServer.java:144)
+		at io.luna.LunaServer.init(LunaServer.java:109)
+		at io.luna.Luna.main(Luna.java:62)
+[01 Jan 2026 06:27:03] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.IllegalStateException: Unable to find id for ServerScriptSymbol(trigger=PROC, name=initalltabs_a, parameters=me.filby.neptune.runescript.compiler.type.MetaType$Unit@1934339, returns=me.filby.neptune.runescript.compiler.type.MetaType$Unit@1934339)
+	at me.filby.neptune.serverscript.compiler.SymbolMapper.get(SymbolMapper.kt:60)
+	at me.filby.neptune.serverscript.compiler.writer.JagFileScriptWriter.outputScript(JagFileScriptWriter.kt:36)
+	at me.filby.neptune.serverscript.compiler.writer.BinaryScriptWriter.finishWrite(BinaryScriptWriter.kt:45)
+	at me.filby.neptune.serverscript.compiler.writer.BinaryScriptWriter.finishWrite(BinaryScriptWriter.kt:31)
+	at me.filby.neptune.runescript.compiler.writer.BaseScriptWriter.write(BaseScriptWriter.kt:38)
+	at me.filby.neptune.runescript.compiler.ScriptCompiler.write(ScriptCompiler.kt:352)
+	at me.filby.neptune.runescript.compiler.ScriptCompiler.compile(ScriptCompiler.kt:202)
+	at me.filby.neptune.runescript.compiler.ScriptCompiler.run(ScriptCompiler.kt:156)
+	at me.filby.neptune.serverscript.compiler.ServerScriptCompilerCLI.main(ServerScriptCompilerApplication.kt:50)
+	at runescript.RuneScriptManager.compile(RuneScriptManager.kt:19)
+	at io.luna.LunaServer.init(LunaServer.java:97)
+	at io.luna.Luna.main(Luna.java:62)
+[01 Jan 2026 10:57:38] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.IllegalStateException: Unable to find id for ServerScriptSymbol(trigger=PROC, name=initalltabs_a, parameters=me.filby.neptune.runescript.compiler.type.MetaType$Unit@1934339, returns=me.filby.neptune.runescript.compiler.type.MetaType$Unit@1934339)
+	at me.filby.neptune.serverscript.compiler.SymbolMapper.get(SymbolMapper.kt:60)
+	at me.filby.neptune.serverscript.compiler.writer.JagFileScriptWriter.outputScript(JagFileScriptWriter.kt:36)
+	at me.filby.neptune.serverscript.compiler.writer.BinaryScriptWriter.finishWrite(BinaryScriptWriter.kt:45)
+	at me.filby.neptune.serverscript.compiler.writer.BinaryScriptWriter.finishWrite(BinaryScriptWriter.kt:31)
+	at me.filby.neptune.runescript.compiler.writer.BaseScriptWriter.write(BaseScriptWriter.kt:38)
+	at me.filby.neptune.runescript.compiler.ScriptCompiler.write(ScriptCompiler.kt:352)
+	at me.filby.neptune.runescript.compiler.ScriptCompiler.compile(ScriptCompiler.kt:202)
+	at me.filby.neptune.runescript.compiler.ScriptCompiler.run(ScriptCompiler.kt:156)
+	at me.filby.neptune.serverscript.compiler.ServerScriptCompilerCLI.main(ServerScriptCompilerApplication.kt:50)
+	at runescript.RuneScriptManager.compile(RuneScriptManager.kt:19)
+	at io.luna.LunaServer.init(LunaServer.java:97)
+	at io.luna.Luna.main(Luna.java:62)
+[01 Jan 2026 11:18:43] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: Index 2 out of bounds for length 0
+	at runescript.DbTableType.decode(DbTableType.kt:64)
+	at runescript.ConfigType.decodeType(ConfigType.kt:17)
+	at runescript.DbTableType$Companion.parse(DbTableType.kt:26)
+	at runescript.DbTableType$Companion.load(DbTableType.kt:15)
+	at runescript.RuneScriptManager.compile(RuneScriptManager.kt:20)
+	at io.luna.LunaServer.init(LunaServer.java:97)
+	at io.luna.Luna.main(Luna.java:62)
+[01 Jan 2026 11:23:10] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.IllegalArgumentException: Unrecognized dbtable config code: 3
+	at runescript.DbTableType.decode(DbTableType.kt:91)
+	at runescript.ConfigType.decodeType(ConfigType.kt:17)
+	at runescript.DbTableType$Companion.parse(DbTableType.kt:26)
+	at runescript.DbTableType$Companion.load(DbTableType.kt:15)
+	at runescript.RuneScriptManager.compile(RuneScriptManager.kt:20)
+	at io.luna.LunaServer.init(LunaServer.java:97)
+	at io.luna.Luna.main(Luna.java:62)
+[01 Jan 2026 11:25:07] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.IllegalArgumentException: Unrecognized dbtable config code: 3
+	at runescript.DbTableType.decode(DbTableType.kt:92)
+	at runescript.ConfigType.decodeType(ConfigType.kt:17)
+	at runescript.DbTableType$Companion.parse(DbTableType.kt:26)
+	at runescript.DbTableType$Companion.load(DbTableType.kt:15)
+	at runescript.RuneScriptManager.compile(RuneScriptManager.kt:20)
+	at io.luna.LunaServer.init(LunaServer.java:97)
+	at io.luna.Luna.main(Luna.java:62)
+[01 Jan 2026 11:25:47] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.IllegalArgumentException: Unrecognized dbtable config code: 3
+	at runescript.DbTableType.decode(DbTableType.kt:93)
+	at runescript.ConfigType.decodeType(ConfigType.kt:17)
+	at runescript.DbTableType$Companion.parse(DbTableType.kt:26)
+	at runescript.DbTableType$Companion.load(DbTableType.kt:15)
+	at runescript.RuneScriptManager.compile(RuneScriptManager.kt:20)
+	at io.luna.LunaServer.init(LunaServer.java:97)
+	at io.luna.Luna.main(Luna.java:62)
+[01 Jan 2026 11:31:27] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.IllegalArgumentException: Unrecognized dbtable config code: 3
+	at runescript.DbTableType.decode(DbTableType.kt:90)
+	at runescript.ConfigType.decodeType(ConfigType.kt:17)
+	at runescript.DbTableType$Companion.parse(DbTableType.kt:24)
+	at runescript.DbTableType$Companion.load(DbTableType.kt:15)
+	at runescript.RuneScriptManager.compile(RuneScriptManager.kt:20)
+	at io.luna.LunaServer.init(LunaServer.java:97)
+	at io.luna.Luna.main(Luna.java:62)
+[01 Jan 2026 11:33:20] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.IllegalArgumentException: Unrecognized dbtable config code: 3
+	at runescript.DbTableType.decode(DbTableType.kt:90)
+	at runescript.ConfigType.decodeType(ConfigType.kt:17)
+	at runescript.DbTableType$Companion.parse(DbTableType.kt:24)
+	at runescript.DbTableType$Companion.load(DbTableType.kt:15)
+	at runescript.RuneScriptManager.compile(RuneScriptManager.kt:20)
+	at io.luna.LunaServer.init(LunaServer.java:97)
+	at io.luna.Luna.main(Luna.java:62)
+[01 Jan 2026 11:57:14] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.IndexOutOfBoundsException
+	at java.base/java.nio.Buffer$1.apply(Buffer.java:757)
+	at java.base/java.nio.Buffer$1.apply(Buffer.java:754)
+	at java.base/jdk.internal.util.Preconditions$4.apply(Preconditions.java:213)
+	at java.base/jdk.internal.util.Preconditions$4.apply(Preconditions.java:210)
+	at java.base/jdk.internal.util.Preconditions.outOfBounds(Preconditions.java:98)
+	at java.base/jdk.internal.util.Preconditions.outOfBoundsCheckIndex(Preconditions.java:106)
+	at java.base/jdk.internal.util.Preconditions.checkIndex(Preconditions.java:302)
+	at java.base/java.nio.Buffer.checkIndex(Buffer.java:768)
+	at java.base/java.nio.HeapByteBuffer.get(HeapByteBuffer.java:176)
+	at io.Packet.g1(Packet.kt:172)
+	at runescript.ConfigType.decodeType(ConfigType.kt:12)
+	at runescript.DbTableType$Companion.parse(DbTableType.kt:24)
+	at runescript.DbTableType$Companion.load(DbTableType.kt:15)
+	at runescript.RuneScriptManager.compile(RuneScriptManager.kt:20)
+	at io.luna.LunaServer.init(LunaServer.java:97)
+	at io.luna.Luna.main(Luna.java:62)
+[01 Jan 2026 11:59:01] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.IndexOutOfBoundsException
+	at java.base/java.nio.Buffer$1.apply(Buffer.java:757)
+	at java.base/java.nio.Buffer$1.apply(Buffer.java:754)
+	at java.base/jdk.internal.util.Preconditions$4.apply(Preconditions.java:213)
+	at java.base/jdk.internal.util.Preconditions$4.apply(Preconditions.java:210)
+	at java.base/jdk.internal.util.Preconditions.outOfBounds(Preconditions.java:98)
+	at java.base/jdk.internal.util.Preconditions.outOfBoundsCheckIndex(Preconditions.java:106)
+	at java.base/jdk.internal.util.Preconditions.checkIndex(Preconditions.java:302)
+	at java.base/java.nio.Buffer.checkIndex(Buffer.java:768)
+	at java.base/java.nio.HeapByteBuffer.get(HeapByteBuffer.java:176)
+	at io.Packet.g1(Packet.kt:172)
+	at runescript.ConfigType.decodeType(ConfigType.kt:12)
+	at runescript.DbTableType$Companion.parse(DbTableType.kt:24)
+	at runescript.DbTableType$Companion.load(DbTableType.kt:15)
+	at runescript.RuneScriptManager.compile(RuneScriptManager.kt:20)
+	at io.luna.LunaServer.init(LunaServer.java:97)
+	at io.luna.Luna.main(Luna.java:62)
+[01 Jan 2026 13:01:47] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: Index 0 out of bounds for length 0
+	at runescript.ScriptFile$Companion.decode(ScriptFile.kt:100)
+	at runescript.RuneScriptProvider.read(RuneScriptProvider.kt:57)
+	at io.luna.LunaServer.init(LunaServer.java:96)
+	at io.luna.Luna.main(Luna.java:62)
+[01 Jan 2026 13:07:28] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: Index 0 out of bounds for length 0
+	at runescript.ScriptFile$Companion.decode(ScriptFile.kt:101)
+	at runescript.RuneScriptProvider.read(RuneScriptProvider.kt:57)
+	at io.luna.LunaServer.init(LunaServer.java:96)
+	at io.luna.Luna.main(Luna.java:62)
+[01 Jan 2026 13:08:14] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+	at java.base/jdk.internal.util.Preconditions.outOfBounds(Preconditions.java:100)
+	at java.base/jdk.internal.util.Preconditions.outOfBoundsCheckIndex(Preconditions.java:106)
+	at java.base/jdk.internal.util.Preconditions.checkIndex(Preconditions.java:302)
+	at java.base/java.util.Objects.checkIndex(Objects.java:365)
+	at java.base/java.util.ArrayList.set(ArrayList.java:471)
+	at runescript.ScriptFile$Companion.decode(ScriptFile.kt:101)
+	at runescript.RuneScriptProvider.read(RuneScriptProvider.kt:57)
+	at io.luna.LunaServer.init(LunaServer.java:96)
+	at io.luna.Luna.main(Luna.java:62)
+[01 Jan 2026 13:10:54] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+	at java.base/jdk.internal.util.Preconditions.outOfBounds(Preconditions.java:100)
+	at java.base/jdk.internal.util.Preconditions.outOfBoundsCheckIndex(Preconditions.java:106)
+	at java.base/jdk.internal.util.Preconditions.checkIndex(Preconditions.java:302)
+	at java.base/java.util.Objects.checkIndex(Objects.java:365)
+	at java.base/java.util.ArrayList.set(ArrayList.java:471)
+	at runescript.RuneScriptProvider.read(RuneScriptProvider.kt:58)
+	at io.luna.LunaServer.init(LunaServer.java:96)
+	at io.luna.Luna.main(Luna.java:62)
+[01 Jan 2026 13:11:47] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: Index 100 out of bounds for length 100
+	at runescript.ScriptFile$Companion.decode(ScriptFile.kt:101)
+	at runescript.RuneScriptProvider.read(RuneScriptProvider.kt:57)
+	at io.luna.LunaServer.init(LunaServer.java:96)
+	at io.luna.Luna.main(Luna.java:62)
+[01 Jan 2026 13:12:11] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: Index 256 out of bounds for length 256
+	at runescript.ScriptFile$Companion.decode(ScriptFile.kt:101)
+	at runescript.RuneScriptProvider.read(RuneScriptProvider.kt:57)
+	at io.luna.LunaServer.init(LunaServer.java:96)
+	at io.luna.Luna.main(Luna.java:62)
+[01 Jan 2026 13:12:29] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: Index 512 out of bounds for length 512
+	at runescript.ScriptFile$Companion.decode(ScriptFile.kt:101)
+	at runescript.RuneScriptProvider.read(RuneScriptProvider.kt:57)
+	at io.luna.LunaServer.init(LunaServer.java:96)
+	at io.luna.Luna.main(Luna.java:62)
+[01 Jan 2026 13:12:46] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: Index 1024 out of bounds for length 1024
+	at runescript.ScriptFile$Companion.decode(ScriptFile.kt:101)
+	at runescript.RuneScriptProvider.read(RuneScriptProvider.kt:57)
+	at io.luna.LunaServer.init(LunaServer.java:96)
+	at io.luna.Luna.main(Luna.java:62)
+[01 Jan 2026 13:22:13] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.nio.BufferUnderflowException
+	at java.base/java.nio.Buffer.nextGetIndex(Buffer.java:721)
+	at java.base/java.nio.HeapByteBuffer.getInt(HeapByteBuffer.java:498)
+	at rs.io.Packet.g4s(Packet.kt:201)
+	at runescript.ScriptFile$Companion.decode(ScriptFile.kt:82)
+	at runescript.RuneScriptProvider.read(RuneScriptProvider.kt:57)
+	at io.luna.LunaServer.init(LunaServer.java:96)
+	at io.luna.Luna.main(Luna.java:62)
+[01 Jan 2026 13:27:50] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.IllegalArgumentException: Unrecognized dbtable config code: 99
+	at runescript.DbTableType.decode(DbTableType.kt:90)
+	at runescript.ConfigType.decodeType(ConfigType.kt:17)
+	at runescript.DbTableType$Companion.parse(DbTableType.kt:24)
+	at runescript.DbTableType$Companion.load(DbTableType.kt:15)
+	at runescript.RuneScriptManager.compile(RuneScriptManager.kt:20)
+	at io.luna.LunaServer.init(LunaServer.java:95)
+	at io.luna.Luna.main(Luna.java:62)
+[01 Jan 2026 13:28:34] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.IllegalArgumentException: Unrecognized dbtable config code: 99
+	at runescript.DbTableType.decode(DbTableType.kt:90)
+	at runescript.ConfigType.decodeType(ConfigType.kt:17)
+	at runescript.DbTableType$Companion.parse(DbTableType.kt:24)
+	at runescript.DbTableType$Companion.load(DbTableType.kt:15)
+	at runescript.RuneScriptManager.compile(RuneScriptManager.kt:20)
+	at io.luna.LunaServer.init(LunaServer.java:95)
+	at io.luna.Luna.main(Luna.java:62)
+[01 Jan 2026 13:44:27] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.IllegalArgumentException: Invalid RuneScript Compiler version or corrupt script bundle
+	at runescript.RuneScriptProvider.read(RuneScriptProvider.kt:45)
+	at io.luna.LunaServer.init(LunaServer.java:96)
+	at io.luna.Luna.main(Luna.java:62)
+[01 Jan 2026 13:46:25] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.IllegalArgumentException: Invalid RuneScript Compiler version or corrupt script bundle, version: 419430400
+	at runescript.RuneScriptProvider.parse(RuneScriptProvider.kt:43)
+	at io.luna.LunaServer.init(LunaServer.java:96)
+	at io.luna.Luna.main(Luna.java:62)
+[01 Jan 2026 13:47:07] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: Index 0 out of bounds for length 0
+	at runescript.ScriptFile$Companion.decode(ScriptFile.kt:74)
+	at runescript.RuneScriptProvider.parse(RuneScriptProvider.kt:56)
+	at io.luna.LunaServer.init(LunaServer.java:96)
+	at io.luna.Luna.main(Luna.java:62)
+[01 Jan 2026 14:27:24] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+	at java.base/jdk.internal.util.Preconditions.outOfBounds(Preconditions.java:100)
+	at java.base/jdk.internal.util.Preconditions.outOfBoundsCheckIndex(Preconditions.java:106)
+	at java.base/jdk.internal.util.Preconditions.checkIndex(Preconditions.java:302)
+	at java.base/java.util.Objects.checkIndex(Objects.java:365)
+	at java.base/java.util.ArrayList.set(ArrayList.java:471)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:66)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[02 Jan 2026 04:20:57] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.IllegalArgumentException: Both script.dat and script.idx must exist in .\data\scripts_bin
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:51)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 02:09:19] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: could not read cache
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:68)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 02:10:12] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: could not read cache
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:68)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 02:10:20] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: could not read cache
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:68)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 02:10:44] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: could not read cache
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:68)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 02:10:55] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: could not read cache
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:68)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 02:11:13] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: could not read cache
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:68)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 02:11:32] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: could not read cache
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:68)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 02:11:50] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: could not read cache
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:68)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 02:12:39] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: could not read cache
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:68)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 02:14:24] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: could not read cache
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:68)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 02:15:48] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: could not read cache
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:68)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 02:16:53] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: could not read cache
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:68)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 02:17:26] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: could not read cache
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:68)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 02:18:05] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: could not read cache
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:68)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 02:19:12] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: could not read cache
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:68)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 02:20:13] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: could not read cache
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:68)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 02:20:56] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: Index 2 out of bounds for length 0
+	at rs.io.FileStream.read(FileStream.kt:55)
+	at rs.io.FileStream.read$default(FileStream.kt:49)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:68)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 02:28:58] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: Index 2 out of bounds for length 0
+	at rs.io.FileStream.read(FileStream.kt:54)
+	at rs.io.FileStream.read$default(FileStream.kt:48)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:68)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 02:29:24] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: Index 2 out of bounds for length 0
+	at rs.io.FileStream.read(FileStream.kt:55)
+	at rs.io.FileStream.read$default(FileStream.kt:48)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:68)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 02:31:23] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: could not read cache
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:68)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 02:31:48] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: could not read cache
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:68)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 02:31:58] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: could not read cache
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:68)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 02:32:19] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: could not read cache
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:68)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 02:40:38] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: arraycopy: last source index 528 out of bounds for byte[520]
+	at java.base/java.lang.System.arraycopy(Native Method)
+	at rs.io.Packet.pdata(Packet.kt:240)
+	at rs.io.FileStream.read(FileStream.kt:89)
+	at rs.io.FileStream.read$default(FileStream.kt:48)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:68)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 02:41:33] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: arraycopy: last source index 528 out of bounds for byte[520]
+	at java.base/java.lang.System.arraycopy(Native Method)
+	at rs.io.Packet.pdata(Packet.kt:240)
+	at rs.io.FileStream.read(FileStream.kt:89)
+	at rs.io.FileStream.read$default(FileStream.kt:48)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:68)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 02:43:08] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: could not read cache
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:68)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 02:43:49] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: arraycopy: last source index 528 out of bounds for byte[520]
+	at java.base/java.lang.System.arraycopy(Native Method)
+	at rs.io.Packet.pdata(Packet.kt:240)
+	at rs.io.FileStream.read(FileStream.kt:89)
+	at rs.io.FileStream.read$default(FileStream.kt:48)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:68)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 02:44:19] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: could not read cache
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:68)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 02:44:30] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: arraycopy: last source index 528 out of bounds for byte[520]
+	at java.base/java.lang.System.arraycopy(Native Method)
+	at rs.io.Packet.pdata(Packet.kt:240)
+	at rs.io.FileStream.read(FileStream.kt:89)
+	at rs.io.FileStream.read$default(FileStream.kt:48)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:68)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 02:53:05] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: arraycopy: last source index 1040 out of bounds for byte[520]
+	at java.base/java.lang.System.arraycopy(Native Method)
+	at rs.io.Packet.pdata(Packet.kt:240)
+	at rs.io.FileStream.read(FileStream.kt:89)
+	at rs.io.FileStream.read$default(FileStream.kt:48)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:68)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 02:53:18] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: arraycopy: last source index 528 out of bounds for byte[520]
+	at java.base/java.lang.System.arraycopy(Native Method)
+	at rs.io.Packet.pdata(Packet.kt:240)
+	at rs.io.FileStream.read(FileStream.kt:89)
+	at rs.io.FileStream.read$default(FileStream.kt:48)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:68)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 02:53:35] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: arraycopy: last destination index 533724 out of bounds for byte[533716]
+	at java.base/java.lang.System.arraycopy(Native Method)
+	at rs.io.Packet.pdata(Packet.kt:240)
+	at rs.io.FileStream.read(FileStream.kt:89)
+	at rs.io.FileStream.read$default(FileStream.kt:48)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:68)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 03:09:14] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: arraycopy: last source index 528 out of bounds for byte[520]
+	at java.base/java.lang.System.arraycopy(Native Method)
+	at rs.io.Packet.pdata(Packet.kt:240)
+	at rs.io.FileStream.read(FileStream.kt:89)
+	at rs.io.FileStream.read$default(FileStream.kt:48)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:68)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 03:10:59] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: arraycopy: last source index 528 out of bounds for byte[520]
+	at java.base/java.lang.System.arraycopy(Native Method)
+	at rs.io.Packet.pdata(Packet.kt:240)
+	at rs.io.FileStream.read(FileStream.kt:89)
+	at rs.io.FileStream.read$default(FileStream.kt:48)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:68)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 03:20:10] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: could not read cache
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:70)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 03:20:34] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: could not read cache
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:71)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 03:20:46] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: Index 100 out of bounds for length 100
+	at rs.io.FileStream.read(FileStream.kt:54)
+	at rs.io.FileStream.read$default(FileStream.kt:48)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:71)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 03:20:58] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: Index 100 out of bounds for length 100
+	at rs.io.FileStream.read(FileStream.kt:54)
+	at rs.io.FileStream.read$default(FileStream.kt:48)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:71)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 03:21:26] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: Index 1000 out of bounds for length 1000
+	at rs.io.FileStream.read(FileStream.kt:54)
+	at rs.io.FileStream.read$default(FileStream.kt:48)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:71)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 03:21:38] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: could not read cache
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:71)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 03:23:55] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: could not read cache
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:71)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 03:26:46] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: could not read cache
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:72)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 03:27:32] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: could not read cache
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:72)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 03:27:48] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: could not read cache
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:72)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 03:28:05] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: could not read cache
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:72)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 03:28:29] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: could not read cache
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:72)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 03:29:07] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: could not read cache
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:72)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[03 Jan 2026 03:39:26] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: Index 1044 out of bounds for length 1044
+	at rs.io.FileStream.read(FileStream.kt:55)
+	at rs.io.FileStream.read$default(FileStream.kt:46)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:72)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[04 Jan 2026 16:43:43] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.NullPointerException
+	at rs.cache.config.FloType$Companion.parse(FloType.kt:23)
+	at rs.cache.config.FloType$Companion.load(FloType.kt:18)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:62)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[04 Jan 2026 16:46:00] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.NullPointerException
+	at rs.cache.config.FloType$Companion.parse(FloType.kt:23)
+	at rs.cache.config.FloType$Companion.load(FloType.kt:18)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:62)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[04 Jan 2026 16:49:23] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.NullPointerException
+	at rs.cache.config.FloType$Companion.parse(FloType.kt:23)
+	at rs.cache.config.FloType$Companion.load(FloType.kt:18)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:62)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[04 Jan 2026 16:51:28] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.NullPointerException
+	at rs.cache.config.FloType$Companion.parse(FloType.kt:23)
+	at rs.cache.config.FloType$Companion.load(FloType.kt:18)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:62)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[04 Jan 2026 17:03:01] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: Index 0 out of bounds for length 0
+	at rs.cache.config.FloType$Companion.parse(FloType.kt:31)
+	at rs.cache.config.FloType$Companion.load(FloType.kt:18)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:62)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[04 Jan 2026 17:04:14] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.net.BindException: Address already in use: bind
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:565)
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.netBind(ServerSocketChannelImpl.java:344)
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:301)
+	at io.netty.channel.socket.nio.NioServerSocketChannel.doBind(NioServerSocketChannel.java:148)
+	at io.netty.channel.AbstractChannel$AbstractUnsafe.bind(AbstractChannel.java:434)
+	at io.netty.channel.DefaultChannelPipeline$HeadContext.bind(DefaultChannelPipeline.java:1353)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeBind(AbstractChannelHandlerContext.java:492)
+	at io.netty.channel.AbstractChannelHandlerContext.bind(AbstractChannelHandlerContext.java:471)
+	at io.netty.channel.DefaultChannelPipeline.bind(DefaultChannelPipeline.java:994)
+	at io.netty.channel.Channel.bind(Channel.java:302)
+	at io.netty.bootstrap.AbstractBootstrap$2.run(AbstractBootstrap.java:380)
+	at io.netty.util.concurrent.AbstractEventExecutor.runTask(AbstractEventExecutor.java:148)
+	at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:141)
+	at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:535)
+	at io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:201)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1193)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+	Suppressed: java.util.concurrent.CompletionException: Rethrowing promise failure cause
+		at io.netty.util.concurrent.DefaultPromise.rethrowIfFailed(DefaultPromise.java:685)
+		at io.netty.util.concurrent.DefaultPromise.syncUninterruptibly(DefaultPromise.java:426)
+		at io.netty.channel.DefaultChannelPromise.syncUninterruptibly(DefaultChannelPromise.java:125)
+		at io.netty.channel.DefaultChannelPromise.syncUninterruptibly(DefaultChannelPromise.java:30)
+		at io.luna.LunaServer.initNetwork(LunaServer.java:136)
+		at io.luna.LunaServer.init(LunaServer.java:101)
+		at io.luna.Luna.main(Luna.java:62)
+[04 Jan 2026 17:05:13] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.net.BindException: Address already in use: bind
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:565)
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.netBind(ServerSocketChannelImpl.java:344)
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:301)
+	at io.netty.channel.socket.nio.NioServerSocketChannel.doBind(NioServerSocketChannel.java:148)
+	at io.netty.channel.AbstractChannel$AbstractUnsafe.bind(AbstractChannel.java:434)
+	at io.netty.channel.DefaultChannelPipeline$HeadContext.bind(DefaultChannelPipeline.java:1353)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeBind(AbstractChannelHandlerContext.java:492)
+	at io.netty.channel.AbstractChannelHandlerContext.bind(AbstractChannelHandlerContext.java:471)
+	at io.netty.channel.DefaultChannelPipeline.bind(DefaultChannelPipeline.java:994)
+	at io.netty.channel.Channel.bind(Channel.java:302)
+	at io.netty.bootstrap.AbstractBootstrap$2.run(AbstractBootstrap.java:380)
+	at io.netty.util.concurrent.AbstractEventExecutor.runTask(AbstractEventExecutor.java:148)
+	at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:141)
+	at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:535)
+	at io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:201)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1193)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+	Suppressed: java.util.concurrent.CompletionException: Rethrowing promise failure cause
+		at io.netty.util.concurrent.DefaultPromise.rethrowIfFailed(DefaultPromise.java:685)
+		at io.netty.util.concurrent.DefaultPromise.syncUninterruptibly(DefaultPromise.java:426)
+		at io.netty.channel.DefaultChannelPromise.syncUninterruptibly(DefaultChannelPromise.java:125)
+		at io.netty.channel.DefaultChannelPromise.syncUninterruptibly(DefaultChannelPromise.java:30)
+		at io.luna.LunaServer.initNetwork(LunaServer.java:136)
+		at io.luna.LunaServer.init(LunaServer.java:101)
+		at io.luna.Luna.main(Luna.java:62)
+[04 Jan 2026 17:10:22] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.net.BindException: Address already in use: bind
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:565)
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.netBind(ServerSocketChannelImpl.java:344)
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:301)
+	at io.netty.channel.socket.nio.NioServerSocketChannel.doBind(NioServerSocketChannel.java:148)
+	at io.netty.channel.AbstractChannel$AbstractUnsafe.bind(AbstractChannel.java:434)
+	at io.netty.channel.DefaultChannelPipeline$HeadContext.bind(DefaultChannelPipeline.java:1353)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeBind(AbstractChannelHandlerContext.java:492)
+	at io.netty.channel.AbstractChannelHandlerContext.bind(AbstractChannelHandlerContext.java:471)
+	at io.netty.channel.DefaultChannelPipeline.bind(DefaultChannelPipeline.java:994)
+	at io.netty.channel.Channel.bind(Channel.java:302)
+	at io.netty.bootstrap.AbstractBootstrap$2.run(AbstractBootstrap.java:380)
+	at io.netty.util.concurrent.AbstractEventExecutor.runTask(AbstractEventExecutor.java:148)
+	at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:141)
+	at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:535)
+	at io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:201)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1193)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+	Suppressed: java.util.concurrent.CompletionException: Rethrowing promise failure cause
+		at io.netty.util.concurrent.DefaultPromise.rethrowIfFailed(DefaultPromise.java:685)
+		at io.netty.util.concurrent.DefaultPromise.syncUninterruptibly(DefaultPromise.java:426)
+		at io.netty.channel.DefaultChannelPromise.syncUninterruptibly(DefaultChannelPromise.java:125)
+		at io.netty.channel.DefaultChannelPromise.syncUninterruptibly(DefaultChannelPromise.java:30)
+		at io.luna.LunaServer.initNetwork(LunaServer.java:136)
+		at io.luna.LunaServer.init(LunaServer.java:101)
+		at io.luna.Luna.main(Luna.java:62)
+[04 Jan 2026 17:12:40] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.net.BindException: Address already in use: bind
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:565)
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.netBind(ServerSocketChannelImpl.java:344)
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:301)
+	at io.netty.channel.socket.nio.NioServerSocketChannel.doBind(NioServerSocketChannel.java:148)
+	at io.netty.channel.AbstractChannel$AbstractUnsafe.bind(AbstractChannel.java:434)
+	at io.netty.channel.DefaultChannelPipeline$HeadContext.bind(DefaultChannelPipeline.java:1353)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeBind(AbstractChannelHandlerContext.java:492)
+	at io.netty.channel.AbstractChannelHandlerContext.bind(AbstractChannelHandlerContext.java:471)
+	at io.netty.channel.DefaultChannelPipeline.bind(DefaultChannelPipeline.java:994)
+	at io.netty.channel.Channel.bind(Channel.java:302)
+	at io.netty.bootstrap.AbstractBootstrap$2.run(AbstractBootstrap.java:380)
+	at io.netty.util.concurrent.AbstractEventExecutor.runTask(AbstractEventExecutor.java:148)
+	at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:141)
+	at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:535)
+	at io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:201)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1193)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+	Suppressed: java.util.concurrent.CompletionException: Rethrowing promise failure cause
+		at io.netty.util.concurrent.DefaultPromise.rethrowIfFailed(DefaultPromise.java:685)
+		at io.netty.util.concurrent.DefaultPromise.syncUninterruptibly(DefaultPromise.java:426)
+		at io.netty.channel.DefaultChannelPromise.syncUninterruptibly(DefaultChannelPromise.java:125)
+		at io.netty.channel.DefaultChannelPromise.syncUninterruptibly(DefaultChannelPromise.java:30)
+		at io.luna.LunaServer.initNetwork(LunaServer.java:136)
+		at io.luna.LunaServer.init(LunaServer.java:101)
+		at io.luna.Luna.main(Luna.java:62)
+[04 Jan 2026 17:14:49] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.net.BindException: Address already in use: bind
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:565)
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.netBind(ServerSocketChannelImpl.java:344)
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:301)
+	at io.netty.channel.socket.nio.NioServerSocketChannel.doBind(NioServerSocketChannel.java:148)
+	at io.netty.channel.AbstractChannel$AbstractUnsafe.bind(AbstractChannel.java:434)
+	at io.netty.channel.DefaultChannelPipeline$HeadContext.bind(DefaultChannelPipeline.java:1353)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeBind(AbstractChannelHandlerContext.java:492)
+	at io.netty.channel.AbstractChannelHandlerContext.bind(AbstractChannelHandlerContext.java:471)
+	at io.netty.channel.DefaultChannelPipeline.bind(DefaultChannelPipeline.java:994)
+	at io.netty.channel.Channel.bind(Channel.java:302)
+	at io.netty.bootstrap.AbstractBootstrap$2.run(AbstractBootstrap.java:380)
+	at io.netty.util.concurrent.AbstractEventExecutor.runTask(AbstractEventExecutor.java:148)
+	at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:141)
+	at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:535)
+	at io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:201)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1193)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+	Suppressed: java.util.concurrent.CompletionException: Rethrowing promise failure cause
+		at io.netty.util.concurrent.DefaultPromise.rethrowIfFailed(DefaultPromise.java:685)
+		at io.netty.util.concurrent.DefaultPromise.syncUninterruptibly(DefaultPromise.java:426)
+		at io.netty.channel.DefaultChannelPromise.syncUninterruptibly(DefaultChannelPromise.java:125)
+		at io.netty.channel.DefaultChannelPromise.syncUninterruptibly(DefaultChannelPromise.java:30)
+		at io.luna.LunaServer.initNetwork(LunaServer.java:136)
+		at io.luna.LunaServer.init(LunaServer.java:101)
+		at io.luna.Luna.main(Luna.java:62)
+[04 Jan 2026 17:15:13] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.io.IOException: Unexpected end of stream
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.bsR(BZip2CompressorInputStream.java:141)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.bsGetBit(BZip2CompressorInputStream.java:120)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.recvDecodingTables(BZip2CompressorInputStream.java:778)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.getAndMoveToFrontDecode(BZip2CompressorInputStream.java:348)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.initBlock(BZip2CompressorInputStream.java:597)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.<init>(BZip2CompressorInputStream.java:274)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.<init>(BZip2CompressorInputStream.java:258)
+	at luna.util.Compression.decompressBZip2Sync(Compression.kt:67)
+	at luna.util.Compression.decompressBZip2Sync$default(Compression.kt:11)
+	at rs.io.JagFile.get(JagFile.kt:89)
+	at rs.io.JagFile.read(JagFile.kt:81)
+	at rs.cache.config.FloType$Companion.parse(FloType.kt:23)
+	at rs.cache.config.FloType$Companion.load(FloType.kt:18)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:62)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[04 Jan 2026 17:16:52] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.io.IOException: Unexpected end of stream
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.bsR(BZip2CompressorInputStream.java:141)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.bsGetBit(BZip2CompressorInputStream.java:120)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.recvDecodingTables(BZip2CompressorInputStream.java:778)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.getAndMoveToFrontDecode(BZip2CompressorInputStream.java:348)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.initBlock(BZip2CompressorInputStream.java:597)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.<init>(BZip2CompressorInputStream.java:274)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.<init>(BZip2CompressorInputStream.java:258)
+	at luna.util.Compression.decompressBZip2Sync(Compression.kt:60)
+	at luna.util.Compression.decompressBZip2Sync$default(Compression.kt:11)
+	at rs.io.JagFile.get(JagFile.kt:89)
+	at rs.io.JagFile.read(JagFile.kt:81)
+	at rs.cache.config.FloType$Companion.parse(FloType.kt:23)
+	at rs.cache.config.FloType$Companion.load(FloType.kt:18)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:62)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[04 Jan 2026 17:18:23] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.io.IOException: Stream is not in the BZip2 format
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.init(BZip2CompressorInputStream.java:530)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.<init>(BZip2CompressorInputStream.java:273)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.<init>(BZip2CompressorInputStream.java:258)
+	at luna.util.Compression.decompressBZip2(Compression.kt:14)
+	at luna.util.Compression.decompressBZip2$default(Compression.kt:12)
+	at rs.io.JagFile.get(JagFile.kt:89)
+	at rs.io.JagFile.read(JagFile.kt:81)
+	at rs.cache.config.FloType$Companion.parse(FloType.kt:23)
+	at rs.cache.config.FloType$Companion.load(FloType.kt:18)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:62)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[04 Jan 2026 17:19:44] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.io.IOException: Stream is not in the BZip2 format
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.init(BZip2CompressorInputStream.java:530)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.<init>(BZip2CompressorInputStream.java:273)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.<init>(BZip2CompressorInputStream.java:258)
+	at luna.util.Compression.decompressBZip2(Compression.kt:31)
+	at luna.util.Compression.decompressBZip2$default(Compression.kt:12)
+	at rs.io.JagFile.get(JagFile.kt:89)
+	at rs.io.JagFile.read(JagFile.kt:81)
+	at rs.cache.config.FloType$Companion.parse(FloType.kt:23)
+	at rs.cache.config.FloType$Companion.load(FloType.kt:18)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:62)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[04 Jan 2026 17:21:27] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.io.IOException: Unexpected end of stream
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.bsR(BZip2CompressorInputStream.java:141)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.bsGetBit(BZip2CompressorInputStream.java:120)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.recvDecodingTables(BZip2CompressorInputStream.java:778)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.getAndMoveToFrontDecode(BZip2CompressorInputStream.java:348)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.initBlock(BZip2CompressorInputStream.java:597)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.<init>(BZip2CompressorInputStream.java:274)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.<init>(BZip2CompressorInputStream.java:258)
+	at luna.util.Compression.decompressBZip2(Compression.kt:31)
+	at luna.util.Compression.decompressBZip2$default(Compression.kt:12)
+	at rs.io.JagFile.get(JagFile.kt:89)
+	at rs.io.JagFile.read(JagFile.kt:81)
+	at rs.cache.config.FloType$Companion.parse(FloType.kt:23)
+	at rs.cache.config.FloType$Companion.load(FloType.kt:18)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:62)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[04 Jan 2026 17:22:50] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.io.IOException: Unexpected end of stream
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.bsR(BZip2CompressorInputStream.java:141)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.bsGetBit(BZip2CompressorInputStream.java:120)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.recvDecodingTables(BZip2CompressorInputStream.java:778)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.getAndMoveToFrontDecode(BZip2CompressorInputStream.java:348)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.initBlock(BZip2CompressorInputStream.java:597)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.<init>(BZip2CompressorInputStream.java:274)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.<init>(BZip2CompressorInputStream.java:258)
+	at luna.util.Compression.decompressBZip2(Compression.kt:35)
+	at luna.util.Compression.decompressBZip2$default(Compression.kt:12)
+	at rs.io.JagFile.get(JagFile.kt:89)
+	at rs.io.JagFile.read(JagFile.kt:81)
+	at rs.cache.config.FloType$Companion.parse(FloType.kt:23)
+	at rs.cache.config.FloType$Companion.load(FloType.kt:18)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:62)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[04 Jan 2026 17:24:20] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.io.IOException: Unexpected end of stream
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.bsR(BZip2CompressorInputStream.java:141)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.bsGetBit(BZip2CompressorInputStream.java:120)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.recvDecodingTables(BZip2CompressorInputStream.java:778)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.getAndMoveToFrontDecode(BZip2CompressorInputStream.java:348)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.initBlock(BZip2CompressorInputStream.java:597)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.<init>(BZip2CompressorInputStream.java:274)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.<init>(BZip2CompressorInputStream.java:258)
+	at luna.util.Compression.decompressBZip2(Compression.kt:31)
+	at luna.util.Compression.decompressBZip2$default(Compression.kt:12)
+	at rs.io.JagFile.get(JagFile.kt:99)
+	at rs.io.JagFile.read(JagFile.kt:81)
+	at rs.cache.config.FloType$Companion.parse(FloType.kt:23)
+	at rs.cache.config.FloType$Companion.load(FloType.kt:18)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:62)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[04 Jan 2026 17:26:11] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.io.IOException: Unexpected end of stream
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.bsR(BZip2CompressorInputStream.java:141)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.bsGetBit(BZip2CompressorInputStream.java:120)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.recvDecodingTables(BZip2CompressorInputStream.java:778)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.getAndMoveToFrontDecode(BZip2CompressorInputStream.java:348)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.initBlock(BZip2CompressorInputStream.java:597)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.<init>(BZip2CompressorInputStream.java:274)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.<init>(BZip2CompressorInputStream.java:258)
+	at luna.util.Compression.decompressBZip2(Compression.kt:31)
+	at luna.util.Compression.decompressBZip2$default(Compression.kt:12)
+	at rs.io.JagFile.get(JagFile.kt:101)
+	at rs.io.JagFile.read(JagFile.kt:81)
+	at rs.cache.config.FloType$Companion.parse(FloType.kt:23)
+	at rs.cache.config.FloType$Companion.load(FloType.kt:18)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:62)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[04 Jan 2026 17:26:43] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.io.IOException: Unexpected end of stream
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.bsR(BZip2CompressorInputStream.java:141)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.bsGetBit(BZip2CompressorInputStream.java:120)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.recvDecodingTables(BZip2CompressorInputStream.java:778)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.getAndMoveToFrontDecode(BZip2CompressorInputStream.java:348)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.initBlock(BZip2CompressorInputStream.java:597)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.<init>(BZip2CompressorInputStream.java:274)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.<init>(BZip2CompressorInputStream.java:258)
+	at luna.util.Compression.decompressBZip2(Compression.kt:14)
+	at luna.util.Compression.decompressBZip2$default(Compression.kt:12)
+	at rs.io.JagFile.get(JagFile.kt:101)
+	at rs.io.JagFile.read(JagFile.kt:81)
+	at rs.cache.config.FloType$Companion.parse(FloType.kt:23)
+	at rs.cache.config.FloType$Companion.load(FloType.kt:18)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:62)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[04 Jan 2026 17:30:04] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.io.IOException: Unexpected end of stream
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.bsR(BZip2CompressorInputStream.java:141)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.bsGetBit(BZip2CompressorInputStream.java:120)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.recvDecodingTables(BZip2CompressorInputStream.java:778)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.getAndMoveToFrontDecode(BZip2CompressorInputStream.java:348)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.initBlock(BZip2CompressorInputStream.java:597)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.<init>(BZip2CompressorInputStream.java:274)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.<init>(BZip2CompressorInputStream.java:258)
+	at luna.util.Compression.decompressBZip2(Compression.kt:43)
+	at luna.util.Compression.decompressBZip2$default(Compression.kt:11)
+	at rs.io.JagFile.get(JagFile.kt:89)
+	at rs.io.JagFile.read(JagFile.kt:81)
+	at rs.cache.config.FloType$Companion.parse(FloType.kt:23)
+	at rs.cache.config.FloType$Companion.load(FloType.kt:18)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:62)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[04 Jan 2026 17:31:34] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.io.IOException: Bad block header
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.initBlock(BZip2CompressorInputStream.java:584)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.<init>(BZip2CompressorInputStream.java:274)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.<init>(BZip2CompressorInputStream.java:258)
+	at luna.util.Compression.decompressBZip2(Compression.kt:43)
+	at luna.util.Compression.decompressBZip2$default(Compression.kt:11)
+	at rs.io.JagFile.get(JagFile.kt:89)
+	at rs.io.JagFile.read(JagFile.kt:81)
+	at rs.cache.config.FloType$Companion.parse(FloType.kt:23)
+	at rs.cache.config.FloType$Companion.load(FloType.kt:18)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:62)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[04 Jan 2026 17:33:30] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.io.IOException: Unexpected end of stream
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.bsR(BZip2CompressorInputStream.java:141)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.bsGetBit(BZip2CompressorInputStream.java:120)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.recvDecodingTables(BZip2CompressorInputStream.java:778)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.getAndMoveToFrontDecode(BZip2CompressorInputStream.java:348)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.initBlock(BZip2CompressorInputStream.java:597)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.<init>(BZip2CompressorInputStream.java:274)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.<init>(BZip2CompressorInputStream.java:258)
+	at luna.util.Compression.decompressBZip2(Compression.kt:43)
+	at luna.util.Compression.decompressBZip2$default(Compression.kt:11)
+	at rs.io.JagFile.get(JagFile.kt:89)
+	at rs.io.JagFile.read(JagFile.kt:81)
+	at rs.cache.config.FloType$Companion.parse(FloType.kt:23)
+	at rs.cache.config.FloType$Companion.load(FloType.kt:18)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:62)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[04 Jan 2026 17:35:48] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.io.IOException: Unexpected end of stream
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.bsR(BZip2CompressorInputStream.java:141)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.bsGetBit(BZip2CompressorInputStream.java:120)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.recvDecodingTables(BZip2CompressorInputStream.java:778)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.getAndMoveToFrontDecode(BZip2CompressorInputStream.java:348)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.initBlock(BZip2CompressorInputStream.java:597)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.<init>(BZip2CompressorInputStream.java:274)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.<init>(BZip2CompressorInputStream.java:258)
+	at luna.util.Compression.decompressBZip2(Compression.kt:43)
+	at luna.util.Compression.decompressBZip2$default(Compression.kt:11)
+	at rs.io.JagFile.get(JagFile.kt:89)
+	at rs.io.JagFile.read(JagFile.kt:81)
+	at rs.cache.config.FloType$Companion.parse(FloType.kt:23)
+	at rs.cache.config.FloType$Companion.load(FloType.kt:18)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:62)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[04 Jan 2026 17:36:05] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.io.IOException: Unexpected end of stream
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.bsR(BZip2CompressorInputStream.java:141)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.bsGetBit(BZip2CompressorInputStream.java:120)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.recvDecodingTables(BZip2CompressorInputStream.java:778)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.getAndMoveToFrontDecode(BZip2CompressorInputStream.java:348)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.initBlock(BZip2CompressorInputStream.java:597)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.<init>(BZip2CompressorInputStream.java:274)
+	at org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream.<init>(BZip2CompressorInputStream.java:258)
+	at luna.util.Compression.decompressBZip2(Compression.kt:43)
+	at luna.util.Compression.decompressBZip2$default(Compression.kt:11)
+	at rs.io.JagFile.get(JagFile.kt:89)
+	at rs.io.JagFile.read(JagFile.kt:81)
+	at rs.cache.config.FloType$Companion.parse(FloType.kt:23)
+	at rs.cache.config.FloType$Companion.load(FloType.kt:18)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:62)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[05 Jan 2026 12:32:05] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: Index 354 out of bounds for length 354
+	at luna.util.BZIP2Compressor.method152(BZIP2Compressor.kt:387)
+	at luna.util.BZIP2Compressor.method153(BZIP2Compressor.kt:553)
+	at luna.util.BZIP2Compressor.decompress(BZIP2Compressor.kt:179)
+	at luna.util.BZIP2Compressor.decompress(BZIP2Compressor.kt:86)
+	at luna.util.BZIP2Compressor.decompress(BZIP2Compressor.kt:62)
+	at rs.io.JagFile.get(JagFile.kt:87)
+	at rs.io.JagFile.read(JagFile.kt:79)
+	at rs.cache.config.FloType$Companion.parse(FloType.kt:23)
+	at rs.cache.config.FloType$Companion.load(FloType.kt:18)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:62)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[05 Jan 2026 12:35:48] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: Index 354 out of bounds for length 354
+	at luna.util.BZIP2Compressor.method152(BZIP2Compressor.kt:387)
+	at luna.util.BZIP2Compressor.method153(BZIP2Compressor.kt:553)
+	at luna.util.BZIP2Compressor.decompress(BZIP2Compressor.kt:179)
+	at luna.util.BZIP2Compressor.decompress(BZIP2Compressor.kt:86)
+	at luna.util.BZIP2Compressor.decompress(BZIP2Compressor.kt:62)
+	at rs.io.JagFile.get(JagFile.kt:91)
+	at rs.io.JagFile.read(JagFile.kt:79)
+	at rs.cache.config.FloType$Companion.parse(FloType.kt:23)
+	at rs.cache.config.FloType$Companion.load(FloType.kt:18)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:62)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[05 Jan 2026 12:37:07] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: Index 354 out of bounds for length 354
+	at luna.util.BZIP2Compressor.method152(BZIP2Compressor.kt:387)
+	at luna.util.BZIP2Compressor.method153(BZIP2Compressor.kt:553)
+	at luna.util.BZIP2Compressor.decompress(BZIP2Compressor.kt:179)
+	at luna.util.BZIP2Compressor.decompress(BZIP2Compressor.kt:86)
+	at luna.util.BZIP2Compressor.decompress(BZIP2Compressor.kt:62)
+	at rs.io.JagFile.get(JagFile.kt:96)
+	at rs.io.JagFile.read(JagFile.kt:84)
+	at rs.cache.config.FloType$Companion.parse(FloType.kt:23)
+	at rs.cache.config.FloType$Companion.load(FloType.kt:18)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:62)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[05 Jan 2026 12:37:53] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: Index 358 out of bounds for length 358
+	at luna.util.BZIP2Compressor.method152(BZIP2Compressor.kt:387)
+	at luna.util.BZIP2Compressor.method153(BZIP2Compressor.kt:553)
+	at luna.util.BZIP2Compressor.decompress(BZIP2Compressor.kt:153)
+	at luna.util.BZIP2Compressor.decompress(BZIP2Compressor.kt:86)
+	at luna.util.BZIP2Compressor.decompress(BZIP2Compressor.kt:62)
+	at rs.io.JagFile.decompressJagBzip(JagFile.kt:120)
+	at rs.io.JagFile.get(JagFile.kt:96)
+	at rs.io.JagFile.read(JagFile.kt:84)
+	at rs.cache.config.FloType$Companion.parse(FloType.kt:23)
+	at rs.cache.config.FloType$Companion.load(FloType.kt:18)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:62)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[05 Jan 2026 12:41:40] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: Index 18002 out of bounds for length 18002
+	at luna.util.BZIP2Compressor.decompress(BZIP2Compressor.kt:159)
+	at luna.util.BZIP2Compressor.decompress(BZIP2Compressor.kt:86)
+	at luna.util.BZIP2Compressor.decompress(BZIP2Compressor.kt:62)
+	at rs.io.JagFile.decompressJagBzip(JagFile.kt:120)
+	at rs.io.JagFile.get(JagFile.kt:96)
+	at rs.io.JagFile.read(JagFile.kt:84)
+	at rs.cache.config.FloType$Companion.parse(FloType.kt:23)
+	at rs.cache.config.FloType$Companion.load(FloType.kt:18)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:62)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[05 Jan 2026 12:42:40] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: Unhandled code 255
+	at rs.cache.config.FloType.decode(FloType.kt:68)
+	at rs.cache.ConfigType.decodeType(ConfigType.kt:17)
+	at rs.cache.config.FloType$Companion.parse(FloType.kt:31)
+	at rs.cache.config.FloType$Companion.load(FloType.kt:18)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:62)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[05 Jan 2026 12:44:04] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: Unhandled code 7
+	at rs.cache.config.FloType.decode(FloType.kt:68)
+	at rs.cache.ConfigType.decodeType(ConfigType.kt:17)
+	at rs.cache.config.FloType$Companion.parse(FloType.kt:31)
+	at rs.cache.config.FloType$Companion.load(FloType.kt:18)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:62)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[05 Jan 2026 12:46:28] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.net.BindException: Address already in use: bind
+	at java.base/sun.nio.ch.Net.bind0(Native Method)
+	at java.base/sun.nio.ch.Net.bind(Net.java:565)
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.netBind(ServerSocketChannelImpl.java:344)
+	at java.base/sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:301)
+	at io.netty.channel.socket.nio.NioServerSocketChannel.doBind(NioServerSocketChannel.java:148)
+	at io.netty.channel.AbstractChannel$AbstractUnsafe.bind(AbstractChannel.java:434)
+	at io.netty.channel.DefaultChannelPipeline$HeadContext.bind(DefaultChannelPipeline.java:1353)
+	at io.netty.channel.AbstractChannelHandlerContext.invokeBind(AbstractChannelHandlerContext.java:492)
+	at io.netty.channel.AbstractChannelHandlerContext.bind(AbstractChannelHandlerContext.java:471)
+	at io.netty.channel.DefaultChannelPipeline.bind(DefaultChannelPipeline.java:994)
+	at io.netty.channel.Channel.bind(Channel.java:302)
+	at io.netty.bootstrap.AbstractBootstrap$2.run(AbstractBootstrap.java:380)
+	at io.netty.util.concurrent.AbstractEventExecutor.runTask(AbstractEventExecutor.java:148)
+	at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:141)
+	at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:535)
+	at io.netty.channel.SingleThreadIoEventLoop.run(SingleThreadIoEventLoop.java:201)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$5.run(SingleThreadEventExecutor.java:1193)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:1575)
+	Suppressed: java.util.concurrent.CompletionException: Rethrowing promise failure cause
+		at io.netty.util.concurrent.DefaultPromise.rethrowIfFailed(DefaultPromise.java:685)
+		at io.netty.util.concurrent.DefaultPromise.syncUninterruptibly(DefaultPromise.java:426)
+		at io.netty.channel.DefaultChannelPromise.syncUninterruptibly(DefaultChannelPromise.java:125)
+		at io.netty.channel.DefaultChannelPromise.syncUninterruptibly(DefaultChannelPromise.java:30)
+		at io.luna.LunaServer.initNetwork(LunaServer.java:136)
+		at io.luna.LunaServer.init(LunaServer.java:101)
+		at io.luna.Luna.main(Luna.java:62)
+[05 Jan 2026 12:57:10] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: Unhandled code 7
+	at rs.cache.config.FloType.decode(FloType.kt:68)
+	at rs.cache.ConfigType.decodeType(ConfigType.kt:17)
+	at rs.cache.config.FloType$Companion.parse(FloType.kt:31)
+	at rs.cache.config.FloType$Companion.load(FloType.kt:18)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:62)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[05 Jan 2026 14:18:43] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: Index 13483 out of bounds for length 10000
+	at rs.cache.graphics.AnimFrame$Companion.unpack(AnimFrame.kt:128)
+	at rs.cache.graphics.AnimFrame$Companion.load(AnimFrame.kt:28)
+	at rs.cache.config.SeqType$Companion.load(SeqType.kt:20)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:71)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[05 Jan 2026 14:21:01] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: Index 3964 out of bounds for length 1044
+	at rs.cache.graphics.AnimFrame$Companion.unpack(AnimFrame.kt:127)
+	at rs.cache.graphics.AnimFrame$Companion.load(AnimFrame.kt:27)
+	at rs.cache.config.SeqType$Companion.load(SeqType.kt:20)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:71)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[05 Jan 2026 14:25:17] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: Index 3964 out of bounds for length 1044
+	at rs.cache.graphics.AnimFrame$Companion.unpack(AnimFrame.kt:111)
+	at rs.cache.graphics.AnimFrame$Companion.load(AnimFrame.kt:27)
+	at rs.cache.config.SeqType$Companion.load(SeqType.kt:20)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:71)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[05 Jan 2026 14:26:14] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: Index 33258 out of bounds for length 30000
+	at rs.cache.graphics.AnimFrame$Companion.unpack(AnimFrame.kt:111)
+	at rs.cache.graphics.AnimFrame$Companion.load(AnimFrame.kt:27)
+	at rs.cache.config.SeqType$Companion.load(SeqType.kt:20)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:71)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[05 Jan 2026 14:31:02] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: Index 3964 out of bounds for length 1044
+	at rs.cache.graphics.AnimFrame$Companion.unpack(AnimFrame.kt:111)
+	at rs.cache.graphics.AnimFrame$Companion.load(AnimFrame.kt:27)
+	at rs.cache.config.SeqType$Companion.load(SeqType.kt:20)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:71)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[05 Jan 2026 14:33:56] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: Index 3964 out of bounds for length 1044
+	at rs.cache.graphics.AnimFrame$Companion.unpack(AnimFrame.kt:111)
+	at rs.cache.graphics.AnimFrame$Companion.load(AnimFrame.kt:27)
+	at rs.cache.config.SeqType$Companion.load(SeqType.kt:20)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:71)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[05 Jan 2026 14:37:37] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: Index 4 out of bounds for length 4
+	at rs.cache.graphics.AnimFrame$Companion.unpack(AnimFrame.kt:79)
+	at rs.cache.graphics.AnimFrame$Companion.load(AnimFrame.kt:27)
+	at rs.cache.config.SeqType$Companion.load(SeqType.kt:20)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:71)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[05 Jan 2026 14:39:34] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: Index 4624 out of bounds for length 1044
+	at rs.cache.config.SeqType.decode(SeqType.kt:99)
+	at rs.cache.ConfigType.decodeType(ConfigType.kt:17)
+	at rs.cache.config.SeqType$Companion.parse(SeqType.kt:38)
+	at rs.cache.config.SeqType$Companion.load(SeqType.kt:25)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:71)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[05 Jan 2026 15:59:14] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: Index 1 out of bounds for length 1
+	at rs.cache.config.ObjType.decode(ObjType.kt:208)
+	at rs.cache.ConfigType.decodeType(ConfigType.kt:17)
+	at rs.cache.config.ObjType$Companion.parse(ObjType.kt:33)
+	at rs.cache.config.ObjType$Companion.load(ObjType.kt:20)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:71)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[05 Jan 2026 16:25:33] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: Unhandled code 9
+	at rs.cache.config.NpcType.decode(NpcType.kt:224)
+	at rs.cache.ConfigType.decodeType(ConfigType.kt:17)
+	at rs.cache.config.NpcType$Companion.parse(NpcType.kt:35)
+	at rs.cache.config.NpcType$Companion.load(NpcType.kt:22)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:72)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[06 Jan 2026 03:30:21] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: Index 1 out of bounds for length 1
+	at rs.cache.config.LocType.decode(LocType.kt:189)
+	at rs.cache.ConfigType.decodeType(ConfigType.kt:17)
+	at rs.cache.config.LocType$Companion.parse(LocType.kt:35)
+	at rs.cache.config.LocType$Companion.load(LocType.kt:22)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:72)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[06 Jan 2026 03:31:18] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.ArrayIndexOutOfBoundsException: Index 1 out of bounds for length 1
+	at rs.cache.config.LocType.decode(LocType.kt:190)
+	at rs.cache.ConfigType.decodeType(ConfigType.kt:17)
+	at rs.cache.config.LocType$Companion.parse(LocType.kt:35)
+	at rs.cache.config.LocType$Companion.load(LocType.kt:22)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:72)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
+[06 Jan 2026 03:32:35] [io.luna.Luna] [InitializationThread]
+FATAL: Luna could not be started.
+java.lang.RuntimeException: Unhandled code 44
+	at rs.cache.config.LocType.decode(LocType.kt:197)
+	at rs.cache.ConfigType.decodeType(ConfigType.kt:17)
+	at rs.cache.config.LocType$Companion.parse(LocType.kt:35)
+	at rs.cache.config.LocType$Companion.load(LocType.kt:22)
+	at rs.engine.script.RuneScriptProvider.parse(RuneScriptProvider.kt:72)
+	at io.luna.LunaServer.init(LunaServer.java:92)
+	at io.luna.Luna.main(Luna.java:62)
