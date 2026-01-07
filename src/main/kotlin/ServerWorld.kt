@@ -32,7 +32,7 @@ object ServerWorld {
         // Accept connections
         scope.launch(Dispatchers.IO) {
             val serverGame = aSocket(selectorManager).tcp().bind("0.0.0.0", 43594)
-            println("GameServer listening on port 43594")
+            println("[:43594] World listening")
 
             while (true) {
                 val socket = serverGame.accept()
@@ -112,7 +112,6 @@ object ServerWorld {
                 C_LOGIN_INIT, C_LOGIN_RE_INIT -> -1
                 else -> 0
             }
-            println("[World] opcode ${client.opcode}")
         }
 
         if (client.waiting == -1) {
@@ -151,7 +150,7 @@ object ServerWorld {
                     return
                 }
 
-                println("[Login 'successful'] (Passed CRCs)")
+                println("[Login] (Passed CRCs)")
             }
 
             C_HANDSHAKE -> handshake(client)

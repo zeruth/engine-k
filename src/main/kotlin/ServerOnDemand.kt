@@ -1,5 +1,4 @@
 import RS2KtorServer.selectorManager
-import ServerWorld.send
 import io.ktor.network.sockets.Socket
 import io.ktor.network.sockets.aSocket
 import io.ktor.network.sockets.openReadChannel
@@ -44,17 +43,6 @@ object ServerOnDemand {
         CrcBuffer32 = Packet.getcrc(CrcBuffer.data, 0, CrcBuffer.data.size)
     }
 
-    fun runHttp(scope: CoroutineScope) {
-        scope.launch(Dispatchers.IO) {
-            val serverJS5 = aSocket(selectorManager).tcp().bind("0.0.0.0", 80)
-            println("JS5 HTTP Server listening on port 80")
-            while (true) {
-                val socket = serverJS5.accept()
-                launch { handleOnDemandHTTP(socket) }
-            }
-        }
-    }
-
     private val archiveMap: Map<String, ByteArray?> by lazy {
         mapOf(
             "/crc" to CrcBuffer.data,
@@ -69,12 +57,24 @@ object ServerOnDemand {
         )
     }
 
-    private suspend fun handleOnDemandHTTP(socket: Socket) {
+    fun runHttp(scope: CoroutineScope) {
+        scope.launch(Dispatchers.IO) {
+            val serverJS5 = aSocket(selectorManager).tcp().bind("0.0.0.0", 80)
+            println("[:80 :43594] OnDemand listening")
+            while (true) {
+                val socket = serverJS5.accept()
+                launch { handleOnDemandHTTP(socket) }
+            }
+        }
+    }
+
+
+    suspend fun handleOnDemandHTTP(socket: Socket) = withContext(Dispatchers.IO) {
         val input = socket.openReadChannel()
         val output = socket.openWriteChannel(autoFlush = true)
 
         try {
-            val requestLine = input.readUTF8Line(1024) ?: return
+            val requestLine = input.readUTF8Line(1024) ?: return@withContext
             var path = requestLine.split(" ").getOrNull(1) ?: "/"
             path = path.replace("-", "").takeWhile { !it.isDigit() }
 
@@ -90,9 +90,9 @@ object ServerOnDemand {
             output.writeFully(headers.encodeToByteArray())
             output.writeFully(data)
         } catch (e: Exception) {
-            println("Error handling JS5 client: ${e.message}")
+            println("JS5 HTTP Error: ${e.message}")
         } finally {
-            withContext(Dispatchers.IO) { socket.close() }
+            socket.close()
         }
     }
 
@@ -105,16 +105,13 @@ object ServerOnDemand {
             val file = buf.g2()
             val priority = buf.g1()
 
-            if (archive > 3 || priority > 2) {
-                client.close()
-                return
-            }
+            if (archive > 3 || priority > 2) { client.close(); return }
 
-            val request = OnDemandRequest(client, archive, file, priority)
+            val req = OnDemandRequest(client, archive, file, priority)
             when (priority) {
-                2 -> urgentRequests.add(request)
-                1 -> extraRequests.add(request)
-                else -> ingameRequests.add(request)
+                2 -> urgentRequests.add(req)
+                1 -> extraRequests.add(req)
+                else -> ingameRequests.add(req)
             }
         }
     }
@@ -124,7 +121,6 @@ object ServerOnDemand {
         if (req != null) {
             var pos = 0
             var part = 0
-
             while (pos < req.size) {
                 val remaining = minOf(500, req.size - pos)
                 val temp = Packet(ByteArray(6 + remaining))
@@ -148,32 +144,33 @@ object ServerOnDemand {
         }
     }
 
+    /**
+     * Processes on-demand queues with a 50ms per-tick budget,
+     * limiting requests per client to avoid flooding.
+     */
     suspend fun cycleOnDemand() = withTimeoutOrNull(50) {
-        val perClientCount = mutableMapOf<Client, Int>()
         val MAX_PER_CLIENT = 1000
+        val sentPerClient = mutableMapOf<Client, Int>()
 
         fun canSend(client: Client): Boolean {
-            val count = perClientCount.getOrDefault(client, 0)
+            val count = sentPerClient.getOrDefault(client, 0)
             if (count >= MAX_PER_CLIENT) return false
-            perClientCount[client] = count + 1
+            sentPerClient[client] = count + 1
             return true
         }
 
-        suspend fun processQueue(queue: MutableList<OnDemandRequest?>) {
-            var i = 0
-            while (i < queue.size) {
-                val req = queue[i] ?: run { queue.removeAt(i); continue }
-                if (!canSend(req.client)) { i++; continue }
-
+        suspend fun processQueue(queue: MutableList<OnDemandRequest>) {
+            val snapshot = queue.toList()
+            queue.clear()
+            for (req in snapshot) {
+                if (!canSend(req.client)) continue
                 try { send(req.client, req.archive, req.file) }
-                catch (_: Exception) { /* ignore */ }
-
-                queue.removeAt(i)
+                catch (_: Exception) { }
             }
         }
 
-        processQueue(urgentRequests.toMutableList())
-        processQueue(extraRequests.toMutableList())
-        processQueue(ingameRequests.toMutableList())
+        processQueue(urgentRequests)
+        processQueue(extraRequests)
+        processQueue(ingameRequests)
     }
 }
