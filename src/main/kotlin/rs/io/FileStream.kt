@@ -91,10 +91,12 @@ class FileStream(
             part++
         }
 
-        val result = data.data
+        if (!decompress) {
+            if (!this.discardPacked) {
+                packed[archive]!![file] = data.data
+            }
 
-        if (!decompress && !discardPacked) {
-            cache[file] = result
+            return data.data
         }
 
         return if (archive == 0) {

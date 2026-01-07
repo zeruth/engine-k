@@ -1,54 +1,35 @@
-import io.ktor.network.sockets.*
-import io.ktor.utils.io.*
-import java.nio.ByteBuffer
+import io.ktor.network.sockets.Socket
+import io.ktor.utils.io.ByteReadChannel
+import io.ktor.utils.io.ByteWriteChannel
+import io.ktor.utils.io.availableForRead
+import io.ktor.utils.io.readFully
+import io.ktor.utils.io.writeFully
 
-// --- Player session ---
-data class Client(
+class Client(
     val sessionId: String,
-    var username: String? = null,
-    var loggedIn: Boolean = false,
     val socket: Socket,
     val input: ByteReadChannel,
-    val output: ByteWriteChannel,
+    val output: ByteWriteChannel
 ) {
     var state = 0
     var opcode = -1
     var waiting = 0
+    val available: Int
+        get() = input.availableForRead
+
+    /**
+     * readFully will suspend until there are enough bytes to be read
+     */
+    suspend fun read(dst: ByteArray, offset: Int, length: Int) {
+        input.readFully(dst, offset, length)
+    }
+
+    suspend fun send(data: ByteArray) {
+        output.writeFully(data)
+    }
 
     fun close() {
-        socket.close()
-    }
-
-    private val buffer = ByteArray(65536)
-    var available = 0
-
-    fun read(dest: ByteArray, offset: Int, length: Int): Boolean {
-        if (available < length) return false
-
-        System.arraycopy(buffer, 0, dest, offset, length)
-        available -= length
-        System.arraycopy(buffer, length, buffer, 0, available)
-
-        return true
-    }
-
-    suspend fun fill(): Boolean {
-        val read = input.readAvailable(buffer, available, buffer.size - available)
-        if (read > 0) {
-            available += read
-            return true
-        }
-        if (read == -1) {
-            close()
-        }
-        return false
-    }
-
-    suspend fun send(buf: ByteBuffer) {
-        output.writeFully(buf)
-    }
-
-    suspend fun send(buf: ByteArray) {
-        output.writeFully(buf)
+        try { socket.close() } catch (_: Exception) {}
+        state = -1
     }
 }

@@ -2,189 +2,171 @@ import Opcode.C_HANDSHAKE
 import Opcode.C_LOGIN
 import Opcode.C_LOGIN_INIT
 import Opcode.C_LOGIN_RE_INIT
-import RS2KtorServer.selectorManager
-import RS2KtorServer.sessions
+import ServerOnDemand.CrcTable
+import ServerOnDemand.cache
+import ServerOnDemand.cycleOnDemand
+import ServerOnDemand.extraRequests
+import ServerOnDemand.handleOnDemandSocket
+import ServerOnDemand.ingameRequests
+import ServerOnDemand.urgentRequests
+import io.ktor.network.selector.ActorSelectorManager
 import io.ktor.network.sockets.Socket
 import io.ktor.network.sockets.aSocket
 import io.ktor.network.sockets.isClosed
 import io.ktor.network.sockets.openReadChannel
 import io.ktor.network.sockets.openWriteChannel
-import io.ktor.utils.io.availableForRead
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
-import rs.engine.OnDemand
+import kotlinx.coroutines.*
+import rs.Environment
 import rs.io.Packet
 import java.util.UUID
 
 object ServerWorld {
+
+    private val selectorManager = ActorSelectorManager(Dispatchers.IO)
+    private val sessions = mutableMapOf<String, Client>()
+    val loginBuf = Packet.alloc(1)
+
+    var nextTick = 0L
+
     fun run(scope: CoroutineScope) {
-        scope.launch {
+        // Accept connections
+        scope.launch(Dispatchers.IO) {
             val serverGame = aSocket(selectorManager).tcp().bind("0.0.0.0", 43594)
-            println("RS2 Game Server listening on port 43594")
+            println("GameServer listening on port 43594")
+
             while (true) {
                 val socket = serverGame.accept()
                 println("[:43594] Game connection from: ${socket.remoteAddress}")
-                launch { connection(socket) }
+                launch { handleClient(socket) }
+            }
+        }
+
+        // Game loop
+        scope.launch(Dispatchers.Default) {
+            while (isActive) {
+                val tickStart = System.currentTimeMillis()
+
+                cycle()
+
+                val elapsed = System.currentTimeMillis() - tickStart
+                val remaining = Environment.TICK_RATE - elapsed
+
+                if (remaining > 0) delay(remaining)
+                else println("⏱ MISSED TICK by ${-remaining}ms!")
             }
         }
     }
 
-    suspend fun connection(socket: Socket) {
-        val input = socket.openReadChannel()
-        val output = socket.openWriteChannel(autoFlush = true)
+    private suspend fun handleClient(socket: Socket) {
         val client = Client(
             sessionId = UUID.randomUUID().toString(),
             socket = socket,
-            input = input,
-            output = output
+            input = socket.openReadChannel(),
+            output = socket.openWriteChannel(autoFlush = true)
         )
 
-        client.fill()
-
-        handle(client)
-    }
-
-    suspend fun handle(client: Client) {
-        while (true) {
-            if (client.socket.isClosed) return
-
-            try {
-                if (client.state == 0) {
-                    handleWorld(client);
-                } else {
-                    handleOnDemand(client);
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-                client.close()
-            }
-        }
-    }
-
-    val loginBuf = Packet.alloc(1)
-
-    suspend fun handleWorld(client: Client) {
-        println("[HandleWorld]")
         sessions[client.sessionId] = client
 
-        if (client.available < 1) {
-            client.fill()
-            return
+        try {
+            while (client.state != -1 && !socket.isClosed) {
+                when (client.state) {
+                    0 -> handleWorldSocket(client)
+                    else -> handleOnDemandSocket(client)
+                }
+            }
+        } catch (_: Exception) {
+            client.close()
+        } finally {
+            sessions.remove(client.sessionId)
         }
+    }
 
+    suspend fun handshake(client: Client) {
+        client.state = 2
+        client.send(ByteArray(8))
+    }
+
+    suspend fun loginHandshake(client: Client) {
+        // Send initial login bytes
+        client.send(ByteArray(Int.SIZE_BYTES * 2))
+        client.send(ByteArray(Byte.SIZE_BYTES))
+
+        val seed = Packet(ByteArray(Int.SIZE_BYTES * 2))
+        seed.p4((Math.random() * 0x00FFFFFF).toInt())
+        seed.p4((Math.random() * 0xFFFFFFFFL).toInt())
+        client.send(seed.data)
+    }
+
+    suspend fun Client.respondOutOfDate() {
+        send(byteArrayOf(6))
+        close()
+    }
+
+    private suspend fun handleWorldSocket(client: Client) {
         if (client.opcode == -1) {
             loginBuf.position(0)
             client.read(loginBuf.data, 0, 1)
-
             client.opcode = loginBuf.g1()
-            println("[Error] opcode ${client.opcode}")
-
-            if (client.opcode == C_LOGIN) {
-                client.waiting = 1;
-            } else if (client.opcode == C_LOGIN_INIT || client.opcode == C_LOGIN_RE_INIT) {
-                client.waiting = -1;
-            } else {
-                client.waiting = 0;
+            client.waiting = when (client.opcode) {
+                C_LOGIN -> 1
+                C_LOGIN_INIT, C_LOGIN_RE_INIT -> -1
+                else -> 0
             }
+            println("[World] opcode ${client.opcode}")
         }
 
         if (client.waiting == -1) {
             loginBuf.position(0)
-            client.read(loginBuf.data, 0, 1);
-
-            client.waiting = loginBuf.g1();
+            client.read(loginBuf.data, 0, 1)
+            client.waiting = loginBuf.g1()
         } else if (client.waiting == -2) {
             loginBuf.position(0)
-            client.read(loginBuf.data, 0, 2);
-
-            client.waiting = loginBuf.g2();
-        }
-
-        if (client.available < client.waiting) {
-            return;
+            client.read(loginBuf.data, 0, 2)
+            client.waiting = loginBuf.g2()
         }
 
         loginBuf.position(0)
-        client.read(loginBuf.data, 0, client.waiting);
+        client.read(loginBuf.data, 0, client.waiting)
 
-        if (client.opcode == C_LOGIN) {
-            client.state = 0;
-            loginHandshake(client)
-        } else if (client.opcode == C_LOGIN_INIT || client.opcode == C_LOGIN_RE_INIT) {
-            var rev = loginBuf.g1()
-            if (rev == 255)
-                rev = loginBuf.g2()
-            println("Login: Revision $rev")
+        when (client.opcode) {
+            C_LOGIN -> {
+                client.state = 0
+                loginHandshake(client)
+            }
 
-            val lowMem = loginBuf.g1() == 1
+            C_LOGIN_INIT, C_LOGIN_RE_INIT -> {
+                var rev = loginBuf.g1()
+                if (rev == 255) rev = loginBuf.g2()
 
-            val crc_0 = loginBuf.g4()
-            val crc_1 = loginBuf.g4()
-            val crc_2 = loginBuf.g4()
-            val crc_3 = loginBuf.g4()
-            val crc_4 = loginBuf.g4()
-            val crc_5 = loginBuf.g4()
-            val crc_6 = loginBuf.g4()
-            val crc_7 = loginBuf.g4()
-        } else if (client.opcode == C_HANDSHAKE) {
-            handshake(client)
-        } else {
-            client.socket.close();
+                if (rev != Environment.ENGINE_REVISION) {
+                    client.respondOutOfDate()
+                    return
+                }
+
+                val lowMem = loginBuf.g1() == 1
+                val crcs = IntArray(CrcTable.size) { loginBuf.g4s() }
+
+                if (!crcs.withIndex().all { (i, crc) -> crc == CrcTable[i] }) {
+                    client.respondOutOfDate()
+                    return
+                }
+
+                println("[Login 'successful'] (Passed CRCs)")
+            }
+
+            C_HANDSHAKE -> handshake(client)
+
+            else -> {
+                println("Unhandled opcode: ${client.opcode}")
+                withContext(Dispatchers.IO) { client.socket.close() }
+            }
         }
 
         client.opcode = -1
     }
 
-    suspend fun handshake(client: Client) {
-        client.state = 2;
-        client.send(ByteArray(Int.SIZE_BYTES * 2))
-        println("[Handshake]")
-    }
-
-    suspend fun loginHandshake(client: Client) {
-        client.send(ByteArray(Int.SIZE_BYTES * 2))
-        client.send(ByteArray(Byte.SIZE_BYTES))
-
-        val seed = Packet(ByteArray(Int.SIZE_BYTES * 2))
-
-        seed.p4((Math.random() * 0x00FFFFFF).toInt())
-        seed.p4((Math.random() * 0xFFFFFFFFL).toInt())
-
-        client.send(seed.data)
-        println("[Login]")
-    }
-
-    suspend fun handleOnDemand(client: Client) {
-        if (client.state != 2)
-            return
-
-        if (client.input.availableForRead < Int.SIZE_BYTES) {
-            client.fill()
-            return
-        }
-
-        val buf = Packet.alloc(0)
-        while (client.input.availableForRead >= Int.SIZE_BYTES) {
-            client.read(buf.data, 0, Int.SIZE_BYTES);
-
-            val archive = buf.g1()
-            val file = buf.g2()
-            val priority = buf.g1()
-
-            if (archive > 3 || priority > 2) {
-                println("closed")
-                client.close()
-            }
-
-            val request = OnDemand.OnDemandRequest(client, archive, file)
-
-            if (priority == 2) {
-                OnDemand.urgentRequests.add(request)
-            } else if (priority == 1) {
-                OnDemand.extraRequests.add(request)
-            } else {
-                OnDemand.ingameRequests.add(request)
-            }
-        }
+    private suspend fun cycle() {
+        cycleOnDemand()
+        nextTick = System.currentTimeMillis() + Environment.TICK_RATE
     }
 }

@@ -1,6 +1,6 @@
 package rs.cache.graphics
 
-import rs.engine.OnDemand
+import ServerOnDemand.cache
 import rs.io.Packet
 
 class AnimFrame {
@@ -19,9 +19,9 @@ class AnimFrame {
         val order = ArrayList<Int>()
 
         fun load() {
-            val count = OnDemand.cache.count(2)
+            val count = cache.count(2)
             for (i in 0 until count) {
-                val data = OnDemand.cache.read(2, i, true)
+                val data = cache.read(2, i, true)
                 if (data != null) {
                     unpack(data)
                 }

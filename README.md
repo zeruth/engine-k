@@ -2,7 +2,7 @@
 
 A Kotlin source port of **Engine-TS**
 
-The goal of this project is to provide a 1:1 experience, but on JVM
+The goal of this project is to provide a 1:1 experience on JVM
 
 ---
   
