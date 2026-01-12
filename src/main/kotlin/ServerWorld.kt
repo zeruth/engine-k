@@ -3,12 +3,7 @@ import Opcode.C_LOGIN
 import Opcode.C_LOGIN_INIT
 import Opcode.C_LOGIN_RE_INIT
 import ServerOnDemand.CrcTable
-import ServerOnDemand.cache
-import ServerOnDemand.cycleOnDemand
-import ServerOnDemand.extraRequests
 import ServerOnDemand.handleOnDemandSocket
-import ServerOnDemand.ingameRequests
-import ServerOnDemand.urgentRequests
 import io.ktor.network.selector.ActorSelectorManager
 import io.ktor.network.sockets.Socket
 import io.ktor.network.sockets.aSocket
@@ -165,7 +160,6 @@ object ServerWorld {
     }
 
     private suspend fun cycle() {
-        cycleOnDemand()
         nextTick = System.currentTimeMillis() + Environment.TICK_RATE
     }
 }

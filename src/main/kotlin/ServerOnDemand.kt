@@ -7,9 +7,11 @@ import io.ktor.utils.io.readUTF8Line
 import io.ktor.utils.io.writeFully
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
+import kotlinx.io.EOFException
 import rs.io.FileStream
 import rs.io.Packet
 import java.io.File
@@ -68,6 +70,24 @@ object ServerOnDemand {
         }
     }
 
+    fun run(scope: CoroutineScope) {
+        scope.launch(Dispatchers.IO) {
+            println("[:43594] OnDemand Serving")
+
+            while (true) {
+                val tickStart = System.currentTimeMillis()
+
+                cycle()
+
+                val elapsed = System.currentTimeMillis() - tickStart
+                val remaining = 50 - elapsed
+
+                if (remaining > 0) delay(remaining)
+                else println("[OnDemand] MISSED TICK by ${-remaining}ms!")
+            }
+        }
+    }
+
 
     suspend fun handleOnDemandHTTP(socket: Socket) = withContext(Dispatchers.IO) {
         val input = socket.openReadChannel()
@@ -97,15 +117,26 @@ object ServerOnDemand {
     }
 
     suspend fun handleOnDemandSocket(client: Client) {
-        val buf = Packet.alloc(0)
-        while (client.available >= Int.SIZE_BYTES) {
-            client.read(buf.data, 0, Int.SIZE_BYTES)
+        val buf = Packet.alloc(4)
+
+        while (true) {
+            try {
+                client.read(buf.data, 0, 4)
+            } catch (e: EOFException) {
+                client.close()
+                return
+            }
+
+            buf.position(0)
 
             val archive = buf.g1()
             val file = buf.g2()
             val priority = buf.g1()
 
-            if (archive > 3 || priority > 2) { client.close(); return }
+            if (archive > 3 || priority > 2) {
+                client.close()
+                return
+            }
 
             val req = OnDemandRequest(client, archive, file, priority)
             when (priority) {
@@ -115,6 +146,7 @@ object ServerOnDemand {
             }
         }
     }
+
 
     private suspend fun send(client: Client, archive: Int, file: Int) {
         val req = cache.read(archive + 1, file)
@@ -148,7 +180,7 @@ object ServerOnDemand {
      * Processes on-demand queues with a 50ms per-tick budget,
      * limiting requests per client to avoid flooding.
      */
-    suspend fun cycleOnDemand() = withTimeoutOrNull(50) {
+    suspend fun cycle() = withTimeoutOrNull(50) {
         val MAX_PER_CLIENT = 1000
         val sentPerClient = mutableMapOf<Client, Int>()
 

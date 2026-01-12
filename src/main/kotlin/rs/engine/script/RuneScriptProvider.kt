@@ -1,5 +1,6 @@
 package rs.engine.script
 
+import ServerOnDemand.cache
 import me.filby.neptune.runescript.compiler.codegen.script.RuneScript
 import me.filby.neptune.serverscript.compiler.ServerScriptCompilerCLI
 import rs.cache.config.CategoryType

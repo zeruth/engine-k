@@ -9,6 +9,7 @@ object RS2KtorServer {
     fun main(args: Array<String>): Unit = runBlocking {
         RuneScriptProvider.parse()
         ServerOnDemand.runHttp(this)
+        ServerOnDemand.run(this)
         ServerWorld.run(this)
     }
 }
