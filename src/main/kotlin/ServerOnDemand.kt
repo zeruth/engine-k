@@ -176,12 +176,8 @@ object ServerOnDemand {
         }
     }
 
-    /**
-     * Processes on-demand queues with a 50ms per-tick budget,
-     * limiting requests per client to avoid flooding.
-     */
     suspend fun cycle() = withTimeoutOrNull(50) {
-        val MAX_PER_CLIENT = 1000
+        val MAX_PER_CLIENT = 10 // 200 per second
         val sentPerClient = mutableMapOf<Client, Int>()
 
         fun canSend(client: Client): Boolean {

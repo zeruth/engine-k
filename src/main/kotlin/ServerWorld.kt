@@ -4,16 +4,13 @@ import Opcode.C_LOGIN_INIT
 import Opcode.C_LOGIN_RE_INIT
 import ServerOnDemand.CrcTable
 import ServerOnDemand.handleOnDemandSocket
-import io.ktor.network.selector.ActorSelectorManager
-import io.ktor.network.sockets.Socket
-import io.ktor.network.sockets.aSocket
-import io.ktor.network.sockets.isClosed
-import io.ktor.network.sockets.openReadChannel
-import io.ktor.network.sockets.openWriteChannel
+import io.ktor.network.selector.*
+import io.ktor.network.sockets.*
 import kotlinx.coroutines.*
 import rs.Environment
 import rs.io.Packet
-import java.util.UUID
+import java.math.BigInteger
+import java.util.*
 
 object ServerWorld {
 
@@ -24,7 +21,6 @@ object ServerWorld {
     var nextTick = 0L
 
     fun run(scope: CoroutineScope) {
-        // Accept connections
         scope.launch(Dispatchers.IO) {
             val serverGame = aSocket(selectorManager).tcp().bind("0.0.0.0", 43594)
             println("[:43594] World listening")
@@ -36,7 +32,6 @@ object ServerWorld {
             }
         }
 
-        // Game loop
         scope.launch(Dispatchers.Default) {
             while (isActive) {
                 val tickStart = System.currentTimeMillis()
@@ -82,7 +77,6 @@ object ServerWorld {
     }
 
     suspend fun loginHandshake(client: Client) {
-        // Send initial login bytes
         client.send(ByteArray(Int.SIZE_BYTES * 2))
         client.send(ByteArray(Byte.SIZE_BYTES))
 
@@ -145,7 +139,23 @@ object ServerWorld {
                     return
                 }
 
-                println("[Login] (Passed CRCs)")
+                val loginBufSize = loginBuf.g1()
+                val enc = ByteArray(loginBufSize)
+                loginBuf.gdata(enc, 0, enc.size)
+
+                val plain = Packet(BigInteger(enc).modPow(RSA.privateExponent, RSA.privateModulus).toByteArray())
+
+                loginBuf.position(0)
+                loginBuf.pdata(plain.data, 0, plain.data.size)
+                loginBuf.position(0)
+                
+                val opcode = loginBuf.g1()
+                if (opcode != 10) {
+                    client.respondOutOfDate()
+                    return
+                }
+
+                println("[Login] (Passed CRCs / RSA)")
             }
 
             C_HANDSHAKE -> handshake(client)
