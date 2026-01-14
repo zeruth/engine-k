@@ -25,6 +25,7 @@ import rs.cache.config.VarPlayerType
 import rs.cache.config.VarSharedType
 import rs.engine.script.test.FakeScriptFile
 import rs.io.Packet
+import util.Logger
 import java.io.File
 
 /**
@@ -59,7 +60,8 @@ object RuneScriptProvider {
     @JvmStatic
     fun parse(): Int {
         val start = System.currentTimeMillis()
-        println("---Lost-City (377)---")
+        Logger.messageColor = Logger.Color.PURPLE
+        Logger.info("Engine","---Lost-City (377)---")
         CategoryType.load()
         DbRowType.load()
         DbTableType.load()
@@ -80,7 +82,8 @@ object RuneScriptProvider {
         VarNpcType.load()
         VarPlayerType.load()
         VarSharedType.load()
-        println("......Compiling RuneScript......")
+        Logger.messageColor = Logger.Color.PURPLE
+        Logger.info("Engine","......Compiling RuneScript......")
         ServerScriptCompilerCLI.main(emptyArray())
 
         val datPath = dir.resolve("script.dat")
@@ -132,8 +135,10 @@ object RuneScriptProvider {
 
         loginScript = scripts.filterNotNull().first { it.name().contains("login") }
 
-        println("Lost-City (377) Engine loaded in ${System.currentTimeMillis() - start}ms")
-        println("--------------------------------")
+        Logger.messageColor = Logger.Color.PURPLE
+        Logger.info("Engine","Lost-City (377) Engine loaded in ${System.currentTimeMillis() - start}ms")
+        Logger.messageColor = Logger.Color.PURPLE
+        Logger.info("Engine","--------------------------------")
         return loaded
     }
 

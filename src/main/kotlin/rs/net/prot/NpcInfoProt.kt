@@ -1,4 +1,4 @@
-package rs
+package rs.net.prot
 
 object NpcInfoProt {
     const val CHANGE_TYPE = 1

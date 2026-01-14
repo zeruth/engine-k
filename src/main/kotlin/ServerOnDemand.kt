@@ -1,4 +1,4 @@
-import RS2KtorServer.selectorManager
+import Server.selectorManager
 import io.ktor.network.sockets.Socket
 import io.ktor.network.sockets.aSocket
 import io.ktor.network.sockets.openReadChannel
@@ -14,6 +14,8 @@ import kotlinx.coroutines.withTimeoutOrNull
 import kotlinx.io.EOFException
 import rs.io.FileStream
 import rs.io.Packet
+import rs.net.Client
+import util.Logger
 import java.io.File
 
 object ServerOnDemand {
@@ -62,7 +64,8 @@ object ServerOnDemand {
     fun runHttp(scope: CoroutineScope) {
         scope.launch(Dispatchers.IO) {
             val serverJS5 = aSocket(selectorManager).tcp().bind("0.0.0.0", 80)
-            println("[:80 :43594] OnDemand listening")
+            Logger.messageColor = Logger.Color.YELLOW
+            Logger.info("OnDemand", "[:80 :43594] listening")
             while (true) {
                 val socket = serverJS5.accept()
                 launch { handleOnDemandHTTP(socket) }
@@ -72,7 +75,8 @@ object ServerOnDemand {
 
     fun run(scope: CoroutineScope) {
         scope.launch(Dispatchers.IO) {
-            println("[:43594] OnDemand Serving")
+            Logger.messageColor = Logger.Color.YELLOW
+            Logger.info("OnDemand", "[:43594] Serving")
 
             while (true) {
                 val tickStart = System.currentTimeMillis()

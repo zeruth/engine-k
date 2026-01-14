@@ -3,6 +3,7 @@ package rs.cache.config
 import rs.cache.ConfigType
 import rs.io.JagFile
 import rs.io.Packet
+import util.Logger
 import java.io.File
 
 class VarPlayerType(id: Int) : ConfigType(id){
@@ -47,7 +48,8 @@ class VarPlayerType(id: Int) : ConfigType(id){
                     RUN = config.id
                 }
             }
-            println("Loaded ${configs.size} VarPlayerTypes")
+            Logger.messageColor = Logger.Color.GREEN
+            Logger.info("Cache", "Loaded ${configs.size} VarPlayerTypes")
         }
 
         fun get(id: Int) = configs[id]

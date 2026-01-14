@@ -1,4 +1,4 @@
-package rs
+package rs.net.prot
 
 object PlayerInfoProt {
     const val BIG = 32

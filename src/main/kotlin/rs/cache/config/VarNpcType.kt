@@ -7,6 +7,7 @@ import rs.engine.entity.hunt.HuntModeType
 import rs.engine.entity.hunt.HuntNobodyNear
 import rs.engine.entity.hunt.HuntVis
 import rs.io.Packet
+import util.Logger
 import java.io.File
 
 class VarNpcType(id: Int) : ConfigType(id){
@@ -36,7 +37,8 @@ class VarNpcType(id: Int) : ConfigType(id){
                 }
             }
 
-            println("Loaded $count VarNpcTypes")
+            Logger.messageColor = Logger.Color.GREEN
+            Logger.info("Cache", "Loaded $count VarNpcTypes")
         }
 
         fun get(id: Int) = configs[id]

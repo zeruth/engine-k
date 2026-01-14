@@ -1,3 +1,5 @@
+package rs.net
+
 object Opcode {
     const val C_HANDSHAKE = 15
 

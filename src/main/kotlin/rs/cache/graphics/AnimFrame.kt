@@ -2,6 +2,7 @@ package rs.cache.graphics
 
 import ServerOnDemand.cache
 import rs.io.Packet
+import util.Logger
 
 class AnimFrame {
 
@@ -27,7 +28,8 @@ class AnimFrame {
                 }
             }
 
-            println("Loaded ${instances.values.size} Animation Frames")
+            Logger.messageColor = Logger.Color.GREEN
+            Logger.info("Cache", "Loaded ${instances.values.size} Animation Frames")
         }
 
         fun unpack(src: ByteArray) {

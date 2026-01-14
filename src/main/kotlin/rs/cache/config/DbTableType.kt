@@ -2,6 +2,7 @@ package rs.cache.config
 
 import rs.cache.ConfigType
 import rs.io.Packet
+import util.Logger
 import java.io.File
 
 class DbTableType(id: Int) : ConfigType(id){
@@ -31,7 +32,8 @@ class DbTableType(id: Int) : ConfigType(id){
                 }
             }
 
-            println("Loaded $count DbTableTypes")
+            Logger.messageColor = Logger.Color.GREEN
+            Logger.info("Cache", "Loaded $count DbTableTypes")
         }
 
         fun get(id: Int) = configs[id]

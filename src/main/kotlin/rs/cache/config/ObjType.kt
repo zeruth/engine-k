@@ -5,6 +5,7 @@ import rs.cache.ConfigType
 import rs.cache.graphics.AnimFrame
 import rs.io.JagFile
 import rs.io.Packet
+import util.Logger
 import java.io.File
 
 class ObjType(id: Int) : ConfigType(id){
@@ -60,7 +61,8 @@ class ObjType(id: Int) : ConfigType(id){
                     }.toMutableMap()
                 }
             }
-            println("Loaded ${configs.size} ObjTypes")
+            Logger.messageColor = Logger.Color.GREEN
+            Logger.info("Cache", "Loaded ${configs.size} ObjTypes")
         }
 
         fun get(id: Int) = configs[id]

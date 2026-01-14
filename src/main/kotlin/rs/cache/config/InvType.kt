@@ -3,6 +3,7 @@ package rs.cache.config
 import ext.ArrayListExt.ensure
 import rs.cache.ConfigType
 import rs.io.Packet
+import util.Logger
 import java.io.File
 
 class InvType(id: Int) : ConfigType(id){
@@ -44,7 +45,8 @@ class InvType(id: Int) : ConfigType(id){
             INV = getId("inv")!!
             WORN = getId("worn")!!
 
-            println("Loaded $count InvTypes")
+            Logger.messageColor = Logger.Color.GREEN
+            Logger.info("Cache", "Loaded $count InvTypes")
         }
 
         fun get(id: Int) = configs[id]

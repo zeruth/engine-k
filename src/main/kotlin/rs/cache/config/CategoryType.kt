@@ -2,6 +2,7 @@ package rs.cache.config
 
 import rs.cache.ConfigType
 import rs.io.Packet
+import util.Logger
 import java.io.File
 
 class CategoryType(id: Int) : ConfigType(id){
@@ -31,7 +32,8 @@ class CategoryType(id: Int) : ConfigType(id){
                 }
             }
 
-            println("Loaded $count CategoryTypes")
+            Logger.messageColor = Logger.Color.GREEN
+            Logger.info("Cache", "Loaded $count CategoryTypes")
         }
 
         fun get(id: Int) = configs[id]

@@ -3,6 +3,7 @@ package rs.cache.config
 import rs.cache.ConfigType
 import rs.io.JagFile
 import rs.io.Packet
+import util.Logger
 import java.io.File
 
 class VarBitType(id: Int) : ConfigType(id){
@@ -36,7 +37,8 @@ class VarBitType(id: Int) : ConfigType(id){
                     configNames[config.debugname!!] = id
                 }
             }
-            println("Loaded ${configs.size} VarBitTypes")
+            Logger.messageColor = Logger.Color.GREEN
+            Logger.info("Cache", "Loaded ${configs.size} VarBitTypes")
         }
 
         fun get(id: Int) = configs[id]

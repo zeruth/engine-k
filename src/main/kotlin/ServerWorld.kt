@@ -1,14 +1,19 @@
-import Opcode.C_HANDSHAKE
-import Opcode.C_LOGIN
-import Opcode.C_LOGIN_INIT
-import Opcode.C_LOGIN_RE_INIT
+import rs.net.Opcode.C_HANDSHAKE
+import rs.net.Opcode.C_LOGIN
+import rs.net.Opcode.C_LOGIN_INIT
+import rs.net.Opcode.C_LOGIN_RE_INIT
 import ServerOnDemand.CrcTable
 import ServerOnDemand.handleOnDemandSocket
+import db.login.DBLogin
 import io.ktor.network.selector.*
 import io.ktor.network.sockets.*
 import kotlinx.coroutines.*
 import rs.Environment
 import rs.io.Packet
+import rs.net.Client
+import rs.net.Isaac
+import rs.net.RSA
+import util.Logger
 import java.math.BigInteger
 import java.util.*
 
@@ -23,11 +28,13 @@ object ServerWorld {
     fun run(scope: CoroutineScope) {
         scope.launch(Dispatchers.IO) {
             val serverGame = aSocket(selectorManager).tcp().bind("0.0.0.0", 43594)
-            println("[:43594] World listening")
+            Logger.messageColor = Logger.Color.YELLOW
+            Logger.info("World", "[:43594] listening")
 
             while (true) {
                 val socket = serverGame.accept()
-                println("[:43594] Game connection from: ${socket.remoteAddress}")
+                Logger.messageColor = Logger.Color.YELLOW
+                Logger.info("World", "[:43594] connection from: ${socket.remoteAddress}")
                 launch { handleClient(socket) }
             }
         }
@@ -91,6 +98,8 @@ object ServerWorld {
         close()
     }
 
+    var loginRequests = HashMap<String, Client>()
+
     private suspend fun handleWorldSocket(client: Client) {
         if (client.opcode == -1) {
             loginBuf.position(0)
@@ -148,14 +157,46 @@ object ServerWorld {
                 loginBuf.position(0)
                 loginBuf.pdata(plain.data, 0, plain.data.size)
                 loginBuf.position(0)
-                
+
                 val opcode = loginBuf.g1()
                 if (opcode != 10) {
                     client.respondOutOfDate()
                     return
                 }
 
-                println("[Login] (Passed CRCs / RSA)")
+                val seed = IntArray(4)
+                for (i in 0 until 4) {
+                    seed[i] = loginBuf.g4s()
+                }
+                client.decryptor = Isaac(seed)
+                for (i in 0 until 4) {
+                    seed[i] += 50
+                }
+                client.encryptor = Isaac(seed)
+
+                val uid = loginBuf.g4s()
+                val username = loginBuf.gjstr()
+                val password = loginBuf.gjstr()
+
+                if (username.length !in 1..12) {
+                    client.send(ByteArray(1) { 3 })
+                    client.close()
+                    return
+                }
+
+                if (password.length !in 1..20) {
+                    client.send(ByteArray(1) { 3 })
+                    client.close()
+                    return
+                }
+
+                //TODO: max players check
+
+                //TODO: check logout requests
+
+                loginRequests[client.uuid] = client
+
+                login(client, username, password)
             }
 
             C_HANDSHAKE -> handshake(client)
@@ -169,7 +210,96 @@ object ServerWorld {
         client.opcode = -1
     }
 
+    suspend fun login(client: Client, username: String, password: String) {
+        val account = DBLogin.getOrInsert(username, password)
+
+        account?.let {
+            Logger.messageColor = Logger.Color.CYAN
+            Logger.info("LOGIN", "[${account.username}-${client.uuid}] (Passed - CRCs / RSA / Password)")
+        }
+    }
+
+    var tickRate = Environment.TICK_RATE
+
     private suspend fun cycle() {
         nextTick = System.currentTimeMillis() + Environment.TICK_RATE
+
+        // world processing
+        // - world queue
+        // - npc hunt
+        //processWorld();
+
+        // client input
+        // - calculate afk event readiness
+        // - process packets
+        // - process pathfinding/following request
+        // - client input tracking
+        //processClientsIn();
+
+        // Spawn triggers, despawn triggers
+        //processNpcEventQueue();
+
+        // npc processing (if npc is not busy)
+        // - resume suspended script
+        // - stat regen
+        // - timer
+        // - queue
+        // - movement
+        // - modes
+        //processNpcs();
+
+        // player processing
+        // - primary queue
+        // - weak queue
+        // - timers
+        // - soft timers
+        // - engine queue
+        // - interactions
+        // - movement
+        // - close interface if attempting to logout
+        //processPlayers();
+
+        // player logout
+        //processLogouts();
+
+        // player login, good spot for it (before packets so they immediately load but after processing so nothing hits them)
+        processLogins();
+
+        // process zones
+        // - build list of active zones around players
+        // - loc/obj despawn/respawn
+        // - compute shared buffer
+        //processZones();
+
+        // process player & npc update info
+        // - convert player movements
+        // - compute player info
+        // - convert npc movements
+        // - compute npc info
+        //processInfo();
+
+        // client output
+        // - map update
+        // - player info
+        // - npc info
+        // - zone updates
+        // - inv changes
+        // - stat changes
+        // - afk zones changes
+        // - flush packets
+        //processClientsOut();
+
+        // cleanup
+        // - reset zones
+        // - reset players
+        // - reset npcs
+        // - reset invs
+        //processCleanup();
+
+        // ----
+    }
+
+    fun processLogins() {
+
     }
 }

@@ -7,6 +7,7 @@ import rs.engine.entity.NpcMode
 import rs.engine.entity.NpcStat
 import rs.io.JagFile
 import rs.io.Packet
+import util.Logger
 import java.io.File
 
 class NpcType(id: Int) : ConfigType(id){
@@ -41,7 +42,8 @@ class NpcType(id: Int) : ConfigType(id){
                 }
             }
 
-            println("Loaded ${configs.size} NpcTypes")
+            Logger.messageColor = Logger.Color.GREEN
+            Logger.info("Cache", "Loaded ${configs.size} NpcTypes")
         }
 
         fun get(id: Int) = configs[id]

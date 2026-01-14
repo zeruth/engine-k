@@ -1,7 +1,7 @@
 package rs.engine.entity
 
-import Client
-import rs.PlayerInfoProt
+import rs.net.Client
+import rs.net.prot.PlayerInfoProt
 import rs.cache.config.InvType
 import rs.cache.config.ScriptVarType
 import rs.cache.config.VarPlayerType

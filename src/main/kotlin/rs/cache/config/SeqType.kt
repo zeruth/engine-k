@@ -4,6 +4,7 @@ import rs.cache.ConfigType
 import rs.cache.graphics.AnimFrame
 import rs.io.JagFile
 import rs.io.Packet
+import util.Logger
 import java.io.File
 
 class SeqType(id: Int) : ConfigType(id){
@@ -44,7 +45,8 @@ class SeqType(id: Int) : ConfigType(id){
                     configNames[config.debugname!!] = id
                 }
             }
-            println("Loaded ${configs.size} SeqTypes")
+            Logger.messageColor = Logger.Color.GREEN
+            Logger.info("Cache", "Loaded ${configs.size} SeqTypes")
         }
 
         fun get(id: Int) = configs[id]

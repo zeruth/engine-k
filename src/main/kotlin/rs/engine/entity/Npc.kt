@@ -1,6 +1,6 @@
 package rs.engine.entity
 
-import rs.NpcInfoProt
+import rs.net.prot.NpcInfoProt
 
 class Npc(
     level: Int,
