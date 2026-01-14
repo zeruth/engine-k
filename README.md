@@ -1,6 +1,6 @@
 # engine-k
 
-A Kotlin source port of **Engine-TS**
+A Kotlin source port of [**Engine-TS**](https://github.com/LostCityRS/Engine-TS)
 
 The goal of this project is to provide a 1:1 experience on JVM  
 
