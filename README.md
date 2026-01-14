@@ -6,8 +6,8 @@ The goal of this project is to provide a 1:1 experience on JVM
 
 current work:  
 ```
-- [x] OnDemand
-- [x] RuneScript Compiler
+- [x] OnDemand using Lost-City generated cache
+- [x] RuneScript Compiler using Lost-City generated cache
 - [ ] Login (WIP)
 ```
 
