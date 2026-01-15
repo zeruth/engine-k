@@ -14,6 +14,10 @@ application {
     mainClass.set("Server")
 }
 
+tasks.named<JavaExec>("run") {
+    standardInput = System.`in`
+}
+
 dependencies {
 
     implementation(files("./lib/neptune-serverscript-compiler-0.0.1-SNAPSHOT.jar"))
