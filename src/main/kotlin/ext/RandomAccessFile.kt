@@ -31,18 +31,6 @@ class RandomAccessFile(
         return Packet(gdata(length))
     }
 
-    fun pdata(buffer: Any) {
-        val data: ByteArray = when (buffer) {
-            is Packet -> buffer.data
-            is ByteArray -> buffer
-            else -> error("Unsupported buffer type: ${buffer::class}")
-        }
-
-        seek(pos)
-        write(data)
-        pos += data.size
-    }
-
     override fun close() {
         close()
     }
