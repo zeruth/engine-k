@@ -1,10 +1,17 @@
 package rs.engine
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
+import ServerWorld
+import ServerWorld.computeUid
+import db.login.DBLogin
 import rs.Environment
 import rs.engine.entity.Player
+import rs.engine.entity.PlayerLoading
+import rs.engine.entity.PlayerStat
 import rs.engine.game.Inventory
+import rs.net.Client
+import rs.util.EntityPool
+import util.Logger
+import java.math.BigInteger
 
 object World {
     val PLAYERS = Environment.NODE_MAX_PLAYERS
@@ -16,9 +23,8 @@ object World {
 
     var currentTick: Int = 0 // the current tick of the game world.
 
-    val players = arrayOfNulls<Player>(PLAYERS)
+    val players = EntityPool<Player>(PLAYERS)
     var nextTick = 0L
-
 
     fun getInventory(inv: Int) : Inventory? {
         if (inv == -1) return null;
@@ -34,5 +40,122 @@ object World {
         return invetory
     }
 
-    fun getPlayerByUid(uid: Int) = players.firstOrNull { it?.uid == uid }
+    fun getPlayerByUid(uid: Int) = players.values.firstOrNull { it.uid == uid }
+
+    suspend fun cycle() {
+        ServerWorld.nextTick = System.currentTimeMillis() + Environment.TICK_RATE
+
+        // world processing
+        // - world queue
+        // - npc hunt
+        //processWorld();
+
+        // client input
+        // - calculate afk event readiness
+        // - process packets
+        // - process pathfinding/following request
+        // - client input tracking
+        //processClientsIn();
+
+        // Spawn triggers, despawn triggers
+        //processNpcEventQueue();
+
+        // npc processing (if npc is not busy)
+        // - resume suspended script
+        // - stat regen
+        // - timer
+        // - queue
+        // - movement
+        // - modes
+        //processNpcs();
+
+        // player processing
+        // - primary queue
+        // - weak queue
+        // - timers
+        // - soft timers
+        // - engine queue
+        // - interactions
+        // - movement
+        // - close interface if attempting to logout
+        //processPlayers();
+
+        // player logout
+        //processLogouts();
+
+        // player login, good spot for it (before packets so they immediately load but after processing so nothing hits them)
+        processLogins();
+
+        // process zones
+        // - build list of active zones around players
+        // - loc/obj despawn/respawn
+        // - compute shared buffer
+        //processZones();
+
+        // process player & npc update info
+        // - convert player movements
+        // - compute player info
+        // - convert npc movements
+        // - compute npc info
+        //processInfo();
+
+        // client output
+        // - map update
+        // - player info
+        // - npc info
+        // - zone updates
+        // - inv changes
+        // - stat changes
+        // - afk zones changes
+        // - flush packets
+        //processClientsOut();
+
+        // cleanup
+        // - reset zones
+        // - reset players
+        // - reset npcs
+        // - reset invs
+        //processCleanup();
+
+        // ----
+    }
+
+    fun processLogins() {
+
+    }
+
+    fun newPlayer(safeName: String, name37: BigInteger, hash64: BigInteger) : Player {
+        return Player(safeName, name37, hash64).apply {
+            for (i in 0 until 21) {
+                stats[i] = 0;
+                baseLevels[i] = 1;
+                levels[i] = 1;
+            }
+
+            // hitpoints starts at level 10
+            stats[PlayerStat.HITPOINTS.ordinal] = getExpByLevel(10);
+            baseLevels[PlayerStat.HITPOINTS.ordinal] = 10;
+            levels[PlayerStat.HITPOINTS.ordinal] = 10;
+        }
+    }
+
+    suspend fun login(client: Client, username: String, password: String) {
+        val account = DBLogin.getOrInsert(username, password)
+
+        account?.let {
+            val player = PlayerLoading.load(account)
+            val pid = players.nextFreeId() ?: return
+            players.add(pid, player)
+            player.pid = pid
+            player.uid = computeUid(player.name37, player.pid)
+            player.tele = true
+            player.moveClickRequest = false
+
+            //TODO GetZone
+            //TODO Player.onLoad
+
+            Logger.messageColor = Logger.Color.CYAN
+            Logger.info("LOGIN", "[${account.username}-${client.uuid}] (Passed - CRCs / RSA / Password)")
+        }
+    }
 }

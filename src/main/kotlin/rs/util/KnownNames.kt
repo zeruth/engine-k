@@ -189,7 +189,8 @@ object KNOWN_NAMES : List<String> by listOf(
     "overlay.dat",
     "size.dat") {
 
-    override fun <T : Any?> toArray(generator: IntFunction<Array<out T?>?>): Array<out T?>? {
+    @Deprecated("JVM")
+    override fun <T> toArray(generator: IntFunction<Array<out T?>?>): Array<out T?>? {
         return super.toArray(generator)
     }
 }

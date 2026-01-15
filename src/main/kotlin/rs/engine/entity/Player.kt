@@ -13,8 +13,14 @@ import rs.net.msg.out.VarpLarge
 import rs.net.msg.out.VarpSmall
 import rs.net.msg.out.game.ServerGameMessage
 import rs.net.msg.out.game.ServerGameProtPriority
+import java.math.BigInteger
+import kotlin.math.pow
 
-class Player : PathingEntity(0, 3094, 3106, 1, 1, EntityLifeCycle.FOREVER, MoveRestrict.NORMAL, BlockWalk.NPC, MoveStrategy.SMART, PlayerInfoProt.FACE_COORD, PlayerInfoProt.FACE_ENTITY){
+class Player(val safeName: String, val name37: BigInteger, val hash64: BigInteger) : PathingEntity(0, 3094, 3106, 1, 1, EntityLifeCycle.FOREVER, MoveRestrict.NORMAL, BlockWalk.NPC, MoveStrategy.SMART, PlayerInfoProt.FACE_COORD, PlayerInfoProt.FACE_ENTITY){
+    var moveClickRequest = false
+    var tele = false
+    var members = false
+    var account_id = -1
     var invs: HashMap<Int, Inventory> = HashMap()
     var modalState: ModalState = ModalState.NONE
     var delayed: Boolean = false
@@ -30,6 +36,9 @@ class Player : PathingEntity(0, 3094, 3106, 1, 1, EntityLifeCycle.FOREVER, MoveR
     var pid = -1
     var uid = -1
     var staffModLevel = 0
+    var stats = IntArray(21)
+    var levels = ByteArray(21)
+    var baseLevels = ByteArray(21)
 
     var client: Client? = null
 
@@ -127,6 +136,18 @@ class Player : PathingEntity(0, 3094, 3106, 1, 1, EntityLifeCycle.FOREVER, MoveR
 
 
     companion object {
+        val levelExperience = IntArray(99)
+
+        init {
+            var acc = 0.0
+            for (i in 0 until 99) {
+                val level = i + 1
+                val delta = (level + 2.0.pow(level / 7.0) * 300.0).toInt()
+                acc += delta
+                levelExperience[i] = ((acc / 4).toInt()) * 10
+            }
+        }
+
         fun Player.writeVarp(id: Int, value: Int) {
             if (value in -128..127) {
                 write(VarpSmall(id, value))
@@ -142,5 +163,18 @@ class Player : PathingEntity(0, 3094, 3106, 1, 1, EntityLifeCycle.FOREVER, MoveR
             write(message)
             return message
         }
+    }
+
+    fun getLevelByExp(exp: Int): Int {
+        for (i in 98 downTo 0) {
+            if (exp >= levelExperience[i]) {
+                return minOf(i + 2, 99)
+            }
+        }
+        return 1
+    }
+
+    fun getExpByLevel(level: Int): Int {
+        return if (level <= 1) 0 else levelExperience[level - 2]
     }
 }

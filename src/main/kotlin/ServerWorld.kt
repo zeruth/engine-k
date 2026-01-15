@@ -9,7 +9,9 @@ import io.ktor.network.selector.*
 import io.ktor.network.sockets.*
 import kotlinx.coroutines.*
 import rs.Environment
+import rs.engine.World
 import rs.engine.entity.Player
+import rs.engine.entity.PlayerLoading
 import rs.engine.script.RuneScriptProvider.loginScript
 import rs.engine.script.RuneScriptRunner
 import rs.engine.script.ScriptState
@@ -36,7 +38,8 @@ object ServerWorld {
             Logger.info("World", "[:43594] listening")
 
             // Script test TODO remove
-            val player = Player()
+            val account = DBLogin.getOrInsert("tester", "tester")!!
+            val player = PlayerLoading.load(account)
             println(loginScript.name())
             val state = RuneScriptRunner.init(loginScript, player)
             val result = ScriptState.of(RuneScriptRunner.execute(state))
@@ -54,10 +57,10 @@ object ServerWorld {
             while (isActive) {
                 val tickStart = System.currentTimeMillis()
 
-                cycle()
+                World.cycle()
 
                 val elapsed = System.currentTimeMillis() - tickStart
-                val remaining = Environment.TICK_RATE - elapsed
+                val remaining = World.TICKRATE - elapsed
 
                 if (remaining > 0) delay(remaining)
                 else println("⏱ MISSED TICK by ${-remaining}ms!")
@@ -207,7 +210,7 @@ object ServerWorld {
 
                 loginRequests[client.uuid] = client
 
-                login(client, username, password)
+                World.login(client, username, password)
             }
 
             C_HANDSHAKE -> handshake(client)
@@ -221,96 +224,9 @@ object ServerWorld {
         client.opcode = -1
     }
 
-    suspend fun login(client: Client, username: String, password: String) {
-        val account = DBLogin.getOrInsert(username, password)
-
-        account?.let {
-            Logger.messageColor = Logger.Color.CYAN
-            Logger.info("LOGIN", "[${account.username}-${client.uuid}] (Passed - CRCs / RSA / Password)")
-        }
-    }
-
-    var tickRate = Environment.TICK_RATE
-
-    private suspend fun cycle() {
-        nextTick = System.currentTimeMillis() + Environment.TICK_RATE
-
-        // world processing
-        // - world queue
-        // - npc hunt
-        //processWorld();
-
-        // client input
-        // - calculate afk event readiness
-        // - process packets
-        // - process pathfinding/following request
-        // - client input tracking
-        //processClientsIn();
-
-        // Spawn triggers, despawn triggers
-        //processNpcEventQueue();
-
-        // npc processing (if npc is not busy)
-        // - resume suspended script
-        // - stat regen
-        // - timer
-        // - queue
-        // - movement
-        // - modes
-        //processNpcs();
-
-        // player processing
-        // - primary queue
-        // - weak queue
-        // - timers
-        // - soft timers
-        // - engine queue
-        // - interactions
-        // - movement
-        // - close interface if attempting to logout
-        //processPlayers();
-
-        // player logout
-        //processLogouts();
-
-        // player login, good spot for it (before packets so they immediately load but after processing so nothing hits them)
-        processLogins();
-
-        // process zones
-        // - build list of active zones around players
-        // - loc/obj despawn/respawn
-        // - compute shared buffer
-        //processZones();
-
-        // process player & npc update info
-        // - convert player movements
-        // - compute player info
-        // - convert npc movements
-        // - compute npc info
-        //processInfo();
-
-        // client output
-        // - map update
-        // - player info
-        // - npc info
-        // - zone updates
-        // - inv changes
-        // - stat changes
-        // - afk zones changes
-        // - flush packets
-        //processClientsOut();
-
-        // cleanup
-        // - reset zones
-        // - reset players
-        // - reset npcs
-        // - reset invs
-        //processCleanup();
-
-        // ----
-    }
-
-    fun processLogins() {
-
+    fun computeUid(username37: BigInteger, pid: Int): Int {
+        val mask = username37.and(BigInteger("1FFFFF", 16)).toLong()
+        val combined = (mask shl 11) or (pid.toLong() and 0x7FF)
+        return combined.toUInt().toInt()
     }
 }
