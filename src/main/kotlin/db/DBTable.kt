@@ -33,7 +33,7 @@ open class DBTable<T : Any>(
         }
 
     open suspend fun insert(args: Array<Any>): Any {
-        return -1
+       TODO()
     }
 }
 
