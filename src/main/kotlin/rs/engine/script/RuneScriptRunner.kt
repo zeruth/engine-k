@@ -6,7 +6,7 @@ import rs.engine.entity.Loc
 import rs.engine.entity.Npc
 import rs.engine.entity.Obj
 import rs.engine.entity.Player
-import rs.engine.script.ScriptPointer.Companion.check
+import rs.engine.script.ScriptState.Companion.check
 import rs.engine.script.handlers.*
 
 object RuneScriptRunner {
@@ -163,7 +163,7 @@ object RuneScriptRunner {
 
                 state.opcount++
                 val innerOp = state.script!!.opcodes[++state.pc]
-                println("Executing inner opcode: ${RuneScriptOpcode.of(innerOp!!)}")
+                println("Executing ($innerOp) ${RuneScriptOpcode.of(innerOp!!)} ")
                 executeInner(state, innerOp)
             }
 
@@ -186,8 +186,9 @@ object RuneScriptRunner {
     }
 
     fun executeInner(state: ScriptState, opcode: Int?) {
-        val handler = handlers[opcode] ?: throw IllegalStateException("Unknown opcode: $opcode")
-        state.check(handler.pointers)
-        handler.handle(state)
+        val handler = handlers[opcode]
+        handler ?: throw IllegalStateException("Unknown opcode: $opcode")
+        handler.pointers?.let { state.check(it) }
+        handler.op(state)
     }
 }

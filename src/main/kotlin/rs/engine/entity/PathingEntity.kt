@@ -14,6 +14,6 @@ open class PathingEntity(
     val entitymask: Int) : Entity(level, x, z, width, length, lifecycle) {
 
     init {
-        TODO()
+
     }
 }

@@ -7,125 +7,104 @@ import rs.engine.script.RuneScriptOpcodeHandler
 import rs.engine.script.RuneScriptProvider
 import rs.engine.script.ScriptState
 
-object BranchEqualsHandler : RuneScriptOpcodeHandler(
-    RuneScriptOpcode.BRANCH_EQUALS
-) {
-    override fun handle(state: ScriptState) {
-        val b = state.popInt()
-        val a = state.popInt()
+object BranchEqualsHandler : RuneScriptOpcodeHandler(RuneScriptOpcode.BRANCH_EQUALS,
+    op = {
+        val b = popInt()
+        val a = popInt()
 
-        if (a == b)
-            state.pc += state.intOperand()
+        if (a == b) {
+            pc += intOperand()
+        }
     }
-}
+)
 
-object BranchGreaterThanHandler : RuneScriptOpcodeHandler(
-    RuneScriptOpcode.BRANCH_GREATER_THAN
-) {
-    override fun handle(state: ScriptState) {
-        val b = state.popInt()
-        val a = state.popInt()
+object BranchGreaterThanHandler : RuneScriptOpcodeHandler(RuneScriptOpcode.BRANCH_GREATER_THAN,
+    op = {
+        val b = popInt()
+        val a = popInt()
         if (a > b) {
-            state.pc += state.intOperand()
+            pc += intOperand()
         }
     }
-}
+)
 
-object BranchGreaterThanOrEqualsHandler : RuneScriptOpcodeHandler(
-    RuneScriptOpcode.BRANCH_GREATER_THAN_OR_EQUALS
-) {
-    override fun handle(state: ScriptState) {
-        val b = state.popInt()
-        val a = state.popInt()
+object BranchGreaterThanOrEqualsHandler : RuneScriptOpcodeHandler(RuneScriptOpcode.BRANCH_GREATER_THAN_OR_EQUALS,
+    op = {
+        val b = popInt()
+        val a = popInt()
         if (a >= b) {
-            state.pc += state.intOperand()
+            pc += intOperand()
         }
     }
-}
+)
 
-object BranchHandler : RuneScriptOpcodeHandler(
-    RuneScriptOpcode.BRANCH
-) {
-    override fun handle(state: ScriptState) {
-        state.pc += state.intOperand()
+object BranchHandler : RuneScriptOpcodeHandler(RuneScriptOpcode.BRANCH,
+    op = {
+        pc += intOperand()
     }
-}
+)
 
-object GoSubWithParamsHandler : RuneScriptOpcodeHandler(
-    RuneScriptOpcode.GOSUB_WITH_PARAMS
-) {
-    override fun handle(state: ScriptState) {
-        if (state.fp >= 50) {
+object GoSubWithParamsHandler : RuneScriptOpcodeHandler(RuneScriptOpcode.GOSUB_WITH_PARAMS,
+    op = {
+        if (fp >= 50) {
             throw RuntimeException("stack overflow")
         }
-        val id = state.intOperand()
+        val id = intOperand()
         val proc = RuneScriptProvider.get(id) ?: throw RuntimeException("unable to find proc with id: $id")
 
-        state.gosubFrame(proc)
+        gosubFrame(proc)
     }
-}
+)
 
-object PopIntLocalHandler : RuneScriptOpcodeHandler(
-    RuneScriptOpcode.POP_INT_LOCAL
-) {
-    override fun handle(state: ScriptState) {
-        state.intLocals[state.intOperand()] = state.popInt()
+object PopIntLocalHandler : RuneScriptOpcodeHandler(RuneScriptOpcode.POP_INT_LOCAL,
+    op = {
+        intLocals[intOperand()] = popInt()
     }
-}
+)
 
-object PopVarpHandler : RuneScriptOpcodeHandler(
-    RuneScriptOpcode.POP_VARP
-) {
-    override fun handle(state: ScriptState) {
-        val secondary = (state.intOperand() shr 16) and 0x1
-        val player = if (secondary != 0) state._activePlayer2 else state._activePlayer
+object PopVarpHandler : RuneScriptOpcodeHandler(RuneScriptOpcode.POP_VARP,
+    op = {
+        val secondary = (intOperand() shr 16) and 0x1
+        val player = if (secondary != 0) _activePlayer2 else _activePlayer
 
         if (player == null)
             throw RuntimeException("No Active Player")
 
-        val varpType = VarPlayerType.get(state.intOperand() and 0xffff) ?: throw RuntimeException("No VarPlayerType")
+        val varpType = VarPlayerType.get(intOperand() and 0xffff) ?: throw RuntimeException("No VarPlayerType")
 
         if (varpType.type == ScriptVarType.STRING) {
-            player.setVar(varpType.id, state.popString());
+            player.setVar(varpType.id, popString());
         } else {
-            player.setVar(varpType.id, state.popInt());
+            player.setVar(varpType.id, popInt());
         }
     }
-}
+)
 
-object PushConstIntHandler : RuneScriptOpcodeHandler(
-    RuneScriptOpcode.PUSH_CONSTANT_INT
-) {
-    override fun handle(state: ScriptState) {
-        state.pushInt(state.intOperand())
+object PushConstIntHandler : RuneScriptOpcodeHandler(RuneScriptOpcode.PUSH_CONSTANT_INT,
+    op = {
+        pushInt(intOperand())
     }
-}
+)
 
-object PushConstStringHandler : RuneScriptOpcodeHandler(
-    RuneScriptOpcode.PUSH_CONSTANT_STRING
-) {
-    override fun handle(state: ScriptState) {
-        state.pushString(state.stringOperand())
+object PushConstStringHandler : RuneScriptOpcodeHandler(RuneScriptOpcode.PUSH_CONSTANT_STRING,
+    op = {
+        pushString(stringOperand())
     }
-}
+)
 
-object PushIntLocalHandler : RuneScriptOpcodeHandler(
-    RuneScriptOpcode.PUSH_INT_LOCAL
-) {
-    override fun handle(state: ScriptState) {
-        state.pushInt(state.intLocals[state.intOperand()])
+object PushIntLocalHandler : RuneScriptOpcodeHandler(RuneScriptOpcode.PUSH_INT_LOCAL,
+    op = {
+        pushInt(intLocals[intOperand()])
     }
-}
+)
 
-object ReturnHandler : RuneScriptOpcodeHandler(
-    RuneScriptOpcode.RETURN
-) {
-    override fun handle(state: ScriptState) {
-        if (state.fp == 0) {
-            state.execution = ScriptState.FINISHED
-            return
+object ReturnHandler : RuneScriptOpcodeHandler(RuneScriptOpcode.RETURN,
+    op = op@{
+        if (fp == 0) {
+            execution = ScriptState.FINISHED
+            return@op
         }
 
-        state.popFrame()
+        popFrame()
     }
-}
+)

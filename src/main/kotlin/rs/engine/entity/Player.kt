@@ -95,7 +95,7 @@ class Player : PathingEntity(0, 3094, 3106, 1, 1, EntityLifeCycle.FOREVER, MoveR
             vars[varp.id] = value;
 
             if (varp.transmit) {
-                this.writeVarp(id, value);
+                writeVarp(id, value);
             }
         } else {
             throw RuntimeException("VarPlayerType set value not valid: $value")
@@ -124,29 +124,23 @@ class Player : PathingEntity(0, 3094, 3106, 1, 1, EntityLifeCycle.FOREVER, MoveR
         }
     }
 
-    fun writeVarp(id: Int, value: Int) {
-        if (value in -128..127) {
-            write(VarpSmall(id, value))
-        } else {
-            write(VarpLarge(id, value))
-        }
-    }
 
-    fun messageGame(message: String) {
-        write(MessageGame(message))
-    }
 
     companion object {
-        fun Player.VarpLarge(id: Int, value: Int) : VarpLarge {
-            return VarpLarge(this, id, value)
+        fun Player.writeVarp(id: Int, value: Int) {
+            if (value in -128..127) {
+                write(VarpSmall(id, value))
+            } else {
+                write(VarpLarge(id, value))
+            }
         }
+        fun Player.VarpLarge(id: Int, value: Int) = process(VarpLarge(this, id, value))
+        fun Player.VarpSmall(id: Int, value: Int) = process(VarpSmall(this, id, value))
+        fun Player.MessageGame(message: String) = process(MessageGame(this, message))
 
-        fun Player.VarpSmall(id: Int, value: Int) : VarpSmall {
-            return VarpSmall(this, id, value)
-        }
-
-        fun Player.MessageGame(message: String) : MessageGame {
-            return MessageGame(this, message)
+        fun <T : ServerGameMessage> Player.process(message: T) : T {
+            write(message)
+            return message
         }
     }
 }

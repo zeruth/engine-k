@@ -45,10 +45,10 @@ object SQLUtil {
             connections[key] = conn
 
             Logger.messageColor = Logger.Color.YELLOW
-            Logger.info("SQL", "Opened connection to ${database ?: "server root"} at $host:$port")
+            Logger.info("SQL", "Opened connection to ${database ?: "MySQL"} at $host:$port")
             return conn
         }catch (e: SQLException) {
-            throw RuntimeException("SQL Exception while opening connection to ${url}:$port", e)
+            throw RuntimeException("Exception while opening MySQL connection to ${url}:$port", e)
         }
     }
 

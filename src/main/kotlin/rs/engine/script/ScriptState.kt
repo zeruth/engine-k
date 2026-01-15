@@ -39,6 +39,36 @@ open class ScriptState(
                 else -> throw IllegalArgumentException("Unknown id $id")
             }
         }
+
+        fun ScriptState.check(pointer: Any) {
+            when (pointer) {
+                is ScriptPointer -> {
+                    pointerCheck(pointer)
+                }
+
+                is Array<*> -> {
+                    val arr = pointer.filterIsInstance<ScriptPointer>()
+                    if (arr.isNotEmpty()) {
+                        pointerCheck(arr[intOperand()])
+                        pointerCheck(*arr.toTypedArray())
+                    }
+                }
+
+                is List<*> -> {
+                    val list = pointer.filterIsInstance<ScriptPointer>()
+                    if (list.isNotEmpty()) {
+                        val index = intOperand()
+                        pointerCheck(list[index])
+                        pointerCheck(*list.toTypedArray())
+                    }
+                }
+
+
+                else -> {
+                    throw IllegalArgumentException("Invalid pointer type: ${pointer::class}")
+                }
+            }
+        }
     }
     val trigger: Int = if (script?.info == null) -1 else script!!.info!!.lookupKey
 

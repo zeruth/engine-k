@@ -9,6 +9,10 @@ import io.ktor.network.selector.*
 import io.ktor.network.sockets.*
 import kotlinx.coroutines.*
 import rs.Environment
+import rs.engine.entity.Player
+import rs.engine.script.RuneScriptProvider.loginScript
+import rs.engine.script.RuneScriptRunner
+import rs.engine.script.ScriptState
 import rs.io.Packet
 import rs.net.Client
 import rs.net.Isaac
@@ -30,6 +34,13 @@ object ServerWorld {
             val serverGame = aSocket(selectorManager).tcp().bind("0.0.0.0", 43594)
             Logger.messageColor = Logger.Color.YELLOW
             Logger.info("World", "[:43594] listening")
+
+            // Script test TODO remove
+            val player = Player()
+            println(loginScript.name())
+            val state = RuneScriptRunner.init(loginScript, player)
+            val result = ScriptState.of(RuneScriptRunner.execute(state))
+            println(result)
 
             while (true) {
                 val socket = serverGame.accept()

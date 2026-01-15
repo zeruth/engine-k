@@ -8,9 +8,6 @@ object Server {
 
     @JvmStatic
     fun main(args: Array<String>) {
-        //TODO don't drop
-        DBLoginBootstrap.DROP()
-
         DBLoginBootstrap.init()
 
         runBlocking {
