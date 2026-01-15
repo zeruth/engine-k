@@ -1,6 +1,7 @@
 package db.login
 
 import db.DB
+import db.login.DBLoginAccountImpl.Companion.update
 import rs.Environment
 import util.Logger
 import util.Password
@@ -18,6 +19,11 @@ object DBLogin : DB(Environment.DB_LOGIN_IP, Environment.DB_LOGIN_PORT, "login")
     suspend fun getOrInsert(username: String, password: String): DBLoginAccountImpl.DBAccount? {
         get(username)?.let {
             return if (Password.verify(it.password, password)) {
+                if (Password.needsRehash(it.password)) {
+                    it.update(password = Password.hash(password))
+                    Logger.messageColor = Logger.Color.CYAN
+                    Logger.info("LOGIN", "REHASH: ${it.username}")
+                }
                 Logger.messageColor = Logger.Color.CYAN
                 Logger.info("LOGIN", "LOGGED_IN: ${it.username}")
                 it

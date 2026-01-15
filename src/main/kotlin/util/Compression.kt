@@ -48,7 +48,7 @@ object Compression {
         }
     }
 
-    fun decompressGZipSync(data: ByteArray): ByteArray {
+    fun decompressGZip(data: ByteArray): ByteArray {
         return GZIPInputStream(ByteArrayInputStream(data)).use { gzip ->
             buffer(gzip)
         }

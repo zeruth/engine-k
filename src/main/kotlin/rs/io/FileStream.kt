@@ -2,10 +2,7 @@ package rs.io
 
 import ext.RandomAccessFile
 import util.Compression
-import java.io.ByteArrayInputStream
-import java.io.ByteArrayOutputStream
 import java.nio.file.Path
-import java.util.zip.GZIPInputStream
 import kotlin.io.path.*
 
 class FileStream(
@@ -102,7 +99,7 @@ class FileStream(
         return if (archive == 0) {
             data.data
         } else {
-            Compression.decompressGZipSync(data.data)
+            Compression.decompressGZip(data.data)
         }
     }
 }

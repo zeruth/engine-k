@@ -10,6 +10,10 @@ object Environment {
     const val DB_WORLD_IP = "127.0.0.1"
     const val DB_WORLD_PORT = 3306
 
+    const val ARGON2_ITERATIONS = 2
+    const val ARGON2_MEMORY = 65536
+    const val ARGON2_PARALLELISM = 1
+
     const val ENGINE_REVISION = 377
     const val NODE_MEMBERS = true
     const val NODE_MAX_PLAYERS = 2047
