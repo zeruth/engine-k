@@ -1,6 +1,6 @@
 package rs.io
 
-import luna.util.Compression
+import util.Compression
 import rs.util.KNOWN_NAMES
 import java.io.File
 import java.util.Locale

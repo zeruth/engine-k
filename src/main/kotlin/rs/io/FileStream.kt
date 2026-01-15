@@ -1,7 +1,7 @@
 package rs.io
 
 import ext.RandomAccessFile
-import luna.util.Compression
+import util.Compression
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.nio.file.Path
