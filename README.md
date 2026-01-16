@@ -11,11 +11,7 @@ current work:
 - [ ] Login (WIP)
 ```
 
-```
-Login:
-DB started, can create and get accounts
-CRCs / RSA / Isaac implemented
-```
+<img width="1105" height="1219" alt="image" src="https://github.com/user-attachments/assets/b8ae364a-1593-4e50-a320-cc10ca843b03" />
 
 ---
   
