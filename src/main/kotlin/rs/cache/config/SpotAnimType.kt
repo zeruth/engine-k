@@ -13,7 +13,7 @@ class SpotAnimType(id: Int) : ConfigType(id){
         private var configNames = HashMap<String, Int>()
         private var configs: Array<SpotAnimType?> = emptyArray()
 
-        fun load() {
+        init {
             val server = Packet.load(dir.resolve("server/spotanim.dat").toFile())
             val jag = JagFile.load(dir.resolve("client/config").toFile())
             parse(server, jag)

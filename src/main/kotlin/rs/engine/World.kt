@@ -4,10 +4,14 @@ import ServerWorld
 import ServerWorld.computeUid
 import db.login.DBLogin
 import rs.Environment
+import rs.engine.entity.Npc
 import rs.engine.entity.Player
 import rs.engine.entity.PlayerLoading
 import rs.engine.entity.PlayerStat
 import rs.engine.game.Inventory
+import rs.engine.script.RuneScriptProvider.loginScript
+import rs.engine.script.RuneScriptRunner
+import rs.engine.script.ScriptState
 import rs.net.Client
 import rs.util.EntityPool
 import util.Logger
@@ -24,7 +28,10 @@ object World {
     var currentTick: Int = 0 // the current tick of the game world.
 
     val players = EntityPool<Player>(PLAYERS)
+    val npcs = EntityPool<Npc>(NPCS)
     var nextTick = 0L
+
+    val gameMap = GameMap(Environment.NODE_MEMBERS)
 
     fun getInventory(inv: Int) : Inventory? {
         if (inv == -1) return null;
@@ -156,6 +163,24 @@ object World {
 
             Logger.messageColor = Logger.Color.CYAN
             Logger.info("LOGIN", "[${account.username}-${client.uuid}] (Passed - CRCs / RSA / Password)")
+
+            //TODO: remove
+            Logger.messageColor = Logger.Color.PURPLE
+            Logger.info("RuneScript", loginScript.name())
+            val state = RuneScriptRunner.init(loginScript, player)
+            val result = ScriptState.of(RuneScriptRunner.execute(state))
+            Logger.messageColor = Logger.Color.PURPLE
+            Logger.info("RuneScript", result)
+        }
+    }
+
+    fun getNextNid() : Int {
+        return npcs.nextFreeId() ?: throw RuntimeException("No npc nextFreeId")
+    }
+
+    fun addNpc(npc: Npc, duration: Int, firstSpawn: Boolean = true) {
+        if (firstSpawn) {
+            npcs.add(npc.nid, npc)
         }
     }
 }

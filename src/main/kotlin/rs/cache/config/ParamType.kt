@@ -17,7 +17,7 @@ class ParamType(id: Int) : ConfigType(id){
         private var configNames = HashMap<String, Int>()
         private var configs: Array<ParamType?> = emptyArray()
 
-        fun load() {
+        init {
             val dat = Packet.load(dir.resolve("param.dat").toFile())
             parse(dat)
         }

@@ -6,9 +6,9 @@ open class PathingEntity(
     z: Int,
     width: Int,
     length: Int,
-    lifecycle: EntityLifeCycle,
-    val moveRestrict: MoveRestrict,
-    val blockWalk: BlockWalk,
+    lifecycle: Int,
+    val moveRestrict: Int,
+    val blockWalk: Int,
     val moveStrategy: MoveStrategy,
     val coordmask: Int,
     val entitymask: Int) : Entity(level, x, z, width, length, lifecycle) {

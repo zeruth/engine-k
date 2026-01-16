@@ -1,23 +1,25 @@
 package rs.net.msg.out.game
 
-import io.netty.buffer.ByteBuf
 import rs.engine.entity.Player
 import rs.io.Packet
 
-abstract class ServerGameMessage(val prot: ServerGameProt, val priority: ServerGameProtPriority, val player: Player) {
-    abstract fun encode(buf: Packet)
-
+open class ServerGameMessage(val priority: ServerGameProtPriority,
+                             val prot: ServerGameProt? = null,
+                             val player: Player? = null,
+                             val encode: (Packet.() -> Unit)?) {
     companion object {
-        fun ServerGameMessage.write(
-            out: ByteBuf?
-        ) {
-/*            val client = player.client ?: return
-            val buf = client.out
+        suspend fun ServerGameMessage.write() {
+            prot ?: return
+            player ?: return
+            encode ?: throw RuntimeException("encode is null")
+            val client = player.client ?: return
+
+            val buf = client.buffer
 
             buf.position(0)
 
             if (client.encryptor != null) {
-                buf.p1(prot.id + client.encryptor.nextInt())
+                buf.p1(prot.id + client.encryptor!!.nextInt())
             } else {
                 buf.p1(prot.id)
             }
@@ -29,7 +31,7 @@ abstract class ServerGameMessage(val prot: ServerGameProt, val priority: ServerG
             }
 
             val start = buf.position()
-            encode(buf)
+            buf.encode()
 
             if (prot.length == -1) {
                 buf.psize1(buf.position() - start)
@@ -37,7 +39,7 @@ abstract class ServerGameMessage(val prot: ServerGameProt, val priority: ServerG
                 buf.psize2(buf.position() - start)
             }
 
-            out?.writeBytes(buf.data.sliceArray(0 until buf.position()))*/
+            client.send(buf.data.sliceArray(0 until buf.position()))
         }
     }
 }

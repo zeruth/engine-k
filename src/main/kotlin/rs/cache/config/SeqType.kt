@@ -14,7 +14,7 @@ class SeqType(id: Int) : ConfigType(id){
         private var configNames = HashMap<String, Int>()
         private var configs: Array<SeqType?> = emptyArray()
 
-        fun load() {
+        init {
 
             // adds some startup time but we need it for seqlength
             if (AnimFrame.instances.isEmpty()) {

@@ -1,12 +1,7 @@
 package rs.engine.entity
 
-enum class EntityLifeCycle {
-    FOREVER, // never respawns or despawns, is always in the world.
-    RESPAWN, // entity added from engine that respawns later.
-    DESPAWN; // entity added from script that despawns later.
-
-    companion object {
-        fun of(id: Int) = MoveRestrict.values()
-            .getOrNull(id) ?: throw IndexOutOfBoundsException("Invalid HuntVis id: $id")
-    }
+object EntityLifeCycle {
+    const val FOREVER = 0 // never respawns or despawns, is always in the world.
+    const val RESPAWN = 1 // entity added from engine that respawns later.
+    const val DESPAWN = 2 // entity added from script that despawns later.
 }

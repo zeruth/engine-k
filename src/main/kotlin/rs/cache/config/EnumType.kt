@@ -12,7 +12,7 @@ class EnumType(id: Int) : ConfigType(id){
         private var configNames = HashMap<String, Int>()
         private var configs: Array<EnumType?> = emptyArray()
 
-        fun load() {
+        init {
             val dat = Packet.load(dir.resolve("enum.dat").toFile())
             parse(dat)
         }

@@ -6,6 +6,7 @@ import io.ktor.utils.io.ByteWriteChannel
 import io.ktor.utils.io.availableForRead
 import io.ktor.utils.io.readFully
 import io.ktor.utils.io.writeFully
+import rs.io.Packet
 import java.util.UUID
 
 class Client(
@@ -18,11 +19,11 @@ class Client(
     var state = 0
     var opcode = -1
     var waiting = 0
-    val available: Int
-        get() = input.availableForRead
 
-    lateinit var decryptor: Isaac
-    lateinit var encryptor: Isaac
+    var decryptor: Isaac? = null
+    var encryptor: Isaac? = null
+
+    var buffer = Packet.alloc(1)
 
     /**
      * readFully will suspend until there are enough bytes to be read

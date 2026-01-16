@@ -163,6 +163,10 @@ class Player(val safeName: String, val name37: BigInteger, val hash64: BigIntege
             write(message)
             return message
         }
+
+        fun dummy() : Player {
+            return Player("", BigInteger("0"), BigInteger("0"))
+        }
     }
 
     fun getLevelByExp(exp: Int): Int {

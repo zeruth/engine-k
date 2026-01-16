@@ -8,10 +8,10 @@ class Npc(
     z: Int,
     width: Int,
     height: Int,
-    lifeCycle: EntityLifeCycle,
-    moveRestrict: MoveRestrict,
-    blockWalk: BlockWalk,
-    var nid: Int,
+    lifeCycle: Int,
+    val nid: Int,
     var type: Int,
+    moveRestrict: Int,
+    blockWalk: Int,
     ) : PathingEntity(level, x, z, width, height, lifeCycle, moveRestrict, blockWalk, MoveStrategy.NAIVE, NpcInfoProt.FACE_COORD, NpcInfoProt.FACE_ENTITY) {
 }

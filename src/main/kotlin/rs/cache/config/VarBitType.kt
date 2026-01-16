@@ -13,7 +13,7 @@ class VarBitType(id: Int) : ConfigType(id){
         private var configNames = HashMap<String, Int>()
         private var configs: Array<VarBitType?> = emptyArray()
 
-        fun load() {
+        init {
             val server = Packet.load(dir.resolve("server/varbit.dat").toFile())
             val jag = JagFile.load(dir.resolve("client/config").toFile())
             parse(server, jag)

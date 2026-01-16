@@ -12,7 +12,7 @@ class DbTableType(id: Int) : ConfigType(id){
         private var configNames = HashMap<String, Int>()
         private var configs: Array<DbTableType?> = emptyArray()
 
-        fun load() {
+        init {
             val dat = Packet.load(dir.resolve("dbtable.dat").toFile())
             parse(dat)
         }

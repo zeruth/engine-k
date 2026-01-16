@@ -9,7 +9,7 @@ open class Entity(
     var z: Int,
     var width: Int,
     var length: Int,
-    var lifecycle: EntityLifeCycle,
+    var lifecycle: Int,
     var isActive: Boolean = false
 ) : Linkable() {
     var lifecycleTick = -1

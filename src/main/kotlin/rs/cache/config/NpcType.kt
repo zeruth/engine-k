@@ -17,7 +17,7 @@ class NpcType(id: Int) : ConfigType(id){
         private var configNames = HashMap<String, Int>()
         private var configs: Array<NpcType?> = emptyArray()
 
-        fun load() {
+        init {
             val server = Packet.load(dir.resolve("server/npc.dat").toFile())
             val jag = JagFile.load(dir.resolve("client/config").toFile())
             parse(server, jag)
@@ -107,7 +107,7 @@ class NpcType(id: Int) : ConfigType(id){
     var defaultmode = NpcMode.WANDER
     var members = false;
     var blockwalk = BlockWalk.NPC;
-    lateinit var params: ParamMap
+    var params = HashMap<Int, Any>()
     var patrolCoord: Array<Int?>? = null
     var patrolDelay: Array<Int?>? = null
     var givechase = true
@@ -202,9 +202,9 @@ class NpcType(id: Int) : ConfigType(id){
             202 -> huntrange = dat.g1()
             203 -> timer = dat.g2()
             204 -> respawnrate = dat.g2()
-            206 -> moverestrict = MoveRestrict.of(dat.g1())
+            206 -> moverestrict = dat.g1()
             207 -> attackrange = dat.g2()
-            208 -> blockwalk = BlockWalk.of(dat.g1())
+            208 -> blockwalk = dat.g1()
             209 -> huntmode = dat.g1()
             210 -> defaultmode = dat.g1()
             211 -> members = true
@@ -219,7 +219,7 @@ class NpcType(id: Int) : ConfigType(id){
                 }
             }
             213 -> givechase = false
-            249 -> params = ParamHelper.decodeParams(dat)
+            249 -> params = Parameters.decode(dat)
             250 -> debugname = dat.gjstr()
             else -> throw RuntimeException("Unhandled code $code")
         }

@@ -9,6 +9,26 @@ import io.ktor.network.selector.*
 import io.ktor.network.sockets.*
 import kotlinx.coroutines.*
 import rs.Environment
+import rs.cache.config.CategoryType
+import rs.cache.config.DbRowType
+import rs.cache.config.DbTableType
+import rs.cache.config.EnumType
+import rs.cache.config.FloType
+import rs.cache.config.HuntType
+import rs.cache.config.IdkType
+import rs.cache.config.InvType
+import rs.cache.config.LocType
+import rs.cache.config.MesAnimType
+import rs.cache.config.NpcType
+import rs.cache.config.ObjType
+import rs.cache.config.ParamType
+import rs.cache.config.SeqType
+import rs.cache.config.SpotAnimType
+import rs.cache.config.StructType
+import rs.cache.config.VarBitType
+import rs.cache.config.VarNpcType
+import rs.cache.config.VarPlayerType
+import rs.cache.config.VarSharedType
 import rs.engine.World
 import rs.engine.entity.Player
 import rs.engine.entity.PlayerLoading
@@ -31,19 +51,12 @@ object ServerWorld {
 
     var nextTick = 0L
 
+
     fun run(scope: CoroutineScope) {
         scope.launch(Dispatchers.IO) {
             val serverGame = aSocket(selectorManager).tcp().bind("0.0.0.0", 43594)
             Logger.messageColor = Logger.Color.YELLOW
             Logger.info("World", "[:43594] listening")
-
-            // Script test TODO remove
-            val account = DBLogin.getOrInsert("tester", "tester")!!
-            val player = PlayerLoading.load(account)
-            println(loginScript.name())
-            val state = RuneScriptRunner.init(loginScript, player)
-            val result = ScriptState.of(RuneScriptRunner.execute(state))
-            println(result)
 
             while (true) {
                 val socket = serverGame.accept()

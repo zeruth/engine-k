@@ -6,8 +6,10 @@ import rs.engine.entity.Loc
 import rs.engine.entity.Npc
 import rs.engine.entity.Obj
 import rs.engine.entity.Player
+import rs.engine.entity.Player.Companion.MessageGame
 import rs.engine.script.ScriptState.Companion.check
 import rs.engine.script.handlers.*
+import util.Logger
 
 object RuneScriptRunner {
     val handlers = HashMap<Int, RuneScriptOpcodeHandler?>()
@@ -135,7 +137,7 @@ object RuneScriptRunner {
         return state
     }
 
-    fun execute(state: ScriptState?, reset: Boolean = false, benchmark: Boolean = false): Int {
+    fun execute(state: ScriptState?, reset: Boolean = false, benchmark: Boolean = false, printOp: Boolean = true): Int {
         if (state == null || state.script == null || state.script!!.info == null) {
             return ScriptState.ABORTED
         }
@@ -163,19 +165,24 @@ object RuneScriptRunner {
 
                 state.opcount++
                 val innerOp = state.script!!.opcodes[++state.pc]
-                println("Executing ($innerOp) ${RuneScriptOpcode.of(innerOp!!)} ")
+                if (printOp) {
+                    Logger.messageColor = Logger.Color.PURPLE
+                    Logger.info("RuneScript","${innerOp.toString().padEnd(4)}  : ${RuneScriptOpcode.of(innerOp!!)}")
+                }
                 executeInner(state, innerOp)
             }
 
             val time = ((System.nanoTime() / 1000) - start).toInt()
             if (time > 1000) {
                 val message = "Warning [cpu time]: Script: ${state.script!!.name()}, time: ${time}us, opcount: ${state.opcount}"
-/*                if (state.self is Player) {
-                    state.self.wrappedMessageGame(message)
+                val player = state.self as? Player
+                if (player != null) {
+                    player.MessageGame(message)
                 } else {
                     println(message)
-                }*/
-                println(message)
+                }
+                Logger.messageColor = Logger.Color.PURPLE
+                Logger.info("RuneScript", message)
             }
         } catch (e: Exception) {
             e.printStackTrace()

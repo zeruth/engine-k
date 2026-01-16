@@ -23,10 +23,12 @@ import rs.cache.config.VarBitType
 import rs.cache.config.VarNpcType
 import rs.cache.config.VarPlayerType
 import rs.cache.config.VarSharedType
+import rs.engine.entity.Player
 import rs.engine.script.test.FakeScriptFile
 import rs.io.Packet
 import util.Logger
 import java.io.File
+import java.math.BigInteger
 
 /**
  * Decoder for Server RuneScript Binaries.
@@ -62,26 +64,6 @@ object RuneScriptProvider {
         val start = System.currentTimeMillis()
         Logger.messageColor = Logger.Color.PURPLE
         Logger.info("Engine","---Lost-City (377)---")
-        CategoryType.load()
-        DbRowType.load()
-        DbTableType.load()
-        EnumType.load()
-        FloType.load()
-        HuntType.load()
-        IdkType.load()
-        InvType.load()
-        LocType.load()
-        MesAnimType.load()
-        NpcType.load()
-        ObjType.load()
-        ParamType.load()
-        SeqType.load()
-        SpotAnimType.load()
-        StructType.load()
-        VarBitType.load()
-        VarNpcType.load()
-        VarPlayerType.load()
-        VarSharedType.load()
         Logger.messageColor = Logger.Color.PURPLE
         Logger.info("Engine","......Compiling RuneScript......")
         ServerScriptCompilerCLI.main(emptyArray())
@@ -134,6 +116,10 @@ object RuneScriptProvider {
         }
 
         loginScript = scripts.filterNotNull().first { it.name().contains("login") }
+
+        //warmup
+        val state = RuneScriptRunner.init(loginScript, Player.dummy())
+        RuneScriptRunner.execute(state, printOp = false)
 
         Logger.messageColor = Logger.Color.PURPLE
         Logger.info("Engine","Lost-City (377) Engine loaded in ${System.currentTimeMillis() - start}ms")

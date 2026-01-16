@@ -1,10 +1,6 @@
 package rs.cache.config
 
 import rs.cache.ConfigType
-import rs.engine.entity.BlockWalk
-import rs.engine.entity.MoveRestrict
-import rs.engine.entity.NpcMode
-import rs.engine.entity.NpcStat
 import rs.io.JagFile
 import rs.io.Packet
 import util.Logger
@@ -17,7 +13,7 @@ class LocType(id: Int) : ConfigType(id){
         private var configNames = HashMap<String, Int>()
         private var configs: Array<LocType?> = emptyArray()
 
-        fun load() {
+        init {
             val server = Packet.load(dir.resolve("server/loc.dat").toFile())
             val jag = JagFile.load(dir.resolve("client/config").toFile())
             parse(server, jag)
@@ -99,7 +95,7 @@ class LocType(id: Int) : ConfigType(id){
     var multiloc: Array<Int?>? = null
 
     var category = -1
-    lateinit var params: ParamMap
+    var params = HashMap<Int, Any>()
 
     override fun decode(code: Int, dat: Packet) {
         when (code) {
@@ -194,7 +190,7 @@ class LocType(id: Int) : ConfigType(id){
                     }
                 }
             }
-            249 -> params = ParamHelper.decodeParams(dat)
+            249 -> params = Parameters.decode(dat)
             250 -> debugname = dat.gjstr()
             else -> throw RuntimeException("Unhandled code $code")
         }

@@ -1,12 +1,7 @@
 package rs.engine.entity
 
-enum class BlockWalk {
-    NONE,
-    NPC,
-    ALL;
-
-    companion object {
-        fun of(id: Int) = values()
-            .getOrNull(id) ?: throw IndexOutOfBoundsException("Invalid HuntVis id: $id")
-    }
+object BlockWalk {
+    const val NONE = 0
+    const val NPC = 1
+    const val ALL = 2
 }

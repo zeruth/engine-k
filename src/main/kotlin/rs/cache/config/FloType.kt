@@ -13,7 +13,7 @@ class FloType(id: Int) : ConfigType(id){
         private var configNames = HashMap<String, Int>()
         private var configs: Array<FloType?> = emptyArray()
 
-        fun load() {
+        init {
             val server = Packet.load(dir.resolve("server/flo.dat").toFile())
             val jag = JagFile.load(dir.resolve("client/config").toFile())
             parse(server, jag)

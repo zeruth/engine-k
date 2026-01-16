@@ -12,7 +12,7 @@ class CategoryType(id: Int) : ConfigType(id){
         private var configNames = HashMap<String, Int>()
         private var configs: Array<CategoryType?> = emptyArray()
 
-        fun load() {
+        init {
             val dat = Packet.load(dir.resolve("category.dat").toFile())
             parse(dat)
         }

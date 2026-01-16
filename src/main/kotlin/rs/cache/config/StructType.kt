@@ -1,11 +1,6 @@
 package rs.cache.config
 
 import rs.cache.ConfigType
-import rs.engine.entity.NpcMode
-import rs.engine.entity.hunt.HuntCheckNotTooStrong
-import rs.engine.entity.hunt.HuntModeType
-import rs.engine.entity.hunt.HuntNobodyNear
-import rs.engine.entity.hunt.HuntVis
 import rs.io.Packet
 import util.Logger
 import java.io.File
@@ -17,7 +12,7 @@ class StructType(id: Int) : ConfigType(id){
         private var configNames = HashMap<String, Int>()
         private var configs: Array<StructType?> = emptyArray()
 
-        fun load() {
+        init {
             val dat = Packet.load(dir.resolve("struct.dat").toFile())
             parse(dat)
         }
@@ -55,13 +50,11 @@ class StructType(id: Int) : ConfigType(id){
         }
     }
 
-
-
-    var params: ParamMap? = null
+    var params = HashMap<Int, Any>()
 
     override fun decode(code: Int, dat: Packet) {
         when (code) {
-            249 -> params = ParamHelper.decodeParams(dat)
+            249 -> params = Parameters.decode(dat)
             250 -> debugname = dat.gjstr()
             else -> throw RuntimeException("Unhandled code $code")
         }

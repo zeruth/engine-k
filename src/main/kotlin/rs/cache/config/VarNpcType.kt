@@ -17,7 +17,7 @@ class VarNpcType(id: Int) : ConfigType(id){
         private var configNames = HashMap<String, Int>()
         private var configs: Array<VarNpcType?> = emptyArray()
 
-        fun load() {
+        init {
             val dat = Packet.load(dir.resolve("varn.dat").toFile())
             parse(dat)
         }

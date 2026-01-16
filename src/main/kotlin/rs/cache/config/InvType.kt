@@ -21,7 +21,7 @@ class InvType(id: Int) : ConfigType(id){
         var INV = -1;
         var WORN = -1;
 
-        fun load() {
+        init {
             val dat = Packet.load(dir.resolve("inv.dat").toFile())
             parse(dat)
         }

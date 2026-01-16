@@ -17,7 +17,7 @@ class MesAnimType(id: Int) : ConfigType(id){
         private var configNames = HashMap<String, Int>()
         private var configs: Array<MesAnimType?> = emptyArray()
 
-        fun load() {
+        init {
             val dat = Packet.load(dir.resolve("mesanim.dat").toFile())
             parse(dat)
         }

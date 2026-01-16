@@ -19,7 +19,7 @@ class VarPlayerType(id: Int) : ConfigType(id){
         // engine-level client <-> server varp
         var RUN = 0
 
-        fun load() {
+        init {
             val server = Packet.load(dir.resolve("server/varp.dat").toFile())
             val jag = JagFile.load(dir.resolve("client/config").toFile())
             parse(server, jag)

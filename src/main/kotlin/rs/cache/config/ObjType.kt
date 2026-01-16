@@ -2,7 +2,6 @@ package rs.cache.config
 
 import rs.Environment
 import rs.cache.ConfigType
-import rs.cache.graphics.AnimFrame
 import rs.io.JagFile
 import rs.io.Packet
 import util.Logger
@@ -15,7 +14,7 @@ class ObjType(id: Int) : ConfigType(id){
         private var configNames = HashMap<String, Int>()
         private var configs: Array<ObjType?> = emptyArray()
 
-        fun load() {
+        init {
             val server = Packet.load(dir.resolve("server/obj.dat").toFile())
             val jag = JagFile.load(dir.resolve("client/config").toFile())
             parse(server, jag)
@@ -58,7 +57,7 @@ class ObjType(id: Int) : ConfigType(id){
 
                     config.params = config.params.filterKeys { key ->
                         ParamType.get(key)?.autodisable != true
-                    }.toMutableMap()
+                    }.toMutableMap() as HashMap<Int, Any>
                 }
             }
             Logger.messageColor = Logger.Color.GREEN
@@ -130,7 +129,7 @@ class ObjType(id: Int) : ConfigType(id){
     var tradeable = true
     var respawnrate = 100 // default to 1-minute
 
-    lateinit var params: ParamMap
+    var params = HashMap<Int, Any>()
 
     fun toCertificate() {
         val template = get(certtemplate)!!
@@ -238,7 +237,7 @@ class ObjType(id: Int) : ConfigType(id){
             114 -> contrast = dat.g1b()
             115 -> team = dat.g1()
             201 -> respawnrate = dat.g2()
-            249 -> params = ParamHelper.decodeParams(dat);
+            249 -> params = Parameters.decode(dat);
             250 -> debugname = dat.gjstr()
             else -> throw RuntimeException("Unhandled code $code")
         }

@@ -17,7 +17,7 @@ class VarSharedType(id: Int) : ConfigType(id){
         private var configNames = HashMap<String, Int>()
         private var configs: Array<VarSharedType?> = emptyArray()
 
-        fun load() {
+        init {
             val dat = Packet.load(dir.resolve("vars.dat").toFile())
             parse(dat)
         }

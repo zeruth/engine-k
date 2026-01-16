@@ -17,7 +17,7 @@ class HuntType(id: Int) : ConfigType(id){
         private var configNames = HashMap<String, Int>()
         private var configs: Array<HuntType?> = emptyArray()
 
-        fun load() {
+        init {
             val dat = Packet.load(dir.resolve("hunt.dat").toFile())
             parse(dat)
         }
