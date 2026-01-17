@@ -48,6 +48,8 @@ class GameMap(val members: Boolean) {
 
             totalNpcs += loadNPCs(Packet.load(File("${dir}n${mx}_${mz}")), mapsquareX, mapsquareZ)
             totalObjs += loadObjs(Packet.load(File("${dir}o${mx}_${mz}")), mapsquareX, mapsquareZ)
+
+            //collision
             val lands = IntArray(MAPSQUARE)
         }
         Logger.messageColor = Logger.Color.GREEN
@@ -141,6 +143,32 @@ class GameMap(val members: Boolean) {
         return total
     }
 
+    fun loadGround(lands: ByteArray, packet: Packet, mapsquareX: Int, mapsquareZ: Int) {
+        for (level in 0 until Y) {
+            for (x in 0 until X) {
+                for (z in 0 until Z) {
+                    while (true) {
+                        val opcode = packet.g1()
+                        when (opcode) {
+                            0 -> break
+                            1 -> {
+                                packet.move(1)
+                                break
+                            }
+                            else -> {
+                                if (opcode <= 49)
+                                    packet.move(1)
+                                else if (opcode <= 81) {
+                                    lands[this.packCoord(x, z, level)] = (opcode - 49).toByte()
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     fun isFreeToPlay(x: Int, z: Int): Boolean {
         return freemap.contains(ZoneMap.zoneIndex(x, z, 0))
     }
@@ -151,4 +179,11 @@ class GameMap(val members: Boolean) {
         val level = (packed shr 12) and 0x3
         return CoordGrid(x = x, z = z, level = level)
     }
+
+    private fun packCoord(x: Int, z: Int, level: Int): Int {
+        return (z and 0x3F) or
+                ((x and 0x3F) shl 6) or
+                ((level and 0x3) shl 12)
+    }
+
 }

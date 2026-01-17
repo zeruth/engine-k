@@ -49,9 +49,7 @@ object World {
 
     fun getPlayerByUid(uid: Int) = players.values.firstOrNull { it.uid == uid }
 
-    suspend fun cycle() {
-        ServerWorld.nextTick = System.currentTimeMillis() + Environment.TICK_RATE
-
+    fun cycle() {
         // world processing
         // - world queue
         // - npc hunt
