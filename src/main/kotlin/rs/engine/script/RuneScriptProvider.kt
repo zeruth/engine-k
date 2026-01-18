@@ -60,9 +60,7 @@ object RuneScriptProvider {
 
     @JvmStatic
     fun parse(): Int {
-        val start = System.currentTimeMillis()
-        Logger.messageColor = Logger.Color.PURPLE
-        Logger.info("Engine","---Lost-City (377)---")
+
         Logger.messageColor = Logger.Color.PURPLE
         Logger.info("Engine","......Compiling RuneScript......")
         ServerScriptCompilerCLI.main(emptyArray())
@@ -115,7 +113,7 @@ object RuneScriptProvider {
         }
 
         Logger.messageColor = Logger.Color.PURPLE
-        Logger.info("Engine","Lost-City (377) Engine loaded in ${System.currentTimeMillis() - start}ms")
+        Logger.info("Engine","Lost-City (377) Engine loaded in ${System.currentTimeMillis() - Server.start}ms")
         Logger.messageColor = Logger.Color.PURPLE
         Logger.info("Engine","--------------------------------")
         return loaded

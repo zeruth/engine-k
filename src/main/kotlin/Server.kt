@@ -21,13 +21,26 @@ import rs.cache.config.VarBitType
 import rs.cache.config.VarNpcType
 import rs.cache.config.VarPlayerType
 import rs.cache.config.VarSharedType
+import rs.engine.GameMap
 import rs.engine.script.RuneScriptProvider
 import rs.engine.script.RuneScriptRunner
+import util.Logger
 
 object Server {
     val selectorManager = ActorSelectorManager(Dispatchers.IO)
+    val start = System.currentTimeMillis()
 
     init {
+        Logger.messageColor = Logger.Color.PURPLE
+        Logger.info("Engine","---Lost-City (377)---")
+
+        initConfigs()
+
+        GameMap.load()
+        RuneScriptProvider.parse()
+    }
+
+    private fun initConfigs() {
         CategoryType
         DbRowType
         DbTableType
@@ -55,7 +68,6 @@ object Server {
         DBLoginBootstrap.init()
 
         runBlocking {
-            RuneScriptProvider.parse()
             ServerOnDemand.runHttp(this)
             ServerOnDemand.run(this)
             ServerWorld.run(this)

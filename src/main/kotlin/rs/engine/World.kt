@@ -31,7 +31,7 @@ object World {
     val npcs = EntityPool<Npc>(NPCS)
     var nextTick = 0L
 
-    val gameMap = GameMap(Environment.NODE_MEMBERS)
+    val gameMap = GameMap
 
     val newPlayers = ArrayList<Player>(PLAYERS)
 

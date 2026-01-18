@@ -1,5 +1,6 @@
 package rs.engine
 
+import rs.Environment
 import rs.cache.config.LocType
 import rs.cache.config.NpcType
 import rs.cache.config.ObjType
@@ -17,28 +18,26 @@ import rsmod.PathFinder
 import util.Logger
 import java.io.File
 
-class GameMap(val members: Boolean) {
-    companion object {
-        const val OPEN = 0x0
-        const val BLOCK_MAP_SQUARE = 0x1
-        const val LINK_BELOW = 0x2
-        const val REMOVE_ROOFS = 0x4
-        const val VISIBLE_BELOW = 0x8
-        const val NOT_LOW_DETAIL = 0x10
+object GameMap {
+    const val OPEN = 0x0
+    const val BLOCK_MAP_SQUARE = 0x1
+    const val LINK_BELOW = 0x2
+    const val REMOVE_ROOFS = 0x4
+    const val VISIBLE_BELOW = 0x8
+    const val NOT_LOW_DETAIL = 0x10
 
-        const val Y = 4
-        const val X = 64
-        const val Z = 64
+    const val Y = 4
+    const val X = 64
+    const val Z = 64
 
-        const val MAPSQUARE = X * Y * Z
+    const val MAPSQUARE = X * Y * Z
 
-        val rsmod = PathFinder
-    }
+    val rsmod = PathFinder
 
     private val multimap = mutableSetOf<Int>()
     private val freemap = mutableSetOf<Int>()
 
-    init {
+    fun load() {
         load(multimap, File("./data/maps/multiway.csv"))
         load(freemap, File("./data/maps/free2play.csv"))
 
@@ -75,6 +74,7 @@ class GameMap(val members: Boolean) {
 
     }
 
+
     fun load(map: MutableSet<Int>, file: File) {
         val lines = file.readLines()
         for (line in lines) {
@@ -108,7 +108,7 @@ class GameMap(val members: Boolean) {
             val count = packet.g1()
             for (i in 0 until count) {
                 val id = packet.g2()
-                if (!members && !isFreeToPlay(absoluteX, absoluteZ)) {
+                if (!Environment.NODE_MEMBERS && !isFreeToPlay(absoluteX, absoluteZ)) {
                     continue
                 }
 
@@ -120,7 +120,7 @@ class GameMap(val members: Boolean) {
 
                 val size = npcType.size
                 val npc = Npc(level, absoluteX, absoluteZ, size, size, RESPAWN, World.getNextNid(), npcType.id, npcType.moverestrict, npcType.blockwalk)
-                if (!npcType.members || members) {
+                if (!npcType.members || Environment.NODE_MEMBERS) {
                     World.addNpc(npc, -1)
                     total += 1
                 }
@@ -145,13 +145,13 @@ class GameMap(val members: Boolean) {
             for (i in 0 until count) {
                 val id = packet.g2()
                 val count = packet.g1()
-                if (!members && !isFreeToPlay(absoluteX, absoluteZ)) {
+                if (!Environment.NODE_MEMBERS && !isFreeToPlay(absoluteX, absoluteZ)) {
                     continue
                 }
 
                 val objType = ObjType.get(id)!!
                 val obj = Obj(level, absoluteX, absoluteZ, RESPAWN, objType.id, count)
-                if (!objType.members || members) {
+                if (!objType.members || Environment.NODE_MEMBERS) {
                     ZoneMap.zone(x, z, level).addStaticObj(obj)
                     total += 1
                 }
@@ -194,7 +194,7 @@ class GameMap(val members: Boolean) {
                 for (z in 0 until Z) {
                     val absoluteZ = z + mapsquareZ
 
-                    if (!this.members && !isFreeToPlay(absoluteX, absoluteZ) && !bordersFreeToPlay(absoluteX, absoluteZ)) {
+                    if (!Environment.NODE_MEMBERS && !isFreeToPlay(absoluteX, absoluteZ) && !bordersFreeToPlay(absoluteX, absoluteZ)) {
                         continue
                     }
 
@@ -256,7 +256,7 @@ class GameMap(val members: Boolean) {
                 val absoluteX = x + mapsquareX
                 val absoluteZ = z + mapsquareZ
 
-                if (!members && !isFreeToPlay(absoluteX, absoluteZ) && !bordersFreeToPlay(absoluteX, absoluteZ)) {
+                if (!Environment.NODE_MEMBERS && !isFreeToPlay(absoluteX, absoluteZ) && !bordersFreeToPlay(absoluteX, absoluteZ)) {
                     continue
                 }
 
