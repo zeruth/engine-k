@@ -1,8 +1,10 @@
 package rs.engine.zone
 
+import rs.engine.World
 import rs.engine.entity.Loc
 import rs.engine.entity.Npc
 import rs.engine.entity.Obj
+import rs.engine.entity.PathingEntity
 import rs.engine.entity.Player
 import rs.util.LinkList
 import java.util.LinkedList
@@ -44,5 +46,16 @@ class Zone(val index: Int) {
         locs.addTail(loc)
         locsCount += 1
         loc.isActive = true
+    }
+
+    fun enter(entity: PathingEntity) {
+        if (entity is Player) {
+            players.addTail(entity)
+            playersCount += 1
+            World.gameMap.getZoneGrid(level).flag(x, z)
+        } else if (entity is Npc) {
+            npcs.addTail(entity)
+            npcsCount += 1
+        }
     }
 }

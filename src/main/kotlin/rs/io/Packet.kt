@@ -198,7 +198,6 @@ class Packet(val data: ByteArray, private val order: ByteOrder = ByteOrder.BIG_E
         data[position() - 1] = (value and 0xFF).toByte()
     }
 
-
     fun p2_alt1(v: Int) {
         move(2)
         data[position() - 2] = (v and 0xFF).toByte()
@@ -211,6 +210,11 @@ class Packet(val data: ByteArray, private val order: ByteOrder = ByteOrder.BIG_E
         data[position() - 1] = ((v + 128) and 0xFF).toByte()
     }
 
+    fun p2_alt3(v: Int) {
+        move(2)
+        data[position() - 2] = ((v + 128) and 0xFF).toByte()
+        data[position() - 1] = ((v shr 8) and 0xFF).toByte()
+    }
 
     fun g2(): Int {
         return view.getShort().toInt() and 0xFFFF
@@ -252,9 +256,26 @@ class Packet(val data: ByteArray, private val order: ByteOrder = ByteOrder.BIG_E
         data[position() - 1] = ((v shr 8) and 0xFF).toByte()
     }
 
+    fun p8(value: Long) {
+        move(8)
+        data[position() - 8] = ((value shr 56) and 0xFF).toByte()
+        data[position() - 7] = ((value shr 48) and 0xFF).toByte()
+        data[position() - 6] = ((value shr 40) and 0xFF).toByte()
+        data[position() - 5] = ((value shr 32) and 0xFF).toByte()
+        data[position() - 4] = ((value shr 24) and 0xFF).toByte()
+        data[position() - 3] = ((value shr 16) and 0xFF).toByte()
+        data[position() - 2] = ((value shr 8) and 0xFF).toByte()
+        data[position() - 1] = (value and 0xFF).toByte()
+    }
+
+
 
     fun gbool() : Boolean {
         return g1() == 1
+    }
+
+    fun pbool(value: Boolean) {
+        p1(if (value) 1 else 0)
     }
 
     fun pjstr(str: String) {

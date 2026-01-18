@@ -9,9 +9,9 @@ import rs.engine.entity.Player
 import rs.engine.entity.PlayerLoading
 import rs.engine.entity.PlayerStat
 import rs.engine.game.Inventory
-import rs.engine.script.RuneScriptProvider.loginScript
 import rs.engine.script.RuneScriptRunner
 import rs.engine.script.ScriptState
+import rs.engine.zone.ZoneMap
 import rs.net.Client
 import rs.util.EntityPool
 import util.Logger
@@ -32,6 +32,8 @@ object World {
     var nextTick = 0L
 
     val gameMap = GameMap(Environment.NODE_MEMBERS)
+
+    val newPlayers = ArrayList<Player>(PLAYERS)
 
     fun getInventory(inv: Int) : Inventory? {
         if (inv == -1) return null;
@@ -113,7 +115,7 @@ object World {
         // - stat changes
         // - afk zones changes
         // - flush packets
-        //processClientsOut();
+        processClientsOut();
 
         // cleanup
         // - reset zones
@@ -126,6 +128,12 @@ object World {
     }
 
     fun processLogins() {
+        for (player in newPlayers) {
+
+        }
+    }
+
+    fun processClientsOut() {
 
     }
 
@@ -151,24 +159,16 @@ object World {
             val player = PlayerLoading.load(account)
             val pid = players.nextFreeId() ?: return
             players.add(pid, player)
+
             player.pid = pid
             player.uid = computeUid(player.name37, player.pid)
             player.tele = true
             player.moveClickRequest = false
 
-            //TODO GetZone
-            //TODO Player.onLoad
-
+            gameMap.getZone(player.x, player.z, player.level).enter(player)
+            player.onLogin()
             Logger.messageColor = Logger.Color.CYAN
             Logger.info("LOGIN", "[${account.username}-${client.uuid}] (Passed - CRCs / RSA / Password)")
-
-            //TODO: remove
-            Logger.messageColor = Logger.Color.PURPLE
-            Logger.info("RuneScript", loginScript.name())
-            val state = RuneScriptRunner.init(loginScript, player)
-            val result = ScriptState.of(RuneScriptRunner.execute(state))
-            Logger.messageColor = Logger.Color.PURPLE
-            Logger.info("RuneScript", result)
         }
     }
 

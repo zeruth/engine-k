@@ -7,6 +7,8 @@ import rs.engine.entity.EntityLifeCycle.RESPAWN
 import rs.engine.entity.Loc
 import rs.engine.entity.Npc
 import rs.engine.entity.Obj
+import rs.engine.zone.Zone
+import rs.engine.zone.ZoneGrid
 import rs.engine.zone.ZoneMap
 import rs.io.Packet
 import rsmod.LocAngle
@@ -287,6 +289,14 @@ class GameMap(val members: Boolean) {
             locIdOffset = packet.gsmarts();
         }
         return total
+    }
+
+    fun getZone(x: Int, z: Int, level: Int) : Zone {
+        return ZoneMap.zone(x, z, level)
+    }
+
+    fun getZoneGrid(level: Int) : ZoneGrid {
+        return ZoneMap.grid(level)
     }
 
     fun isFreeToPlay(x: Int, z: Int): Boolean {

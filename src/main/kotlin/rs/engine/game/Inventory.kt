@@ -2,6 +2,11 @@ package rs.engine.game
 
 import rs.cache.config.InvType
 
+data class InventoryListener(val type: Int, // InvType
+                             val com: Int, // Component
+                             val source: Int, // uid or -1 for world
+                             var firstSeen: Boolean)
+
 class Inventory(
     val type: Int,          // inv ID
     val capacity: Int,

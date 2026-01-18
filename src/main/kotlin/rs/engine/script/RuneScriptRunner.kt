@@ -6,9 +6,10 @@ import rs.engine.entity.Loc
 import rs.engine.entity.Npc
 import rs.engine.entity.Obj
 import rs.engine.entity.Player
-import rs.engine.entity.Player.Companion.MessageGame
 import rs.engine.script.ScriptState.Companion.check
 import rs.engine.script.handlers.*
+import rs.net.msg.out.MessageGame
+import rs.net.msg.out.game.ServerGameMessage.Companion.write
 import util.Logger
 
 object RuneScriptRunner {
@@ -177,7 +178,7 @@ object RuneScriptRunner {
                 val message = "Warning [cpu time]: Script: ${state.script!!.name()}, time: ${time}us, opcount: ${state.opcount}"
                 val player = state.self as? Player
                 if (player != null) {
-                    player.MessageGame(message)
+                    MessageGame(message).write(player)
                 } else {
                     println(message)
                 }

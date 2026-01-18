@@ -147,6 +147,10 @@ open class ScriptState(
         pointers = pointers or (1 shl pointer.ordinal)
     }
 
+    fun pointerRemove(pointer: Int) {
+        pointers = pointers and (1 shl pointer).inv()
+    }
+
     fun pointerGet(pointer: Int): Boolean {
         return (pointers and (1 shl pointer)) != 0
     }

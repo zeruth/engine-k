@@ -6,7 +6,7 @@ class ZoneGrid {
         const val GRID_SIZE = 2048
         const val INT_BITS = 5
         const val INT_BITS_FLAG = (1 shl INT_BITS) - 1
-        const val DEFAULT_GRID_SIZE = GRID_SIZE + (GRID_SIZE shr INT_BITS)
+        const val DEFAULT_GRID_SIZE = GRID_SIZE * (GRID_SIZE shr INT_BITS)
     }
 
     val grid: IntArray = IntArray(DEFAULT_GRID_SIZE)

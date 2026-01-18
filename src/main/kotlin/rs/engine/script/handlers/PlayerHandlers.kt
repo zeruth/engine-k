@@ -1,12 +1,13 @@
 package rs.engine.script.handlers
 
 import rs.engine.World
-import rs.engine.entity.Player.Companion.MessageGame
 import rs.engine.script.RuneScriptOpcode
 import rs.engine.script.RuneScriptOpcodeHandler
 import rs.engine.script.ScriptPointer
 import rs.engine.script.ScriptPointer.Companion.ActivePlayers
 import rs.engine.script.ScriptPointer.Companion.ProtectedActivePlayers
+import rs.net.msg.out.MessageGame
+import rs.net.msg.out.game.ServerGameMessage.Companion.write
 
 object BasReadyAnimHandler : RuneScriptOpcodeHandler(RuneScriptOpcode.BAS_READYANIM, ScriptPointer.ActivePlayer, {
         val value = popInt()
@@ -33,7 +34,7 @@ object BasWalkFHandler : RuneScriptOpcodeHandler(RuneScriptOpcode.BAS_WALK_F, Sc
 object MesHandler : RuneScriptOpcodeHandler(RuneScriptOpcode.MES, ScriptPointer.ActivePlayer,
     {
         val message = popString()
-        activePlayer.MessageGame(message)
+        MessageGame(message).write(activePlayer)
     }
 )
 

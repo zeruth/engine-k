@@ -1,16 +1,15 @@
 package rs.net.msg.out.game
 
+import kotlinx.coroutines.runBlocking
 import rs.engine.entity.Player
 import rs.io.Packet
 
 open class ServerGameMessage(val priority: ServerGameProtPriority,
                              val prot: ServerGameProt? = null,
-                             val player: Player? = null,
-                             val encode: (Packet.() -> Unit)?) {
+                             val encode: (Packet.() -> Unit)? = null) {
     companion object {
-        suspend fun ServerGameMessage.write() {
+        fun ServerGameMessage.write(player: Player) {
             prot ?: return
-            player ?: return
             encode ?: throw RuntimeException("encode is null")
             val client = player.client ?: return
 
@@ -39,7 +38,11 @@ open class ServerGameMessage(val priority: ServerGameProtPriority,
                 buf.psize2(buf.position() - start)
             }
 
-            client.send(buf.data.sliceArray(0 until buf.position()))
+            val slice = buf.data.sliceArray(0 until buf.position())
+
+            runBlocking {
+                client.send(slice)
+            }
         }
     }
 }
