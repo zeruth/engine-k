@@ -11,7 +11,7 @@ https://github.com/zeruth/rsmod-pathfinder
 - [ ] Login (WIP)
 ```
 
-<img width="1105" height="1219" alt="image" src="https://github.com/user-attachments/assets/b8ae364a-1593-4e50-a320-cc10ca843b03" />
+<img width="883" height="1081" alt="image" src="https://github.com/user-attachments/assets/63cab0c8-a2d1-47ce-b7d6-ac6bd1719fb1" />
 
 ---
   
