@@ -13,6 +13,7 @@ import rs.io.Packet
 import rs.net.Client
 import rs.net.Isaac
 import rs.net.RSA
+import rsmod.PathFinder
 import util.Logger
 import java.math.BigInteger
 import java.util.*
@@ -28,6 +29,7 @@ object ServerWorld {
 
     init {
         runBlocking {
+            World // calling World here guarantees it loads before the first tick fires
             server = socketBuilder.bind("0.0.0.0", 43594)
 
             Logger.messageColor = Logger.Color.YELLOW

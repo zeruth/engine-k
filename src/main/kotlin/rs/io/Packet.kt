@@ -297,6 +297,15 @@ class Packet(val data: ByteArray, private val order: ByteOrder = ByteOrder.BIG_E
         }
     }
 
+    fun gsmarts(): Int {
+        return if ((data[position()].toInt() and 0xFF) < 0x80) {
+            g1()
+        } else {
+            g2() - 0x8000
+        }
+    }
+
+
     fun gdata(dest: ByteArray, offset: Int, length: Int) {
         System.arraycopy(data, position(), dest, offset, length)
         move(length)

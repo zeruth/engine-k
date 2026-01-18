@@ -2,12 +2,12 @@
 
 A Kotlin source port of [**Engine-TS**](https://github.com/LostCityRS/Engine-TS)
 
-The goal of this project is to provide a 1:1 experience on JVM  
-
-current work:  
+uses:  
+https://github.com/zeruth/rsmod-pathfinder  
 ```
 - [x] OnDemand using Lost-City generated cache
-- [x] RuneScript Compiler using Lost-City generated cache
+- [x] RuneScript Compiler using Lost-City generated cache (still needs opcode handlers)
+- [x] GameMap
 - [ ] Login (WIP)
 ```
 

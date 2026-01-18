@@ -39,4 +39,10 @@ class Zone(val index: Int) {
         objsCount += 1
         obj.isActive = true
     }
+
+    fun addStaticLoc(loc: Loc) {
+        locs.addTail(loc)
+        locsCount += 1
+        loc.isActive = true
+    }
 }

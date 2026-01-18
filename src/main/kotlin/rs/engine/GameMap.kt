@@ -1,13 +1,17 @@
 package rs.engine
 
+import rs.cache.config.LocType
 import rs.cache.config.NpcType
 import rs.cache.config.ObjType
 import rs.engine.entity.EntityLifeCycle.RESPAWN
+import rs.engine.entity.Loc
 import rs.engine.entity.Npc
 import rs.engine.entity.Obj
-import rs.engine.zone.Zone
 import rs.engine.zone.ZoneMap
 import rs.io.Packet
+import rsmod.LocAngle
+import rsmod.LocLayer
+import rsmod.PathFinder
 import util.Logger
 import java.io.File
 
@@ -25,6 +29,8 @@ class GameMap(val members: Boolean) {
         const val Z = 64
 
         const val MAPSQUARE = X * Y * Z
+
+        val rsmod = PathFinder
     }
 
     private val multimap = mutableSetOf<Int>()
@@ -34,11 +40,13 @@ class GameMap(val members: Boolean) {
         load(multimap, File("./data/maps/multiway.csv"))
         load(freemap, File("./data/maps/free2play.csv"))
 
-        val dir = "./data/pack/server/maps/"
-        val file = File(dir)
+        val path = "./data/pack/server/maps/"
+        val file = File(path)
         val maps = file.listFiles()!!.filter { it.name.startsWith("m") }
+        var totalZones = 0
         var totalNpcs = 0
         var totalObjs = 0
+        var totalLocs = 0
         maps.forEachIndexed { index, file ->
             val coord = file.name.substring(1 until file.name.length).split("_")
             val mx = coord[0].toInt()
@@ -46,16 +54,23 @@ class GameMap(val members: Boolean) {
             val mapsquareX = mx shl 6
             val mapsquareZ = mz shl 6
 
-            totalNpcs += loadNPCs(Packet.load(File("${dir}n${mx}_${mz}")), mapsquareX, mapsquareZ)
-            totalObjs += loadObjs(Packet.load(File("${dir}o${mx}_${mz}")), mapsquareX, mapsquareZ)
+            totalNpcs += loadNPCs(Packet.load(File("${path}n${mx}_${mz}")), mapsquareX, mapsquareZ)
+            totalObjs += loadObjs(Packet.load(File("${path}o${mx}_${mz}")), mapsquareX, mapsquareZ)
 
             //collision
-            val lands = IntArray(MAPSQUARE)
+            val lands = IntArray(MAPSQUARE) // 4 * 64 * 64 size is guaranteed for lands
+            totalZones += loadGround(lands, Packet.load(File("${path}m${mx}_${mz}")), mapsquareX, mapsquareZ)
+            totalLocs += loadLocs(lands, Packet.load(File("${path}l${mx}_${mz}")), mapsquareX, mapsquareZ)
         }
         Logger.messageColor = Logger.Color.GREEN
-        Logger.info("World", "Loaded $totalNpcs Npc spawns")
+        Logger.info("GameMap", "Loaded $totalZones Zones")
         Logger.messageColor = Logger.Color.GREEN
-        Logger.info("World", "Loaded $totalObjs Obj spawns")
+        Logger.info("GameMap", "Loaded $totalLocs Locs")
+        Logger.messageColor = Logger.Color.GREEN
+        Logger.info("GameMap", "Loaded $totalNpcs Npcs")
+        Logger.messageColor = Logger.Color.GREEN
+        Logger.info("GameMap", "Loaded $totalObjs Objs")
+
     }
 
     fun load(map: MutableSet<Int>, file: File) {
@@ -143,7 +158,7 @@ class GameMap(val members: Boolean) {
         return total
     }
 
-    fun loadGround(lands: ByteArray, packet: Packet, mapsquareX: Int, mapsquareZ: Int) {
+    fun loadGround(lands: IntArray, packet: Packet, mapsquareX: Int, mapsquareZ: Int) : Int {
         for (level in 0 until Y) {
             for (x in 0 until X) {
                 for (z in 0 until Z) {
@@ -159,7 +174,7 @@ class GameMap(val members: Boolean) {
                                 if (opcode <= 49)
                                     packet.move(1)
                                 else if (opcode <= 81) {
-                                    lands[this.packCoord(x, z, level)] = (opcode - 49).toByte()
+                                    lands[this.packCoord(x, z, level)] = (opcode - 49)
                                 }
                             }
                         }
@@ -167,10 +182,119 @@ class GameMap(val members: Boolean) {
                 }
             }
         }
+
+        var i = 0
+
+        for (level in 0 until Y) {
+            for (x in 0 until X) {
+                val absoluteX = x + mapsquareX
+
+                for (z in 0 until Z) {
+                    val absoluteZ = z + mapsquareZ
+
+                    if (!this.members && !isFreeToPlay(absoluteX, absoluteZ) && !bordersFreeToPlay(absoluteX, absoluteZ)) {
+                        continue
+                    }
+
+                    if (x % 7 == 0 && z % 7 == 0) {
+                        rsmod.allocateIfAbsent(absoluteX, absoluteZ, level);
+                        i += 1
+                    }
+
+                    val land = lands[packCoord(x, z, level)]
+
+                    if (land and REMOVE_ROOFS != OPEN) {
+                        changeRoofCollision(absoluteX, absoluteZ, level, true);
+                    }
+
+                    if (land and BLOCK_MAP_SQUARE != BLOCK_MAP_SQUARE) {
+                        continue
+                    }
+
+                    val bridged: Boolean = if (level == 1) {
+                        (land and LINK_BELOW) == LINK_BELOW
+                    } else {
+                        (lands[packCoord(x, z, 1)] and LINK_BELOW) == LINK_BELOW
+                    }
+
+                    val actualLevel = if (bridged) level - 1 else level
+
+                    if (actualLevel < 0) {
+                        continue
+                    }
+
+                    changeLandCollision(absoluteX, absoluteZ, actualLevel, true);
+                }
+            }
+        }
+        return i
+    }
+
+    fun loadLocs(lands: IntArray, packet: Packet, mapsquareX: Int, mapsquareZ: Int) : Int {
+        var total = 0
+        var locId = -1
+        var locIdOffset = packet.gsmarts()
+
+        while (locIdOffset != 0) {
+            locId += locIdOffset
+
+            var coord = 0
+            var coordOffset = packet.gsmarts()
+
+            while (coordOffset != 0) {
+                coord += coordOffset - 1
+                val position = unpackCoord(coord)
+                val x = position.x
+                val z = position.z
+                val level = position.level
+
+                val info = packet.g1()
+                coordOffset = packet.gsmarts()
+
+                val absoluteX = x + mapsquareX
+                val absoluteZ = z + mapsquareZ
+
+                if (!members && !isFreeToPlay(absoluteX, absoluteZ) && !bordersFreeToPlay(absoluteX, absoluteZ)) {
+                    continue
+                }
+
+                val bridged: Boolean = if (level == 1) {
+                    (lands[coord] and LINK_BELOW) == LINK_BELOW
+                } else {
+                    (lands[packCoord(x, z, 1)] and LINK_BELOW) == LINK_BELOW
+                }
+
+                val actualLevel = if (bridged) level - 1 else level
+
+                if (actualLevel < 0) {
+                    continue
+                }
+
+                val type = LocType.get(locId) ?: throw RuntimeException("Invalid loc type $locId")
+
+                val width = type.width
+                val length = type.length
+                val shape = info shr 2
+                val angle = info and 0x3
+
+                if (type.blockwalk){
+                    changeLocCollision(shape, angle, type.blockrange, length, width, type.active, absoluteX, absoluteZ, actualLevel, true);
+                }
+
+                ZoneMap.zone(x, z, level).addStaticLoc(Loc(actualLevel, absoluteX, absoluteZ, width, length, RESPAWN, locId, shape, angle))
+                total += 1
+            }
+            locIdOffset = packet.gsmarts();
+        }
+        return total
     }
 
     fun isFreeToPlay(x: Int, z: Int): Boolean {
         return freemap.contains(ZoneMap.zoneIndex(x, z, 0))
+    }
+
+    fun bordersFreeToPlay(x: Int, z: Int): Boolean {
+        return isFreeToPlay(x + 1, z) || isFreeToPlay(x - 1, z) || isFreeToPlay(x, z + 1) || isFreeToPlay(x, z - 1)
     }
 
     private fun unpackCoord(packed: Int): CoordGrid {
@@ -186,4 +310,39 @@ class GameMap(val members: Boolean) {
                 ((level and 0x3) shl 12)
     }
 
+    fun changeRoofCollision(x: Int, z: Int, level: Int, add: Boolean) {
+        rsmod.changeRoof(x, z, level, add)
+    }
+
+    fun changeLandCollision(x: Int, z: Int, level: Int, add: Boolean) {
+        rsmod.changeFloor(x, z, level, add)
+    }
+
+    private fun changeLocCollision(
+        shape: Int,
+        angle: Int,
+        blockrange: Boolean,
+        length: Int,
+        width: Int,
+        active: Int,
+        x: Int,
+        z: Int,
+        level: Int,
+        add: Boolean
+    ) {
+        val locLayer = rsmod.locShapeLayer(shape)
+        if (locLayer == LocLayer.WALL) {
+            rsmod.changeWall(x, z, level, angle, shape, blockrange, false, add)
+        } else if (locLayer == LocLayer.GROUND) {
+            if (angle == LocAngle.NORTH || angle == LocAngle.SOUTH) {
+                rsmod.changeLoc(x, z, level, length, width, blockrange, false, add)
+            } else {
+                rsmod.changeLoc(x, z, level, width, length, blockrange, false, add)
+            }
+        } else if (locLayer == LocLayer.GROUND_DECOR) {
+            if (active == 1) {
+                rsmod.changeFloor(x, z, level, add)
+            }
+        }
+    }
 }
